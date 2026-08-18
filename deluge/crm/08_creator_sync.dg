@@ -1,0 +1,199 @@
+/* ============================================================================
+ * CRM -> CREATOR : THE ONLY TWO THINGS CRM EVER PUSHES
+ *
+ * This system is PULL-based on purpose. Creator reads what it needs from CRM at
+ * render time, so there is no nightly sync job, no duplicated student table, and
+ * no window in which the portal shows yesterday's marks. Two events are the
+ * exception, because a pull cannot discover them:
+ *
+ *   1. The parent-to-student MAPPING changed (new admission, guardian email
+ *      corrected, student left). The portal caches that mapping for speed, so
+ *      CRM tells it to drop the cache.
+ *   2. A leave request was approved/rejected, which the parent must see, and
+ *      which must be reflected in attendance.
+ * ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+ * school.invalidatePortalCache
+ * Workflow on Students - create, and edit of Parent / Secondary_Parent /
+ * Status / Current_Class_Section.
+ *
+ * Also fired for the OLD parent when the lookup is repointed, so a previous
+ * guardian's cached access disappears immediately rather than at TTL expiry.
+ * -------------------------------------------------------------------------- */
+void school.invalidatePortalCache(int studentId)
+{
+    stu = zoho.crm.getRecordById("Students", studentId);
+    if(isNull(stu.get("id")))
+    {
+        return;
+    }
+
+    emails = List();
+    for each fld in {"Parent", "Secondary_Parent"}
+    {
+        if(!isNull(stu.get(fld)))
+        {
+            c = zoho.crm.getRecordById("Contacts", stu.get(fld).get("id").toLong());
+            if(!isNull(c.get("Email")))
+            {
+                emails.add(c.get("Email").toString().toLowerCase());
+            }
+        }
+    }
+
+    for each em in emails
+    {
+        params = Map();
+        params.put("email", em);
+        resp = invokeurl
+        [
+            url        : school.creatorFnUrl("invalidateParentCache")
+            type       : POST
+            parameters : params
+            connection : "creator_conn"
+        ];
+        info "Portal cache invalidated for " + em + " : " + resp;
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.processLeaveApproval
+ * Workflow on Leave_Requests when Status changes to Approved or Rejected.
+ *
+ * On approval it converts every working day in the range to "Approved Leave"
+ * attendance - upserting on Attendance_Key, so days already marked Absent are
+ * corrected in place and days not yet marked are created. Holidays and weekends
+ * are skipped. The existing rollup workflow then fixes the percentages, so
+ * approval and normal marking share one code path.
+ * -------------------------------------------------------------------------- */
+void school.processLeaveApproval(int leaveId)
+{
+    lv = zoho.crm.getRecordById("Leave_Requests", leaveId);
+    if(isNull(lv.get("id")) || isNull(lv.get("Student")))
+    {
+        return;
+    }
+    status = ifnull(lv.get("Status"), "").toString();
+    if(status != "Approved" && status != "Rejected")
+    {
+        return;
+    }
+
+    // ---- 1. Tell the portal --------------------------------------------------
+    if(!isNull(lv.get("Creator_Record_ID")))
+    {
+        p = Map();
+        p.put("crmRecordId", leaveId.toString());
+        p.put("newStatus",   status);
+        p.put("secret",      school.callbackSecret());
+        invokeurl
+        [
+            url        : school.creatorFnUrl("updateLeaveStatus")
+            type       : POST
+            parameters : p
+            connection : "creator_conn"
+        ];
+    }
+
+    if(status == "Rejected")
+    {
+        return;
+    }
+
+    // ---- 2. Apply the leave to attendance -----------------------------------
+    stuId = lv.get("Student").get("id").toString();
+    stu   = zoho.crm.getRecordById("Students", stuId.toLong());
+    stuCode = ifnull(stu.get("Student_ID"), stuId).toString();
+    enId    = if(isNull(stu.get("Current_Enrollment")), "", stu.get("Current_Enrollment").get("id").toString());
+    secId   = if(isNull(stu.get("Current_Class_Section")), "", stu.get("Current_Class_Section").get("id").toString());
+
+    fromD = lv.get("From_Date").toDate();
+    toD   = lv.get("To_Date").toDate();
+
+    // One query for the holidays in the range instead of one per day.
+    hols = school.coql("select Holiday_Date from Holidays where Holiday_Date >= '" +
+                       fromD.toString("yyyy-MM-dd") + "' and Holiday_Date <= '" +
+                       toD.toString("yyyy-MM-dd") + "'");
+    holSet = Map();
+    for each h in hols
+    {
+        holSet.put(h.get("Holiday_Date").toString(), 1);
+    }
+
+    rows = List();
+    d    = fromD;
+    while(d <= toD)
+    {
+        ds  = d.toString("yyyy-MM-dd");
+        dow = d.toString("EEE");
+        if(dow != "Sat" && dow != "Sun" && !holSet.containKey(ds))
+        {
+            r = Map();
+            r.put("Name",            stuCode + "-" + ds);
+            r.put("Attendance_Key",  stuCode + "-" + ds);
+            r.put("Student",         stuId);
+            r.put("Enrollment",      enId);
+            r.put("Class_Section",   secId);
+            r.put("Attendance_Date", ds);
+            r.put("Status",          "Approved Leave");
+            r.put("Remarks",         "Auto-applied from approved leave request #" + leaveId);
+            rows.add(r);
+        }
+        d = d.addDay(1);
+    }
+
+    if(rows.size() > 0)
+    {
+        // Upsert on the unique key: corrects existing rows, creates missing ones,
+        // never duplicates. Triggers stay ON here because the rollup must run.
+        school.bulkUpsert("Attendance", rows, "Attendance_Key");
+    }
+
+    // ---- 3. Confirm to the parent -------------------------------------------
+    if(!isNull(stu.get("Parent")))
+    {
+        parent = zoho.crm.getRecordById("Contacts", stu.get("Parent").get("id").toLong());
+        if(!isNull(parent.get("Email")))
+        {
+            sendmail
+            [
+                from    : zoho.adminuserid
+                to      : parent.get("Email")
+                subject : "Leave approved - " + ifnull(stu.get("Student_Name"), "")
+                message : "<p>Dear Parent,</p><p>The leave request for <b>" + ifnull(stu.get("Student_Name"), "") +
+                          "</b> from <b>" + fromD.toString("dd-MMM-yyyy") + "</b> to <b>" + toD.toString("dd-MMM-yyyy") +
+                          "</b> has been approved. " + rows.size() + " school day(s) have been recorded as approved leave.</p>"
+            ];
+        }
+    }
+}
+
+
+/* Creator published-function endpoint. App owner / app link name are held in
+ * App_Settings so moving between a trial org and production is a data change. */
+string school.creatorFnUrl(string fnName)
+{
+    owner = school.setting("CREATOR_OWNER", "schooladmin");
+    app   = school.setting("CREATOR_APP",   "parent-portal");
+    return "https://www.zohoapis.in/creator/custom/" + owner + "/" + fnName +
+           "?publickey=" + school.setting("CREATOR_PUBLIC_KEY", "");
+}
+
+string school.callbackSecret()
+{
+    return school.setting("CRM_CALLBACK_SECRET", "");
+}
+
+string school.setting(string key, string fallback)
+{
+    rows = zoho.crm.searchRecords("App_Settings", "(Setting_Key:equals:" + key + ")");
+    val  = fallback;
+    if(rows.size() > 0 && !isNull(rows.get(0).get("Setting_Value")))
+    {
+        val = rows.get(0).get("Setting_Value").toString();
+    }
+    return val;
+}

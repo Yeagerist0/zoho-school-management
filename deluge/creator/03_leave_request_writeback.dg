@@ -1,0 +1,203 @@
+/* ============================================================================
+ * CREATOR -> CRM WRITE-BACK : LEAVE REQUEST
+ *
+ * The only path where the portal writes into CRM. It is deliberately narrow:
+ * a parent can create a Leave_Request and nothing else. The connection used for
+ * writes ("crm_write_conn") belongs to a service user whose CRM profile can
+ * create Leave_Requests and read nothing sensitive - so even a flaw in this
+ * function cannot be turned into a way to edit marks or fees.
+ *
+ * Flow:
+ *   Creator form submit -> validate + authorise -> create CRM Leave_Request
+ *   -> store the CRM id back on the Creator row (so status changes can be
+ *      pulled back) -> notify the class teacher.
+ *
+ * When the school approves it in CRM, a CRM workflow flips the matching
+ * Attendance rows to "Approved Leave" and calls back into Creator to update the
+ * request status. Approval therefore changes the attendance percentage through
+ * exactly the same rollup used by normal marking - one code path, no drift.
+ * ========================================================================== */
+
+/* Creator form "Leave_Request" - On Successful Form Submit */
+void portal.submitLeaveRequest()
+{
+    // ---- authorise ----------------------------------------------------------
+    access = portal.assertStudentAccess(input.Student_Record_ID);
+    if(access.size() == 0)
+    {
+        input.Sync_Status  = "Rejected";
+        input.Sync_Message = "You are not authorised to raise a request for this student.";
+        return;
+    }
+
+    // ---- validate -----------------------------------------------------------
+    if(input.From_Date > input.To_Date)
+    {
+        input.Sync_Status  = "Rejected";
+        input.Sync_Message = "The 'from' date cannot be after the 'to' date.";
+        return;
+    }
+    if(input.From_Date < zoho.currentdate.subDay(7))
+    {
+        input.Sync_Status  = "Rejected";
+        input.Sync_Message = "Leave can only be applied for from the last 7 days onwards. Contact the office for older corrections.";
+        return;
+    }
+    if(portal.dayDiff(input.From_Date, input.To_Date) > 30)
+    {
+        input.Sync_Status  = "Rejected";
+        input.Sync_Message = "Leave longer than 30 days must be applied for at the school office.";
+        return;
+    }
+
+    // Overlap guard - one pending request per date range per student.
+    dupes = Leave_Request[Student_Record_ID == input.Student_Record_ID
+                          && Status == "Pending"
+                          && From_Date <= input.To_Date
+                          && To_Date   >= input.From_Date
+                          && ID        != input.ID];
+    if(dupes.count() > 0)
+    {
+        input.Sync_Status  = "Rejected";
+        input.Sync_Message = "A pending request already covers these dates.";
+        return;
+    }
+
+    // ---- push to CRM --------------------------------------------------------
+    payload = Map();
+    payload.put("Name",      access.get("name") + " - leave " + input.From_Date.toString("dd MMM"));
+    payload.put("Student",   input.Student_Record_ID);
+    payload.put("From_Date", input.From_Date.toString("yyyy-MM-dd"));
+    payload.put("To_Date",   input.To_Date.toString("yyyy-MM-dd"));
+    payload.put("Reason",    input.Reason);
+    payload.put("Status",    "Pending");
+    payload.put("Source",    "Parent Portal");
+    payload.put("Requested_By_Email", zoho.loginuser);
+
+    body = Map();
+    body.put("data", {payload});
+
+    resp = invokeurl
+    [
+        url        : "https://www.zohoapis.in/crm/v5/Leave_Requests"
+        type       : POST
+        parameters : body.toString()
+        headers    : {"Content-Type":"application/json"}
+        connection : "crm_write_conn"
+    ];
+
+    ok = false;
+    if(!isNull(resp.get("data")) && resp.get("data").toList().size() > 0)
+    {
+        first = resp.get("data").get(0);
+        if(first.get("code") == "SUCCESS")
+        {
+            input.CRM_Record_ID = first.get("details").get("id").toString();
+            input.Sync_Status   = "Synced";
+            input.Sync_Message  = "Submitted to the school.";
+            input.Status        = "Pending";
+            ok = true;
+        }
+    }
+
+    if(!ok)
+    {
+        // Never lose the parent's request because an API hiccuped. It stays in
+        // Creator marked Failed and a scheduled retry picks it up.
+        input.Sync_Status  = "Failed";
+        input.Sync_Message = "Could not reach the school system. We will retry automatically.";
+        info "Leave request sync failed: " + resp.toString();
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * portal.retryFailedSyncs   (Creator scheduled workflow - every 30 minutes)
+ * Bounded retry with a give-up count, so a permanently bad row cannot become an
+ * infinite API drain.
+ * -------------------------------------------------------------------------- */
+void portal.retryFailedSyncs()
+{
+    pending = Leave_Request[Sync_Status == "Failed" && Retry_Count < 5];
+    for each row in pending
+    {
+        payload = Map();
+        payload.put("Name",      "Leave request " + row.ID);
+        payload.put("Student",   row.Student_Record_ID);
+        payload.put("From_Date", row.From_Date.toString("yyyy-MM-dd"));
+        payload.put("To_Date",   row.To_Date.toString("yyyy-MM-dd"));
+        payload.put("Reason",    row.Reason);
+        payload.put("Status",    "Pending");
+        payload.put("Source",    "Parent Portal");
+        payload.put("Requested_By_Email", row.Added_User);
+
+        body = Map();
+        body.put("data", {payload});
+
+        resp = invokeurl
+        [
+            url        : "https://www.zohoapis.in/crm/v5/Leave_Requests"
+            type       : POST
+            parameters : body.toString()
+            headers    : {"Content-Type":"application/json"}
+            connection : "crm_write_conn"
+        ];
+
+        if(!isNull(resp.get("data")) && resp.get("data").get(0).get("code") == "SUCCESS")
+        {
+            row.CRM_Record_ID = resp.get("data").get(0).get("details").get("id").toString();
+            row.Sync_Status   = "Synced";
+            row.Sync_Message  = "Submitted to the school.";
+        }
+        else
+        {
+            row.Retry_Count = row.Retry_Count + 1;
+            if(row.Retry_Count >= 5)
+            {
+                row.Sync_Status  = "Abandoned";
+                row.Sync_Message = "Please contact the school office directly.";
+            }
+        }
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * portal.updateLeaveStatus
+ * Exposed as a Creator STANDALONE FUNCTION published for REST access, called by
+ * CRM when a Leave_Request is approved or rejected. Signature-checked with a
+ * shared secret so only the CRM org can call it.
+ * -------------------------------------------------------------------------- */
+string portal.updateLeaveStatus(string crmRecordId, string newStatus, string secret)
+{
+    if(secret != portal.sharedSecret())
+    {
+        return "unauthorised";
+    }
+    rows = Leave_Request[CRM_Record_ID == crmRecordId];
+    if(rows.count() == 0)
+    {
+        return "not_found";
+    }
+    for each r in rows
+    {
+        r.Status       = newStatus;
+        r.Sync_Message = "Marked " + newStatus + " by the school on " + zoho.currentdate.toString("dd-MMM-yyyy");
+    }
+    return "ok";
+}
+
+
+int portal.dayDiff(date fromDate, date toDate)
+{
+    ms = toDate.toLong() - fromDate.toLong();
+    return (ms / 86400000).round(0).toLong();
+}
+
+/* Held in a single-row Creator form so it is never hardcoded in a script that
+ * could be exported or shared. */
+string portal.sharedSecret()
+{
+    s = App_Config[Config_Key == "CRM_CALLBACK_SECRET"];
+    return if(s.count() > 0, s.Config_Value, "");
+}

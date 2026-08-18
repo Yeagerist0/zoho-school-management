@@ -1,0 +1,198 @@
+/* ============================================================================
+ * ZOHO CREATOR - PARENT PORTAL : IDENTITY & AUTHORISATION
+ *
+ * HOW A PARENT IS CONNECTED TO A STUDENT
+ *   The link is the parent's EMAIL, and it is established at admission time, not
+ *   by the parent. When a lead converts, CRM creates/reuses a Contact with that
+ *   email and points the Student's Parent lookup at it. The Creator app is
+ *   published as a CUSTOMER PORTAL: a parent signs in with that same email, so
+ *   Creator's authenticated identity and the CRM Contact key are the same value.
+ *   No password, no student code, nothing the parent could type wrongly or guess.
+ *
+ * THE SECURITY RULE THAT MATTERS
+ *   Every single data function in this app starts by calling resolveParent() and
+ *   then checks the requested student against that parent's OWN student list.
+ *   A student id is never trusted because it arrived in a URL parameter or a
+ *   form field. This is the difference between a portal and an IDOR: without the
+ *   assertStudentAccess() call, changing ?stu=1234 in the address bar would show
+ *   somebody else's child's marks.
+ *
+ * WHY A THIN LOCAL FORM
+ *   Parent_Portal_User caches the CRM Contact id and the resolved student ids so
+ *   the common case is a local lookup instead of two CRM API calls on every page
+ *   render. It stores identity only - no marks, no fees, no attendance. Cache
+ *   entries carry Last_Synced and are refreshed when older than the TTL, so a
+ *   newly admitted sibling appears without any manual step.
+ * ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+ * portal.resolveParent
+ * Returns : Map { ok, email, contactId, students : list of Map{id, name, code,
+ *                 section, sectionName, enrollmentId}, message }
+ * -------------------------------------------------------------------------- */
+map portal.resolveParent()
+{
+    out = Map();
+    out.put("ok", false);
+    out.put("students", List());
+
+    email = zoho.loginuser.trim().toLowerCase();
+    if(email == "")
+    {
+        out.put("message", "Not signed in.");
+        return out;
+    }
+    out.put("email", email);
+
+    // ---- 1. Local cache -----------------------------------------------------
+    cache   = Parent_Portal_User[Email == email];
+    ttlMins = 30;
+    fresh   = false;
+    if(cache.count() > 0 && cache.CRM_Contact_ID != null && cache.CRM_Contact_ID != "")
+    {
+        if(cache.Last_Synced != null && cache.Last_Synced.addMinutes(ttlMins) > zoho.currenttime)
+        {
+            fresh = true;
+        }
+    }
+
+    if(fresh)
+    {
+        out.put("ok", true);
+        out.put("contactId", cache.CRM_Contact_ID);
+        out.put("students", cache.Students_JSON.toJSONList());
+        return out;
+    }
+
+    // ---- 2. Resolve against CRM --------------------------------------------
+    contacts = zoho.crm.searchRecords("Contacts", "(Email:equals:" + email + ")", 1, 1, Map(), "crm_conn");
+    if(contacts.size() == 0)
+    {
+        out.put("message", "This email is not registered as a parent. Please contact the school office.");
+        portal.log(email, "AUTH_FAIL_NO_CONTACT", "");
+        return out;
+    }
+    contactId = contacts.get(0).get("id").toString();
+    out.put("contactId", contactId);
+
+    // Both parent slots are honoured, so either guardian can sign in.
+    crit  = "((Parent:equals:" + contactId + ")or(Secondary_Parent:equals:" + contactId + "))";
+    stus  = zoho.crm.searchRecords("Students", crit, 1, 50, Map(), "crm_conn");
+
+    students = List();
+    for each s in stus
+    {
+        if(ifnull(s.get("Status"), "").toString() == "Suspended")
+        {
+            continue;
+        }
+        m = Map();
+        m.put("id",   s.get("id").toString());
+        m.put("name", ifnull(s.get("Student_Name"), "").toString());
+        m.put("code", ifnull(s.get("Student_ID"), "").toString());
+        m.put("status", ifnull(s.get("Status"), "").toString());
+        m.put("section", "");
+        m.put("sectionName", "");
+        m.put("enrollmentId", "");
+        if(!isNull(s.get("Current_Class_Section")))
+        {
+            m.put("section", s.get("Current_Class_Section").get("id").toString());
+            m.put("sectionName", ifnull(s.get("Current_Class_Section").get("name"), "").toString());
+        }
+        if(!isNull(s.get("Current_Enrollment")))
+        {
+            m.put("enrollmentId", s.get("Current_Enrollment").get("id").toString());
+        }
+        students.add(m);
+    }
+
+    if(students.size() == 0)
+    {
+        out.put("message", "No active student is linked to this email.");
+        portal.log(email, "AUTH_FAIL_NO_STUDENT", "");
+        return out;
+    }
+
+    // ---- 3. Refresh the cache ----------------------------------------------
+    if(cache.count() > 0)
+    {
+        cache.CRM_Contact_ID = contactId;
+        cache.Students_JSON  = students.toString();
+        cache.Last_Synced    = zoho.currenttime;
+    }
+    else
+    {
+        insert into Parent_Portal_User
+        [
+            Email          = email
+            CRM_Contact_ID = contactId
+            Students_JSON  = students.toString()
+            Last_Synced    = zoho.currenttime
+            Added_User     = zoho.loginuser
+        ];
+    }
+
+    out.put("ok", true);
+    out.put("students", students);
+    portal.log(email, "AUTH_OK", students.size() + " student(s)");
+    return out;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * portal.assertStudentAccess
+ * THE authorisation gate. Call it at the top of every data function.
+ * Returns the student map if this parent owns the record, an empty Map if not.
+ * -------------------------------------------------------------------------- */
+map portal.assertStudentAccess(string studentId)
+{
+    allowed = Map();
+    ctx = portal.resolveParent();
+    if(!ctx.get("ok"))
+    {
+        return allowed;
+    }
+    for each s in ctx.get("students")
+    {
+        if(s.get("id").toString() == studentId.trim())
+        {
+            return s;
+        }
+    }
+    // A mismatch is either a bug or a probe. Log it either way.
+    portal.log(ctx.get("email"), "ACCESS_DENIED", "requested student " + studentId);
+    return allowed;
+}
+
+
+/* Append-only access log. Cheap, and the first thing anyone asks for when a
+ * parent claims they saw the wrong child's data. */
+void portal.log(string email, string event, string detail)
+{
+    insert into Portal_Access_Log
+    [
+        Email      = email
+        Event      = event
+        Detail     = detail
+        Logged_At  = zoho.currenttime
+        Added_User = zoho.loginuser
+    ];
+}
+
+
+/* ----------------------------------------------------------------------------
+ * portal.invalidateCache
+ * Called from CRM (see 08_creator_sync.dg on the CRM side) whenever a student's
+ * parent link, section or status changes, so the portal never serves a stale
+ * mapping. This is the ONLY thing CRM ever pushes into Creator - the actual
+ * data is always pulled live.
+ * -------------------------------------------------------------------------- */
+void portal.invalidateCache(string email)
+{
+    rows = Parent_Portal_User[Email == email.trim().toLowerCase()];
+    for each r in rows
+    {
+        r.Last_Synced = null;
+    }
+}

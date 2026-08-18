@@ -1,0 +1,337 @@
+/* ============================================================================
+ * FEES & PAYMENTS
+ *
+ * The rule that keeps the ledger honest: a Payment is never edited by hand and
+ * never carries its own idea of what it settled. The allocator decides, writes
+ * the trail onto the payment, and re-derives the parent totals. That means
+ * "total / collected / outstanding / status" can never disagree with the
+ * payment history, because they are all computed from it.
+ * ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.allocatePayment
+ * Type     : Workflow on Payments - Create, and on Edit when Status changes
+ *            (a bounced cheque must give the money back).
+ *
+ * Allocates the amount across Fee_Installments oldest-due-first (FIFO), which
+ * is how schools actually clear dues, then recomputes the Student_Fee summary.
+ * -------------------------------------------------------------------------- */
+void school.allocatePayment(int paymentId)
+{
+    pay = zoho.crm.getRecordById("Payments", paymentId);
+    if(isNull(pay.get("id")) || isNull(pay.get("Student_Fee")))
+    {
+        return;
+    }
+
+    feeId  = pay.get("Student_Fee").get("id").toString();
+    status = ifnull(pay.get("Status"), "Success").toString();
+
+    if(status != "Success")
+    {
+        // Bounced or refunded - drop its allocation and re-derive from scratch.
+        u = Map();
+        u.put("Allocation_Detail", "Reversed on " + zoho.currentdate.toString("yyyy-MM-dd") + " (" + status + ")");
+        zoho.crm.updateRecord("Payments", paymentId, u);
+        school.recomputeFeeSummary(feeId);
+        return;
+    }
+
+    school.recomputeFeeSummary(feeId);
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.recomputeFeeSummary
+ * The single place where installment balances and the fee summary are derived.
+ *
+ * Re-deriving the whole ladder (rather than incrementally nudging balances) is
+ * the right trade here: a student has at most ~12 installments and a few dozen
+ * payments, so the cost is trivial, while incremental arithmetic across
+ * edits/deletes/bounces is exactly where fee modules drift out of balance.
+ * -------------------------------------------------------------------------- */
+void school.recomputeFeeSummary(string feeId)
+{
+    fee = zoho.crm.getRecordById("Student_Fees", feeId.toLong());
+    if(isNull(fee.get("id")))
+    {
+        return;
+    }
+
+    // ---- successful payments, oldest first ---------------------------------
+    payments = school.coql("select id, Amount, Payment_Date from Payments " +
+                           "where Student_Fee = " + feeId + " and Status = 'Success' " +
+                           "order by Payment_Date asc limit 200");
+    totalPaid = 0.0;
+    for each p in payments
+    {
+        totalPaid = totalPaid + ifnull(p.get("Amount"), 0).toDecimal();
+    }
+
+    // ---- installments, oldest due first ------------------------------------
+    insts = school.coql("select id, Installment_No, Due_Date, Amount_Due, Amount_Paid, Status " +
+                        "from Fee_Installments where Student_Fee = " + feeId +
+                        " order by Due_Date asc limit 100");
+
+    pool         = totalPaid;
+    instUpdates  = List();
+    nextDueDate  = null;
+    nextDueAmt   = 0.0;
+    overdueFound = false;
+    today        = zoho.currentdate;
+
+    for each ins in insts
+    {
+        due     = ifnull(ins.get("Amount_Due"), 0).toDecimal();
+        settled = 0.0;
+        if(pool > 0)
+        {
+            settled = if(pool >= due, due, pool);
+            pool    = pool - settled;
+        }
+
+        st = "Pending";
+        if(settled >= due && due > 0)
+        {
+            st = "Paid";
+        }
+        else if(settled > 0)
+        {
+            st = "Partially Paid";
+        }
+
+        dueDate = ins.get("Due_Date").toDate();
+        if(st != "Paid" && dueDate < today)
+        {
+            st = "Overdue";
+            overdueFound = true;
+        }
+        if(st != "Paid" && isNull(nextDueDate))
+        {
+            nextDueDate = dueDate;
+            nextDueAmt  = due - settled;
+        }
+
+        u = Map();
+        u.put("id", ins.get("id"));
+        u.put("Amount_Paid", settled);
+        u.put("Status", st);
+        instUpdates.add(u);
+    }
+
+    if(instUpdates.size() > 0)
+    {
+        school.bulkUpdate("Fee_Installments", instUpdates);
+    }
+
+    // ---- fee summary --------------------------------------------------------
+    netPayable = ifnull(fee.get("Total_Fee"), 0).toDecimal() - ifnull(fee.get("Concession_Amount"), 0).toDecimal();
+    outstanding = netPayable - totalPaid;
+
+    feeStatus = "Not Started";
+    if(totalPaid <= 0)
+    {
+        feeStatus = if(overdueFound, "Overdue", "Not Started");
+    }
+    else if(outstanding <= 0)
+    {
+        feeStatus = "Paid";
+    }
+    else
+    {
+        feeStatus = if(overdueFound, "Overdue", "Partially Paid");
+    }
+
+    fu = Map();
+    fu.put("Amount_Paid",     totalPaid);
+    fu.put("Status",          feeStatus);
+    fu.put("Next_Due_Date",   nextDueDate);
+    fu.put("Next_Due_Amount", if(nextDueAmt < 0, 0, nextDueAmt));
+    zoho.crm.updateRecord("Student_Fees", feeId.toLong(), fu);
+
+    // Advance payment beyond the ladder is legitimate (a parent paying the full
+    // year up front) - record it rather than losing it.
+    if(pool > 0)
+    {
+        note = Map();
+        note.put("Parent_Id",    feeId);
+        note.put("se_module",    "Student_Fees");
+        note.put("Note_Title",   "Advance / unallocated balance");
+        note.put("Note_Content", "Rs. " + pool + " received beyond the current installment ladder.");
+        zoho.crm.createRecord("Notes", note);
+    }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.generateReceipt
+ * Type     : Workflow on Payments - Create. Mails the parent a receipt and
+ *            stamps the running balance so the mail is self-contained.
+ * -------------------------------------------------------------------------- */
+void school.generateReceipt(int paymentId)
+{
+    pay = zoho.crm.getRecordById("Payments", paymentId);
+    if(isNull(pay.get("id")) || isNull(pay.get("Student")))
+    {
+        return;
+    }
+
+    stu = zoho.crm.getRecordById("Students", pay.get("Student").get("id").toLong());
+    if(isNull(stu.get("Parent")))
+    {
+        return;
+    }
+    parent = zoho.crm.getRecordById("Contacts", stu.get("Parent").get("id").toLong());
+    email  = ifnull(parent.get("Email"), "").toString();
+    if(email == "")
+    {
+        return;
+    }
+
+    fee = Map();
+    if(!isNull(pay.get("Student_Fee")))
+    {
+        fee = zoho.crm.getRecordById("Student_Fees", pay.get("Student_Fee").get("id").toLong());
+    }
+    outstanding = ifnull(fee.get("Total_Fee"), 0).toDecimal()
+                - ifnull(fee.get("Concession_Amount"), 0).toDecimal()
+                - ifnull(fee.get("Amount_Paid"), 0).toDecimal();
+
+    body = "<p>Dear Parent,</p>" +
+           "<p>We have received your payment.</p>" +
+           "<table border='1' cellpadding='6' cellspacing='0'>" +
+           "<tr><td>Receipt No</td><td><b>" + ifnull(pay.get("Receipt_No"), "") + "</b></td></tr>" +
+           "<tr><td>Student</td><td>" + ifnull(stu.get("Student_Name"), "") + " (" + ifnull(stu.get("Student_ID"), "") + ")</td></tr>" +
+           "<tr><td>Date</td><td>" + pay.get("Payment_Date") + "</td></tr>" +
+           "<tr><td>Amount Paid</td><td>Rs. " + ifnull(pay.get("Amount"), 0) + "</td></tr>" +
+           "<tr><td>Mode</td><td>" + ifnull(pay.get("Mode"), "") + "</td></tr>" +
+           "<tr><td>Balance Outstanding</td><td>Rs. " + if(outstanding < 0, 0, outstanding) + "</td></tr>" +
+           "</table><p>This is a system-generated receipt.</p>";
+
+    sendmail
+    [
+        from    : zoho.adminuserid
+        to      : email
+        subject : "Fee Receipt " + ifnull(pay.get("Receipt_No"), "") + " - " + ifnull(stu.get("Student_Name"), "")
+        message : body
+    ];
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.feeDueScheduler   (Scheduled - daily 08:00)
+ *
+ * Three jobs in one pass over the open fee rows:
+ *   - refresh Overdue status,
+ *   - send a reminder 7 days before a due date and on the due date,
+ *   - escalate anything more than 30 days overdue to the accounts owner.
+ *
+ * Only rows that are not fully paid are queried, and reminders are de-duplicated
+ * via Last_Reminder_Sent so a parent never gets the same nag twice in a day.
+ * -------------------------------------------------------------------------- */
+void school.feeDueScheduler()
+{
+    today = zoho.currentdate;
+    ay    = school.currentAcademicYear();
+    if(isNull(ay.get("id")))
+    {
+        return;
+    }
+
+    page = 1;
+    more = true;
+    remindersSent = 0;
+
+    while(more && page <= 100)
+    {
+        rows = school.coqlPaged(
+            "select id, Student.id, Student.Student_Name, Student.Parent.Email, " +
+            "Next_Due_Date, Next_Due_Amount, Status, Last_Reminder_Sent " +
+            "from Student_Fees where Academic_Year = " + ay.get("id") +
+            " and Status != 'Paid'", page);
+
+        updates = List();
+
+        for each f in rows
+        {
+            if(isNull(f.get("Next_Due_Date")))
+            {
+                continue;
+            }
+            due      = f.get("Next_Due_Date").toDate();
+            daysToGo = school.dayDiff(today, due);
+            lastSent = f.get("Last_Reminder_Sent");
+
+            // Already reminded today? skip.
+            if(!isNull(lastSent) && lastSent.toDate() == today)
+            {
+                continue;
+            }
+
+            kind = "";
+            if(daysToGo == 7)                    { kind = "upcoming"; }
+            else if(daysToGo == 0)               { kind = "due_today"; }
+            else if(daysToGo < 0 && daysToGo >= -30 && (-daysToGo % 7) == 0) { kind = "overdue"; }
+            else if(daysToGo < -30)              { kind = "escalate"; }
+
+            if(kind == "")
+            {
+                continue;
+            }
+
+            email = "";
+            if(!isNull(f.get("Student")) && !isNull(f.get("Student").get("Parent")))
+            {
+                email = ifnull(f.get("Student").get("Parent").get("Email"), "").toString();
+            }
+            name = "";
+            if(!isNull(f.get("Student")))
+            {
+                name = ifnull(f.get("Student").get("Student_Name"), "").toString();
+            }
+
+            if(email != "" && kind != "escalate")
+            {
+                subj = "Fee reminder - " + name;
+                if(kind == "overdue")
+                {
+                    subj = "Fee OVERDUE - " + name;
+                }
+                sendmail
+                [
+                    from    : zoho.adminuserid
+                    to      : email
+                    subject : subj
+                    message : "<p>Dear Parent,</p><p>An installment of <b>Rs. " + ifnull(f.get("Next_Due_Amount"), 0) +
+                              "</b> for <b>" + name + "</b> is due on <b>" + due.toString("dd-MMM-yyyy") +
+                              "</b>.</p><p>You can view the full fee status on the Parent Portal.</p>"
+                ];
+                remindersSent = remindersSent + 1;
+            }
+
+            u = Map();
+            u.put("id", f.get("id"));
+            u.put("Last_Reminder_Sent", today);
+            if(daysToGo < 0)
+            {
+                u.put("Status", "Overdue");
+            }
+            if(kind == "escalate")
+            {
+                u.put("Escalated", true);
+            }
+            updates.add(u);
+        }
+
+        if(updates.size() > 0)
+        {
+            school.bulkUpdate("Student_Fees", updates);
+        }
+
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    info "Fee scheduler: " + remindersSent + " reminders sent.";
+}
