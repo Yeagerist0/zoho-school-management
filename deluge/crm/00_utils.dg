@@ -1,0 +1,219 @@
+/* ============================================================================
+ * SHARED UTILITIES
+ *
+ * Every other function in this project goes through these four helpers. That is
+ * deliberate: query shape, batching, paging and error handling are solved once
+ * here instead of being re-improvised in nine places.
+ *
+ * Connection : name "crmconn", scopes
+ *              ZohoCRM.modules.ALL, ZohoCRM.coql.READ, ZohoCRM.settings.ALL
+ * Domain     : swap zohoapis.in for zohoapis.com / .eu as per the org's DC.
+ * ========================================================================== */
+
+/* ----------------------------------------------------------------------------
+ * school.coql - one COQL page (max 200 rows).
+ *
+ * WHY COQL AND NOT searchRecords / getRelatedRecords:
+ *   COQL selects only the columns needed and can filter on related-module
+ *   fields in a single call. Pulling 40 full student records to read two fields
+ *   each is what makes Zoho projects slow; this keeps payloads small and stays
+ *   well inside the daily API credit budget.
+ * -------------------------------------------------------------------------- */
+list school.coql(string query)
+{
+    return school.coqlPaged(query, 1);
+}
+
+list school.coqlPaged(string query, int page)
+{
+    q = query;
+    if(!q.containsIgnoreCase(" limit "))
+    {
+        offset = (page - 1) * 200;
+        q = q + " limit " + offset + ", 200";
+    }
+
+    payload = Map();
+    payload.put("select_query", q);
+
+    resp = invokeurl
+    [
+        url        : "https://www.zohoapis.in/crm/v5/coql"
+        type       : POST
+        parameters : payload.toString()
+        headers    : {"Content-Type":"application/json"}
+        connection : "crmconn"
+    ];
+
+    out = List();
+    if(!isNull(resp.get("data")))
+    {
+        out = resp.get("data").toList();
+    }
+    else if(!isNull(resp.get("code")) && resp.get("code") != "NO_CONTENT")
+    {
+        info "COQL error: " + resp.toString() + " | query: " + q;
+    }
+    return out;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.bulkInsert - inserts a list of record Maps in batches of 100
+ * (the v5 API maximum). Returns the count actually created.
+ * -------------------------------------------------------------------------- */
+int school.bulkInsert(string moduleName, list records)
+{
+    created = 0;
+    batch   = List();
+
+    for each rec in records
+    {
+        batch.add(rec);
+        if(batch.size() == 100)
+        {
+            created = created + school.pushBatch(moduleName, batch, "POST");
+            batch = List();
+        }
+    }
+    if(batch.size() > 0)
+    {
+        created = created + school.pushBatch(moduleName, batch, "POST");
+    }
+    return created;
+}
+
+
+/* school.bulkUpdate - same batching, each Map must carry "id". */
+int school.bulkUpdate(string moduleName, list records)
+{
+    updated = 0;
+    batch   = List();
+
+    for each rec in records
+    {
+        batch.add(rec);
+        if(batch.size() == 100)
+        {
+            updated = updated + school.pushBatch(moduleName, batch, "PUT");
+            batch = List();
+        }
+    }
+    if(batch.size() > 0)
+    {
+        updated = updated + school.pushBatch(moduleName, batch, "PUT");
+    }
+    return updated;
+}
+
+
+int school.pushBatch(string moduleName, list batch, string method)
+{
+    body = Map();
+    body.put("data", batch);
+    // trigger:[] suppresses workflows for bulk paths where the caller is
+    // already maintaining the rollups itself - prevents N workflow storms.
+    body.put("trigger", List());
+
+    resp = invokeurl
+    [
+        url        : "https://www.zohoapis.in/crm/v5/" + moduleName
+        type       : method
+        parameters : body.toString()
+        headers    : {"Content-Type":"application/json"}
+        connection : "crmconn"
+    ];
+
+    ok = 0;
+    if(!isNull(resp.get("data")))
+    {
+        for each r in resp.get("data").toList()
+        {
+            if(r.get("code") == "SUCCESS")
+            {
+                ok = ok + 1;
+            }
+            else if(r.get("code") != "DUPLICATE_DATA")
+            {
+                // DUPLICATE_DATA is expected and harmless - it is the unique-key
+                // guard doing its job. Anything else is worth logging.
+                info moduleName + " batch item failed: " + r.toString();
+            }
+        }
+    }
+    else
+    {
+        info moduleName + " batch call failed: " + resp.toString();
+    }
+    return ok;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.computeGrade - single source of truth for the grading band.
+ * Changing the scheme means editing one function, not ten workflows.
+ * -------------------------------------------------------------------------- */
+string school.computeGrade(decimal percent)
+{
+    grade = "E";
+    if(percent >= 90)      { grade = "A+"; }
+    else if(percent >= 80) { grade = "A";  }
+    else if(percent >= 70) { grade = "B+"; }
+    else if(percent >= 60) { grade = "B";  }
+    else if(percent >= 50) { grade = "C";  }
+    else if(percent >= 40) { grade = "D";  }
+    return grade;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.dayDiff - whole days from 'fromDate' to 'toDate' (negative = in the past).
+ *
+ * Deliberately NOT days360(): that uses the 30-day-month accounting convention
+ * and drifts by up to 5 days across a month boundary, which would fire fee
+ * reminders on the wrong day. Epoch arithmetic is exact.
+ * -------------------------------------------------------------------------- */
+int school.dayDiff(date fromDate, date toDate)
+{
+    ms = toDate.toLong() - fromDate.toLong();
+    return (ms / 86400000).round(0).toLong();
+}
+
+
+/* Current academic year, resolved once per call site. */
+map school.currentAcademicYear()
+{
+    rows = zoho.crm.searchRecords("Academic_Years", "(Is_Current:equals:true)");
+    out  = Map();
+    if(rows.size() > 0)
+    {
+        out = rows.get(0);
+    }
+    return out;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.enforceSingleCurrentYear
+ * Workflow on Academic_Years (create/edit, Is_Current = true).
+ * Keeps "current year" a singleton so nothing downstream has to guess.
+ * -------------------------------------------------------------------------- */
+void school.enforceSingleCurrentYear(string yearId)
+{
+    others = zoho.crm.searchRecords("Academic_Years", "(Is_Current:equals:true)");
+    updates = List();
+    for each o in others
+    {
+        if(o.get("id").toString() != yearId)
+        {
+            u = Map();
+            u.put("id", o.get("id"));
+            u.put("Is_Current", false);
+            updates.add(u);
+        }
+    }
+    if(updates.size() > 0)
+    {
+        school.bulkUpdate("Academic_Years", updates);
+    }
+}

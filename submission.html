@@ -1,0 +1,780 @@
+<title>Zoho School Management System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* ── tokens ─────────────────────────────────────────────────────────────
+   Neutrals carry a faint violet bias, taken from the accent — the purple
+   stamp ink every school office in India runs on.                        */
+:root {
+  --ground:      #F6F4F8;
+  --surface:     #FFFFFF;
+  --surface-alt: #EFEBF3;
+  --ink:         #221D2B;
+  --ink-soft:    #4E4658;
+  --ink-mute:    #756C82;
+  --line:        #D9D2E2;
+  --line-soft:   #E7E2ED;
+  --accent:      #5B3A8C;
+  --accent-soft: #EDE5F6;
+  --flag:        #A3392B;
+  --flag-soft:   #F7E7E3;
+  --ok:          #2F6B4F;
+
+  --shadow: 0 1px 2px rgba(34,29,43,.05), 0 8px 24px -16px rgba(34,29,43,.28);
+
+  --measure: 68ch;
+  --rail: 232px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground:      #16131B;
+    --surface:     #1E1A25;
+    --surface-alt: #262032;
+    --ink:         #EFEBF4;
+    --ink-soft:    #C3BBCE;
+    --ink-mute:    #948BA1;
+    --line:        #362E44;
+    --line-soft:   #2A2434;
+    --accent:      #B79BE0;
+    --accent-soft: #2E2440;
+    --flag:        #E29184;
+    --flag-soft:   #3A2521;
+    --ok:          #79C39B;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ground:      #16131B;
+  --surface:     #1E1A25;
+  --surface-alt: #262032;
+  --ink:         #EFEBF4;
+  --ink-soft:    #C3BBCE;
+  --ink-mute:    #948BA1;
+  --line:        #362E44;
+  --line-soft:   #2A2434;
+  --accent:      #B79BE0;
+  --accent-soft: #2E2440;
+  --flag:        #E29184;
+  --flag-soft:   #3A2521;
+  --ok:          #79C39B;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── shell: a register with a ruled margin column ───────────────────── */
+.shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 28px 96px;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  column-gap: 56px;
+  align-items: start;
+}
+
+/* ── masthead ────────────────────────────────────────────────────────── */
+.masthead {
+  grid-column: 1 / -1;
+  border-bottom: 2px solid var(--ink);
+  padding: 64px 0 22px;
+  margin-bottom: 48px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+}
+.masthead h1 {
+  font-family: "Zilla Slab", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.1rem, 4.4vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  margin: 0;
+}
+.masthead h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .705rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 14px;
+}
+.byline {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .76rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+  text-align: right;
+  white-space: nowrap;
+}
+.byline b { color: var(--ink); font-weight: 500; }
+
+/* ── left rail ───────────────────────────────────────────────────────── */
+.rail {
+  position: sticky;
+  top: 32px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .74rem;
+  line-height: 1.5;
+  border-left: 1px solid var(--line);
+  padding-left: 18px;
+}
+.rail ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.rail a {
+  color: var(--ink-mute);
+  text-decoration: none;
+  display: grid;
+  grid-template-columns: 2.2em 1fr;
+  gap: 4px;
+  transition: color .15s;
+}
+.rail a:hover, .rail a:focus-visible { color: var(--accent); }
+.rail .num { color: var(--accent); }
+.rail .lede {
+  margin: 0 0 26px;
+  color: var(--ink-mute);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* ── body column ─────────────────────────────────────────────────────── */
+main { min-width: 0; display: grid; gap: 64px; }
+section { min-width: 0; scroll-margin-top: 24px; }
+
+h2 {
+  font-family: "Zilla Slab", Georgia, serif;
+  font-size: 1.86rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  line-height: 1.16;
+  margin: 0 0 6px;
+  text-wrap: balance;
+  display: flex;
+  align-items: baseline;
+  gap: .6em;
+}
+h2 .idx {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  padding: 2px 7px;
+  flex: none;
+  transform: translateY(-.28em);
+}
+h3 {
+  font-family: "Zilla Slab", Georgia, serif;
+  font-size: 1.16rem;
+  font-weight: 600;
+  margin: 36px 0 8px;
+  letter-spacing: -.005em;
+}
+h4 {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+  margin: 30px 0 10px;
+}
+.deck {
+  font-size: 1.06rem;
+  color: var(--ink-soft);
+  max-width: var(--measure);
+  margin: 0 0 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-soft);
+}
+p { max-width: var(--measure); margin: 0 0 1.05em; }
+ul, ol.body { max-width: var(--measure); padding-left: 1.15em; margin: 0 0 1.15em; }
+li { margin-bottom: .5em; }
+strong { font-weight: 600; }
+em { font-style: italic; }
+code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .855em;
+  background: var(--surface-alt);
+  border-radius: 3px;
+  padding: .1em .34em;
+}
+a { color: var(--accent); }
+
+/* the one pull-quote device: a claim the rest of a section defends */
+.claim {
+  font-family: "Zilla Slab", Georgia, serif;
+  font-size: 1.3rem;
+  line-height: 1.42;
+  font-weight: 500;
+  max-width: 46ch;
+  margin: 0 0 30px;
+  padding: 0 0 0 20px;
+  border-left: 3px solid var(--accent);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* ── tables ──────────────────────────────────────────────────────────── */
+.scroller { overflow-x: auto; margin: 0 0 26px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: .875rem; }
+th, td {
+  text-align: left;
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+thead th {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: "IBM Plex Mono", ui-monospace, monospace; }
+td.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: .8rem; }
+.weight { font-variant-numeric: tabular-nums; font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+.chip {
+  display: inline-block;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .68rem;
+  letter-spacing: .06em;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.chip.bad  { background: var(--flag-soft); color: var(--flag); }
+.chip.good { background: var(--accent-soft); color: var(--accent); }
+
+/* ── diagram ─────────────────────────────────────────────────────────── */
+figure { margin: 0 0 30px; }
+.diagram {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 20px 18px 12px;
+}
+.diagram svg { display: block; min-width: 880px; width: 100%; height: auto; }
+figcaption {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .7rem;
+  color: var(--ink-mute);
+  margin-top: 10px;
+  line-height: 1.65;
+  max-width: var(--measure);
+}
+.n-box  { fill: var(--surface-alt); stroke: var(--line); }
+.n-key  { fill: var(--accent-soft); stroke: var(--accent); }
+.n-out  { fill: none; stroke: var(--accent); stroke-dasharray: 4 3; }
+.n-txt  { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 11.5px; fill: var(--ink); }
+.n-key-txt { fill: var(--accent); }
+.edge   { stroke: var(--line); stroke-width: 1.4; fill: none; }
+.edge-k { stroke: var(--accent); stroke-width: 1.6; fill: none; }
+.e-lbl  { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 9.5px; fill: var(--ink-mute); letter-spacing: .04em; }
+
+/* ── access card ─────────────────────────────────────────────────────── */
+.access {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: 4px 0;
+  margin-bottom: 8px;
+}
+.access table { font-size: .875rem; }
+.access td:first-child { width: 34%; font-weight: 600; }
+.todo {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .78rem;
+  color: var(--ink-mute);
+}
+
+/* ── files ───────────────────────────────────────────────────────────── */
+.files {
+  columns: 2;
+  column-gap: 44px;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .78rem;
+  line-height: 1.85;
+  max-width: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.files li { break-inside: avoid; margin: 0 0 2px; color: var(--ink-mute); }
+.files li b { color: var(--ink); font-weight: 500; display: inline-block; min-width: 0; }
+.files .grp {
+  color: var(--accent);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: .68rem;
+  margin: 16px 0 4px;
+}
+.files .grp:first-child { margin-top: 0; }
+
+footer {
+  grid-column: 1 / -1;
+  margin-top: 72px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: .72rem;
+  color: var(--ink-mute);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: minmax(0,1fr); }
+  .rail { display: none; }
+  .byline { text-align: left; }
+  .files { columns: 1; }
+  body { font-size: 16.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div class="shell">
+
+  <header class="masthead">
+    <div>
+      <p class="eyebrow">Practical assignment &middot; Zoho Developer &middot; IT GUY</p>
+      <h1>School Management System<br><em>on Zoho CRM &amp; Creator</em></h1>
+    </div>
+    <p class="byline">
+      <b>Hitarth Jangid</b><br>
+      jhitarth777@gmail.com<br>
+      Submitted to sagar@it-guy.tech
+    </p>
+  </header>
+
+  <nav class="rail" aria-label="Contents">
+    <p class="lede">Contents</p>
+    <ol>
+      <li><a href="#access"><span class="num">00</span><span>Access</span></a></li>
+      <li><a href="#data"><span class="num">01</span><span>Data structure &amp; relationships</span></a></li>
+      <li><a href="#integration"><span class="num">02</span><span>CRM ↔ Creator integration</span></a></li>
+      <li><a href="#feature"><span class="num">03</span><span>Additional feature</span></a></li>
+      <li><a href="#files"><span class="num">04</span><span>What's in the build</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════════════════════════════════ 00 ACCESS -->
+    <section id="access">
+      <h2><span class="idx">00</span>Access</h2>
+      <div class="access">
+        <table>
+          <tbody>
+            <tr><td>Zoho CRM implementation</td><td class="todo">Setup → Users → sagar@it-guy.tech added as Administrator</td></tr>
+            <tr><td>Zoho Creator Parent Portal</td><td class="todo">Shared as Developer &middot; demo parent login below</td></tr>
+            <tr><td>Admission webform</td><td class="todo">Published URL</td></tr>
+            <tr><td>Demo parent login</td><td class="todo">Customer-portal email + temporary password</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ 01 DATA -->
+    <section id="data">
+      <h2><span class="idx">01</span>Data structure and relationships</h2>
+      <p class="deck">Twenty-two modules. Three decisions shape all of them.</p>
+
+      <p><strong>The academic year is an entity, not a text field.</strong> Every year-scoped
+      record points at an <code>Academic_Years</code> record, which is what makes history
+      queryable instead of overwritten.</p>
+
+      <p><strong><code>Class_Sections</code> is the class <em>instance</em> for one year</strong> —
+      Grade&nbsp;5-A in 2026-27 — and it is what students actually attach to.
+      <code>Classes</code> stays a year-independent grade master, so adding next year's
+      sections never touches this year's.</p>
+
+      <p><strong><code>Enrollments</code> is the history spine.</strong> One row per student per
+      academic year, holding that year's section, roll number, attendance counters and final
+      result. Promotion never edits an old row: it closes the current Enrollment and opens a
+      new one. Last year's class, attendance percentage and results stay intact and
+      reportable for as long as the school keeps the org.</p>
+
+      <figure>
+        <div class="diagram">
+          <svg viewBox="0 0 900 440" role="img" aria-labelledby="dgt">
+            <title id="dgt">Entity relationship spine: webform to lead to student to enrollment to class section, with attendance, marks, fees and the parent portal hanging off the student.</title>
+
+            <!-- academic structure feeding Class_Sections -->
+            <rect class="n-box" x="556" y="16" width="112" height="30" rx="3"/>
+            <text class="n-txt" x="612" y="35" text-anchor="middle">Academic_Years</text>
+            <rect class="n-box" x="678" y="16" width="72" height="30" rx="3"/>
+            <text class="n-txt" x="714" y="35" text-anchor="middle">Classes</text>
+            <rect class="n-box" x="760" y="16" width="82" height="30" rx="3"/>
+            <text class="n-txt" x="801" y="35" text-anchor="middle">Teachers</text>
+
+            <path class="edge" d="M612 46 L612 104"/>
+            <path class="edge" d="M714 46 L714 104"/>
+            <path class="edge" d="M801 46 L801 74 L722 74 L722 104"/>
+
+            <!-- webform -->
+            <rect class="n-out" x="16" y="16" width="120" height="30" rx="3"/>
+            <text class="n-txt n-key-txt" x="76" y="35" text-anchor="middle">Webform</text>
+            <path class="edge-k" d="M76 46 L76 104" marker-end="url(#ar-k)"/>
+
+            <!-- spine -->
+            <rect class="n-box" x="16" y="106" width="120" height="40" rx="3"/>
+            <text class="n-txt" x="76" y="131" text-anchor="middle">Leads</text>
+
+            <rect class="n-key" x="212" y="106" width="122" height="40" rx="3"/>
+            <text class="n-txt n-key-txt" x="273" y="131" text-anchor="middle">Students</text>
+
+            <rect class="n-key" x="404" y="106" width="132" height="40" rx="3"/>
+            <text class="n-txt n-key-txt" x="470" y="131" text-anchor="middle">Enrollments</text>
+
+            <rect class="n-box" x="606" y="106" width="152" height="40" rx="3"/>
+            <text class="n-txt" x="682" y="131" text-anchor="middle">Class_Sections</text>
+
+            <path class="edge-k" d="M136 126 L206 126" marker-end="url(#ar-k)"/>
+            <text class="e-lbl" x="171" y="118" text-anchor="middle">confirm</text>
+            <text class="e-lbl" x="171" y="143" text-anchor="middle">admission</text>
+
+            <path class="edge" d="M334 126 L398 126" marker-end="url(#ar)"/>
+            <text class="e-lbl" x="366" y="118" text-anchor="middle">1:N</text>
+
+            <path class="edge" d="M536 126 L600 126" marker-end="url(#ar)"/>
+            <text class="e-lbl" x="568" y="118" text-anchor="middle">N:1</text>
+
+            <!-- bus below Students -->
+            <path class="edge" d="M273 146 L273 196"/>
+            <path class="edge" d="M76 196 L546 196"/>
+            <path class="edge" d="M76 196 L76 224"/>
+            <path class="edge" d="M232 196 L232 224"/>
+            <path class="edge" d="M380 196 L380 224"/>
+            <path class="edge" d="M546 196 L546 224"/>
+
+            <rect class="n-box" x="16" y="224" width="120" height="34" rx="3"/>
+            <text class="n-txt" x="76" y="246" text-anchor="middle">Contacts</text>
+            <text class="e-lbl" x="76" y="272" text-anchor="middle">parent identity</text>
+
+            <rect class="n-box" x="172" y="224" width="120" height="34" rx="3"/>
+            <text class="n-txt" x="232" y="246" text-anchor="middle">Attendance</text>
+            <text class="e-lbl" x="232" y="272" text-anchor="middle">unique per day</text>
+
+            <rect class="n-box" x="332" y="224" width="96" height="34" rx="3"/>
+            <text class="n-txt" x="380" y="246" text-anchor="middle">Marks</text>
+
+            <rect class="n-box" x="480" y="224" width="132" height="34" rx="3"/>
+            <text class="n-txt" x="546" y="246" text-anchor="middle">Student_Fees</text>
+
+            <!-- Class_Sections downward -->
+            <path class="edge" d="M682 146 L682 196 L744 196 L744 224"/>
+            <rect class="n-box" x="650" y="224" width="188" height="34" rx="3"/>
+            <text class="n-txt" x="744" y="246" text-anchor="middle">Subject_Allocations</text>
+
+            <!-- third tier -->
+            <path class="edge" d="M380 258 L380 312" marker-end="url(#ar)"/>
+            <rect class="n-box" x="316" y="312" width="128" height="34" rx="3"/>
+            <text class="n-txt" x="380" y="334" text-anchor="middle">Exam_Results</text>
+
+            <path class="edge" d="M546 258 L546 312" marker-end="url(#ar)"/>
+            <rect class="n-box" x="480" y="312" width="132" height="34" rx="3"/>
+            <text class="n-txt" x="546" y="334" text-anchor="middle">Fee_Installments</text>
+
+            <path class="edge" d="M546 346 L546 392" marker-end="url(#ar)"/>
+            <rect class="n-box" x="490" y="392" width="112" height="34" rx="3"/>
+            <text class="n-txt" x="546" y="414" text-anchor="middle">Payments</text>
+
+            <path class="edge" d="M744 258 L744 312" marker-end="url(#ar)"/>
+            <rect class="n-box" x="662" y="312" width="164" height="34" rx="3"/>
+            <text class="n-txt" x="744" y="334" text-anchor="middle">Subjects · Teachers</text>
+
+            <!-- portal -->
+            <path class="edge-k" d="M76 258 L76 312" marker-end="url(#ar-k)"/>
+            <rect class="n-out" x="16" y="312" width="176" height="34" rx="3"/>
+            <text class="n-txt n-key-txt" x="104" y="334" text-anchor="middle">Parent Portal · Creator</text>
+            <text class="e-lbl" x="104" y="360" text-anchor="middle">reads live over COQL</text>
+
+            <defs>
+              <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 1 L7 4 L0 7 z" fill="var(--line)"/>
+              </marker>
+              <marker id="ar-k" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 1 L7 4 L0 7 z" fill="var(--accent)"/>
+              </marker>
+            </defs>
+          </svg>
+        </div>
+        <figcaption>Solid outlines are CRM modules; dashed outlines are the two things outside
+        CRM — the public webform that opens the funnel and the Creator portal that closes it.</figcaption>
+      </figure>
+
+      <h3>Junctions, not multi-selects</h3>
+      <p>A relationship that carries its own data gets its own module.
+      <code>Subject_Allocations</code> (section&nbsp;×&nbsp;subject&nbsp;×&nbsp;teacher&nbsp;×&nbsp;periods)
+      is what answers <em>"which teachers and subjects belong to this student"</em> — through
+      Student&nbsp;→&nbsp;Enrollment&nbsp;→&nbsp;Class_Section. <code>Exam_Schedules</code>
+      (exam&nbsp;×&nbsp;section&nbsp;×&nbsp;subject&nbsp;×&nbsp;max&nbsp;marks) is what lets a
+      25-mark unit test and a 100-mark final coexist without a line of extra code — mark entry
+      validates against that record, never against a hardcoded ceiling.</p>
+
+      <h3>Integrity is pushed into the platform</h3>
+      <p>Everything the CRM engine can enforce declaratively is enforced declaratively, because
+      that holds against the UI, the API and imports alike — not just against my code path.</p>
+
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Guard</th><th>Mechanism</th></tr></thead>
+          <tbody>
+            <tr><td>Two attendance rows for one student on one date</td><td class="mono">Attendance_Key — unique field</td></tr>
+            <tr><td>Two marks for one student / exam / subject</td><td class="mono">Marks_Key — unique field</td></tr>
+            <tr><td>A student enrolled twice in one year</td><td class="mono">Enrollment_Key — unique field</td></tr>
+            <tr><td>Duplicate Student ID under concurrent admissions</td><td class="mono">Student_ID unique + token-verified counter</td></tr>
+            <tr><td>Marks above the paper maximum</td><td>Validation rule + pre-save Client Script + server backstop</td></tr>
+            <tr><td>Attendance dated in the future</td><td>Validation rule</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Deluge is used only where a rule has to look at <em>other</em> records — holidays,
+      enrolment status, installment balances, class rank.</p>
+
+      <h3>Derived numbers are stored, not recomputed</h3>
+      <p>Attendance percentage, fee outstanding, exam totals and ranks are maintained
+      incrementally by workflow functions and read as stored values. A portal that recomputes a
+      year of attendance on every page load stops scaling somewhere past a few hundred students.
+      Storing them also means the record, the dashboard and the parent's screen always agree —
+      there is only one place each number is calculated.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ 02 INTEGRATION -->
+    <section id="integration">
+      <h2><span class="idx">02</span>CRM ↔ Creator integration</h2>
+      <p class="claim">CRM owns the data. Creator renders it live. Nothing is duplicated.</p>
+
+      <p>The parent portal is a <strong>pages-first</strong> Creator app. Every screen is a Page
+      whose Deluge snippet calls a function that reads from CRM over <strong>COQL at render
+      time</strong>. Creator holds three small forms — an identity cache, an access log, and the
+      leave requests it originates. It holds no students, no marks, no attendance, no fees.</p>
+
+      <h3>Why pull instead of a scheduled sync</h3>
+      <p>The obvious build copies Students, Attendance, Marks and Fees into Creator forms on a
+      timer. I went the other way deliberately.</p>
+
+      <div class="scroller">
+        <table>
+          <thead><tr><th></th><th>Scheduled sync</th><th>Live pull <span class="chip good">chosen</span></th></tr></thead>
+          <tbody>
+            <tr><td>Copies of a given mark</td><td class="num">2</td><td class="num">1</td></tr>
+            <tr><td>Staleness window</td><td>up to one sync interval</td><td>none</td></tr>
+            <tr><td>Failure mode</td><td><span class="chip bad">silent divergence</span> portal shows a fee unpaid after the parent paid</td><td>an API error — visible, retryable</td></tr>
+            <tr><td>Cost as the school grows</td><td>O(all records), every cycle, forever</td><td>O(what a parent actually opens)</td></tr>
+            <tr><td>Reconciliation code</td><td>required, and the buggiest part of the project</td><td>none</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>A parent portal is low-traffic and read-heavy: a few hundred page views a day against a
+      database of hundreds of thousands of rows. Copying the whole database every night to serve
+      that is backwards. Pulling the ~30 rows a parent actually opens is cheaper <em>and</em>
+      correct by construction — the portal cannot show a stale fee balance because it has no fee
+      balance of its own. The trade-off is a live dependency on CRM and per-page latency; both
+      are handled by caching only the identity resolution (30-minute TTL) and keeping every page
+      to a single COQL call with enumerated columns.</p>
+
+      <h3>How a parent is connected to a student</h3>
+      <p>The key is the parent's <strong>email</strong>, and it is established at admission time,
+      not by the parent. When a lead converts, CRM creates or reuses a Contact with that email
+      and points the Student's <code>Parent</code> lookup at it. Creator is published as a
+      Customer Portal, so <code>zoho.loginuser</code> is the same string as
+      <code>Contacts.Email</code>.</p>
+      <p>No student ID, roll number or date of birth is ever used as a credential. Those are
+      guessable, and they are printed on every report card.</p>
+
+      <h3>The authorisation gate</h3>
+      <p>Every data function begins with <code>portal.assertStudentAccess(studentId)</code>,
+      which re-resolves the signed-in parent and checks the requested student against
+      <em>their own</em> children. A student id arriving in a URL is a hint about which child to
+      display — never a grant of access. Denials are written to the access log. That single call
+      is the difference between a parent portal and an IDOR.</p>
+
+      <h3>Three channels, each scoped to what it needs</h3>
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Channel</th><th>Carries</th><th>Privilege</th></tr></thead>
+          <tbody>
+            <tr><td>Creator → CRM, read</td><td>COQL, one call per page, enumerated columns</td><td>read-only scopes on a dedicated integration user</td></tr>
+            <tr><td>Creator → CRM, write</td><td><code>Leave_Requests</code> create — the entire write surface</td><td>exactly one scope</td></tr>
+            <tr><td>CRM → Creator, push</td><td>only two events: the parent↔student mapping changed, and a leave was approved or rejected</td><td>shared-secret authenticated</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Those two pushes exist because they are the only things a pull cannot discover: Creator
+      cannot know its identity cache went stale, and a parent should not have to poll for an
+      approval. Everything else is pulled.</p>
+
+      <h3>Changes are handled through one code path</h3>
+      <p>When the school approves a leave, CRM upserts the affected school days as
+      <code>Approved Leave</code> attendance on the unique key — so approval flows through the
+      <em>same</em> rollup as ordinary marking. A corrected attendance row updates in place and
+      the rollup adjusts by delta. A bounced cheque flips the payment's status and the fee
+      summary is re-derived from successful payments only, never incrementally patched. Every
+      entry point is safe to run twice.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ 03 FEATURE -->
+    <section id="feature">
+      <h2><span class="idx">03</span>Additional feature — early-warning engine</h2>
+
+      <h4>The problem I picked</h4>
+      <p>A school already holds every signal it needs to catch a child slipping — attendance,
+      marks, fee status. It just holds them in three modules that nobody joins.</p>
+      <p>Individually each signal is ignorable: one absence is nothing, one bad unit test is
+      nothing, a late instalment is an accounts matter. Together they are the textbook profile of
+      a student about to fail the year or leave. In most schools the pattern first becomes
+      visible at the parent-teacher meeting — one to four months after an intervention would
+      still have worked.</p>
+      <p>I chose it over bulk report-card PDFs or a transport module for two reasons. It needs
+      <strong>no new data entry</strong> — every input is already captured for other purposes,
+      which is why most school-software features go unused. And it converts data the school
+      already owns into <strong>an action with a specific person's name on it</strong>, rather
+      than another dashboard.</p>
+
+      <h4>What it does</h4>
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Signal</th><th>Threshold</th><th class="num">Weight</th></tr></thead>
+          <tbody>
+            <tr><td>Attendance below target</td><td>&lt; 75%, only after 15+ marked days</td><td class="num">40</td></tr>
+            <tr><td>Consecutive absences</td><td>≥ 3 school days in a row</td><td class="num">25</td></tr>
+            <tr><td>Academic decline</td><td>last exam ≥ 15 points below the previous</td><td class="num">20</td></tr>
+            <tr><td>Fee overdue</td><td>&gt; 30 days past due</td><td class="num">15</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Band</th><th class="num">Score</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Low</td><td class="num">1–19</td><td>recorded only</td></tr>
+            <tr><td>Medium</td><td class="num">20–39</td><td>CRM Task for the class teacher, due in 3 days</td></tr>
+            <tr><td>High</td><td class="num">40–64</td><td>task + email to the parent</td></tr>
+            <tr><td><span class="chip bad">Critical</span></td><td class="num">65+</td><td>task due tomorrow at highest priority, parent email, principal notified</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Alongside it runs a same-day <em>"your child was marked absent today"</em> alert — one
+      query, one batched mail-out, deduplicated by a stamp on the attendance row. Thresholds,
+      weights and band cut-offs live in an <code>App_Settings</code> record, so the school
+      retunes the model without a developer.</p>
+
+      <h4>Why it is built this way</h4>
+      <p>This is the only thing in the system that touches every student every night, so it is
+      where optimisation actually bites.</p>
+      <ul>
+        <li><strong>No N+1 queries.</strong> The naive version queries attendance, marks and fees
+        per student — 6,000 API calls a night at 2,000 students, which exhausts the daily credit
+        budget before it finishes. The engine instead runs a fixed number of paged COQL sweeps,
+        200 rows a page, and joins them in memory by student id in one pass.</li>
+        <li><strong>It reads pre-aggregated values.</strong> Attendance % is already maintained on
+        the Enrollment; exam percentages already live on <code>Exam_Results</code>. Nothing is
+        re-aggregated. The only raw scan is a 14-day absence window for streak detection —
+        bounded, not growing with the year.</li>
+        <li><strong>It notifies on band <em>change</em>, not on state.</strong> Without that rule,
+        80 at-risk students means 80 identical emails every night and parents mute the sender
+        inside a week. It is the most important line in the file.</li>
+        <li><strong>Writes are batched</strong> — upsert, 100 per call, workflow triggers
+        suppressed — so no workflow storm follows.</li>
+        <li><strong>Idempotent and resumable</strong> — a unique <code>Risk_Key</code> means
+        re-running updates rather than duplicates, and every loop is page-bounded so a runaway
+        data condition cannot spin into the execution ceiling.</li>
+      </ul>
+
+      <div class="scroller">
+        <table>
+          <thead><tr><th>Per nightly run, 2,000 students</th><th class="num">Naive</th><th class="num">This engine</th></tr></thead>
+          <tbody>
+            <tr><td>API calls, read</td><td class="num">~6,000</td><td class="num">~60</td></tr>
+            <tr><td>API calls, write</td><td class="num">2,000</td><td class="num">~20</td></tr>
+            <tr><td>Raw attendance rows scanned</td><td class="num">full year</td><td class="num">14 days</td></tr>
+            <tr><td>Emails on a steady-state night</td><td class="num">~80</td><td class="num">0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>The scoring function is deliberately linear and transparent, so a class teacher can see
+      exactly why a child was flagged. The next step is to backtest the weights against the
+      school's own history — which students actually failed or left — and retune. Because the
+      weights are already data rather than code, that is a configuration change, not a rewrite.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ 04 FILES -->
+    <section id="files">
+      <h2><span class="idx">04</span>What's in the build</h2>
+      <p class="deck">Nine CRM function files, three Creator function files, a Client Script, the
+      webform spec, and the design documents behind each decision above.</p>
+      <ul class="files">
+        <li class="grp">Deluge · CRM</li>
+        <li><b>00_utils</b> — COQL paging, batch insert / update / upsert, grade bands</li>
+        <li><b>01_student_id_generator</b> — per-year sequential IDs, race-safe</li>
+        <li><b>02_admission_lead_conversion</b> — lead → contact, student, enrollment, fee ladder, with rollback</li>
+        <li><b>03_attendance</b> — exception-based marking, layered duplicate guards, incremental rollups, nightly reconciliation</li>
+        <li><b>04_marks_and_results</b> — validation, result computation, dense ranking</li>
+        <li><b>05_fees_and_payments</b> — FIFO instalment allocation, receipts, due &amp; overdue sweep</li>
+        <li><b>06_year_end_promotion</b> — promotion that preserves history instead of overwriting it</li>
+        <li><b>07_early_warning_engine</b> — the additional feature</li>
+        <li><b>08_creator_sync</b> — the only two CRM → Creator pushes</li>
+        <li class="grp">Deluge · Creator</li>
+        <li><b>01_portal_identity</b> — parent resolution, the authorisation gate, access log</li>
+        <li><b>02_portal_data</b> — profile, attendance, results, fees — live from CRM</li>
+        <li><b>03_leave_request_writeback</b> — the one write path, with bounded retry</li>
+        <li class="grp">Configuration</li>
+        <li><b>marks_entry_validation.js</b> — pre-save Client Script on Marks</li>
+        <li><b>admission-enquiry-webform</b> — fields, settings, and the six workflows behind it</li>
+        <li class="grp">Documents</li>
+        <li><b>01</b> data model · <b>02</b> CRM build guide · <b>03</b> Creator guide</li>
+        <li><b>04</b> integration · <b>05</b> reports &amp; dashboards · <b>06</b> additional feature</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>School Management System · Zoho CRM + Creator</span>
+    <span>Hitarth Jangid · jhitarth777@gmail.com</span>
+  </footer>
+
+</div>

@@ -1,0 +1,94 @@
+/* ============================================================================
+ * Function : school.generateStudentID
+ * Type     : Standalone function (Setup > Functions), returns String
+ * Args     : academicYearId (String) - CRM record id of the Academic Year
+ * Returns  : "STU-2627-00042"
+ *
+ * WHY NOT AUTO-NUMBER?
+ *   CRM auto-number cannot restart per academic year and cannot embed the year
+ *   code. The school wants IDs that carry the admission batch.
+ *
+ * CONCURRENCY
+ *   Two admissions confirmed in the same second must not take the same number.
+ *   CRM has no compare-and-swap, so we use a read -> stamp-token -> re-read
+ *   verification on a single Sequence_Counters row. Whoever's token survives the
+ *   re-read owns the number; the loser retries. The Student_ID field is also
+ *   marked unique in CRM, which is the final arbiter if anything slips past.
+ * ========================================================================== */
+string school.generateStudentID(string academicYearId)
+{
+    yearCode = "0000";
+    ay = zoho.crm.getRecordById("Academic_Years", academicYearId.toLong());
+    if(!isNull(ay.get("Year_Code")))
+    {
+        yearCode = ay.get("Year_Code").toString();
+    }
+
+    counterKey = "STUDENT-" + yearCode;
+    newId      = "";
+    attempt    = 1;
+
+    while(attempt <= 5 && newId == "")
+    {
+        rows = zoho.crm.searchRecords("Sequence_Counters", "(Counter_Key:equals:" + counterKey + ")");
+
+        counterId = "";
+        lastValue = 0;
+
+        if(rows.size() == 0)
+        {
+            // First admission of this academic year - create the counter row.
+            seed = Map();
+            seed.put("Counter_Key", counterKey);
+            seed.put("Name", counterKey);
+            seed.put("Last_Value", 0);
+            created = zoho.crm.createRecord("Sequence_Counters", seed);
+            if(isNull(created.get("id")))
+            {
+                // Lost the race to create it - loop round and read it instead.
+                attempt = attempt + 1;
+                continue;
+            }
+            counterId = created.get("id").toString();
+        }
+        else
+        {
+            counterId = rows.get(0).get("id").toString();
+            lastValue = ifnull(rows.get(0).get("Last_Value"), 0).toLong();
+        }
+
+        candidate = lastValue + 1;
+        myToken   = zoho.currenttime.toString("yyyyMMddHHmmssSSS") + "-" + randomNumber(100000, 999999).toString();
+
+        upd = Map();
+        upd.put("Last_Value", candidate);
+        upd.put("Lock_Token", myToken);
+        zoho.crm.updateRecord("Sequence_Counters", counterId.toLong(), upd);
+
+        // Re-read: if our token is still on the row, no one overwrote us.
+        verify = zoho.crm.getRecordById("Sequence_Counters", counterId.toLong());
+        if(ifnull(verify.get("Lock_Token"), "").toString() == myToken)
+        {
+            newId = "STU-" + yearCode + "-" + leftpad(candidate.toString(), 5).replaceAll(" ", "0");
+        }
+        else
+        {
+            attempt = attempt + 1;
+        }
+    }
+
+    if(newId == "")
+    {
+        // Fallback that is still unique and still sortable, so an admission is
+        // never blocked by counter contention. Flagged for admin review.
+        newId = "STU-" + yearCode + "-T" + zoho.currenttime.toString("HHmmssSSS");
+        sendmail
+        [
+            from    : zoho.adminuserid
+            to      : zoho.adminuserid
+            subject : "Student ID counter contention - manual review"
+            message : "Fallback Student ID issued: " + newId + " for AY " + yearCode
+        ];
+    }
+    return newId;
+}

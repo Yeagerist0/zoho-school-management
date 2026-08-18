@@ -1,0 +1,347 @@
+/* ============================================================================
+ * Function : school.confirmAdmission
+ * Type     : Standalone function, wired to
+ *              (a) Workflow on Leads: Lead_Status becomes "Admission Confirmed"
+ *              (b) A "Confirm Admission" button on the Lead detail page
+ * Args     : leadId (Int)
+ *
+ * WHAT IT DOES (one click = a fully set-up student)
+ *   1. Guard: idempotent - a lead already converted is never converted twice.
+ *   2. Parent  -> find Contact by email, else create it.
+ *   3. Student -> created with a generated Student ID, linked to the parent and
+ *                 back to the source Lead.
+ *   4. Class_Section -> pick the section for the target class/year with the most
+ *                 free seats; refuse if the whole class is full.
+ *   5. Enrollment -> created and stamped back onto the Student as
+ *                 Current_Enrollment / Current_Class_Section.
+ *   6. Fees -> Student_Fee raised from the Fee_Structure for that class+year,
+ *                 and Fee_Installments generated from the structure's plan.
+ *   7. Lead marked Converted with the new Student ID stamped on it.
+ *
+ * FAILURE HANDLING
+ *   Zoho has no cross-module transaction. So the function creates in dependency
+ *   order and, if a later step fails, rolls back what it already created and
+ *   leaves the Lead untouched - never a half-built student.
+ * ========================================================================== */
+void school.confirmAdmission(int leadId)
+{
+    lead = zoho.crm.getRecordById("Leads", leadId);
+    if(isNull(lead.get("id")))
+    {
+        info "Lead not found: " + leadId;
+        return;
+    }
+
+    // ---------- 1. Idempotency guard -----------------------------------------
+    existing = zoho.crm.searchRecords("Students", "(Source_Lead:equals:" + leadId + ")");
+    if(existing.size() > 0)
+    {
+        info "Lead " + leadId + " already converted to " + existing.get(0).get("Student_ID");
+        return;
+    }
+
+    createdStudentId    = "";
+    createdEnrollmentId = "";
+    createdFeeId        = "";
+    errorMsg            = "";
+
+    try
+    {
+        // ---------- 2. Parent (Contact) --------------------------------------
+        parentEmail = ifnull(lead.get("Email"), "").toString().trim().toLowerCase();
+        if(parentEmail == "")
+        {
+            throw "Parent email is mandatory to create a portal-enabled parent record.";
+        }
+
+        parentId  = "";
+        parentHit = zoho.crm.searchRecords("Contacts", "(Email:equals:" + parentEmail + ")");
+        if(parentHit.size() > 0)
+        {
+            parentId = parentHit.get(0).get("id").toString();
+        }
+        else
+        {
+            pm = Map();
+            pm.put("Last_Name",  ifnull(lead.get("Last_Name"), "Parent"));
+            pm.put("First_Name", ifnull(lead.get("First_Name"), ""));
+            pm.put("Email",      parentEmail);
+            pm.put("Phone",      ifnull(lead.get("Phone"), ""));
+            pm.put("Mobile",     ifnull(lead.get("Mobile"), ""));
+            pm.put("Relationship", ifnull(lead.get("Relationship"), "Guardian"));
+            pm.put("Portal_Enabled", true);
+            pr = zoho.crm.createRecord("Contacts", pm);
+            if(isNull(pr.get("id")))
+            {
+                throw "Could not create parent Contact: " + pr.toString();
+            }
+            parentId = pr.get("id").toString();
+        }
+
+        // ---------- 3. Resolve class / academic year -------------------------
+        classId = "";
+        if(!isNull(lead.get("Applying_For_Class")))
+        {
+            classId = lead.get("Applying_For_Class").get("id").toString();
+        }
+        if(classId == "")
+        {
+            throw "Lead has no 'Applying For Class'.";
+        }
+
+        ayId = "";
+        if(!isNull(lead.get("Target_Academic_Year")))
+        {
+            ayId = lead.get("Target_Academic_Year").get("id").toString();
+        }
+        if(ayId == "")
+        {
+            curAy = zoho.crm.searchRecords("Academic_Years", "(Is_Current:equals:true)");
+            if(curAy.size() == 0)
+            {
+                throw "No current Academic Year is marked.";
+            }
+            ayId = curAy.get(0).get("id").toString();
+        }
+
+        // ---------- 4. Pick the emptiest active section ----------------------
+        secCrit = "((Class:equals:" + classId + ")and(Academic_Year:equals:" + ayId + ")and(Is_Active:equals:true))";
+        sections = zoho.crm.searchRecords("Class_Sections", secCrit);
+        if(sections.size() == 0)
+        {
+            throw "No active section configured for this class in the selected academic year.";
+        }
+
+        chosenSection = "";
+        bestFree      = -1;
+        for each sec in sections
+        {
+            cap  = ifnull(sec.get("Max_Strength"), 0).toLong();
+            cur  = ifnull(sec.get("Current_Strength"), 0).toLong();
+            free = cap - cur;
+            if(free > bestFree)
+            {
+                bestFree      = free;
+                chosenSection = sec;
+            }
+        }
+        if(bestFree <= 0)
+        {
+            throw "All sections for this class are full. Increase capacity or add a section.";
+        }
+        sectionId = chosenSection.get("id").toString();
+
+        // ---------- 5. Student ------------------------------------------------
+        studentId = school.generateStudentID(ayId);
+
+        sm = Map();
+        sm.put("Student_ID",      studentId);
+        sm.put("Name",            ifnull(lead.get("Student_First_Name"), "") + " " + ifnull(lead.get("Student_Last_Name"), ""));
+        sm.put("Student_Name",    ifnull(lead.get("Student_First_Name"), "") + " " + ifnull(lead.get("Student_Last_Name"), ""));
+        sm.put("DOB",             lead.get("Student_DOB"));
+        sm.put("Gender",          lead.get("Gender"));
+        sm.put("Admission_Date",  zoho.currentdate);
+        sm.put("Parent",          parentId);
+        sm.put("Source_Lead",     leadId.toString());
+        sm.put("Status",          "Active");
+        sm.put("Address",         ifnull(lead.get("Street"), ""));
+        sm.put("City",            ifnull(lead.get("City"), ""));
+        sm.put("Pincode",         ifnull(lead.get("Zip_Code"), ""));
+        sr = zoho.crm.createRecord("Students", sm);
+        if(isNull(sr.get("id")))
+        {
+            throw "Student creation failed: " + sr.toString();
+        }
+        createdStudentId = sr.get("id").toString();
+
+        // ---------- 6. Enrollment --------------------------------------------
+        ayRec    = zoho.crm.getRecordById("Academic_Years", ayId.toLong());
+        yearCode = ifnull(ayRec.get("Year_Code"), "0000").toString();
+
+        em = Map();
+        em.put("Name",            studentId + " / " + ifnull(chosenSection.get("Name"), ""));
+        em.put("Student",         createdStudentId);
+        em.put("Academic_Year",   ayId);
+        em.put("Class_Section",   sectionId);
+        em.put("Enrollment_Date", zoho.currentdate);
+        em.put("Status",          "Active");
+        em.put("Enrollment_Key",  studentId + "-" + yearCode);
+        em.put("Roll_No",         ifnull(chosenSection.get("Current_Strength"), 0).toLong() + 1);
+        em.put("Days_Marked", 0);
+        em.put("Days_Present", 0);
+        em.put("Attendance_Percent", 0);
+        er = zoho.crm.createRecord("Enrollments", em);
+        if(isNull(er.get("id")))
+        {
+            throw "Enrollment creation failed: " + er.toString();
+        }
+        createdEnrollmentId = er.get("id").toString();
+
+        // Stamp the current position onto the Student (denormalised for reports)
+        su = Map();
+        su.put("Current_Enrollment",    createdEnrollmentId);
+        su.put("Current_Class_Section", sectionId);
+        zoho.crm.updateRecord("Students", createdStudentId.toLong(), su);
+
+        // Section strength
+        secU = Map();
+        secU.put("Current_Strength", ifnull(chosenSection.get("Current_Strength"), 0).toLong() + 1);
+        zoho.crm.updateRecord("Class_Sections", sectionId.toLong(), secU);
+
+        // ---------- 7. Fees ---------------------------------------------------
+        createdFeeId = school.raiseStudentFee(createdStudentId, ayId, classId, sectionId);
+
+        // ---------- 8. Close the lead ----------------------------------------
+        lu = Map();
+        lu.put("Lead_Status",        "Admission Confirmed");
+        lu.put("Generated_Student_ID", studentId);
+        lu.put("Converted_On",       zoho.currentdate);
+        zoho.crm.updateRecord("Leads", leadId, lu);
+
+        // ---------- 9. Welcome mail ------------------------------------------
+        sendmail
+        [
+            from    : zoho.adminuserid
+            to      : parentEmail
+            subject : "Admission Confirmed - " + sm.get("Student_Name")
+            message : "<p>Dear Parent,</p><p>We are glad to confirm the admission of <b>" + sm.get("Student_Name") + "</b>.</p><p>Student ID: <b>" + studentId + "</b><br/>Class: <b>" + ifnull(chosenSection.get("Name"), "") + "</b></p><p>You can track attendance, results and fees on the Parent Portal using this email address.</p>"
+        ];
+    }
+    catch (e)
+    {
+        errorMsg = e.toString();
+
+        // ---------- Rollback in reverse dependency order ---------------------
+        if(createdFeeId != "")
+        {
+            school.deleteFeeAndInstallments(createdFeeId);
+        }
+        if(createdEnrollmentId != "")
+        {
+            zoho.crm.deleteRecord("Enrollments", createdEnrollmentId.toLong());
+        }
+        if(createdStudentId != "")
+        {
+            zoho.crm.deleteRecord("Students", createdStudentId.toLong());
+        }
+
+        note = Map();
+        note.put("Parent_Id",    leadId.toString());
+        note.put("Note_Title",   "Admission conversion failed");
+        note.put("Note_Content", errorMsg);
+        note.put("se_module",    "Leads");
+        zoho.crm.createRecord("Notes", note);
+
+        info "confirmAdmission failed for lead " + leadId + " : " + errorMsg;
+    }
+}
+
+
+/* ============================================================================
+ * Function : school.raiseStudentFee
+ * Creates the Student_Fee row and its installment ladder from the class's
+ * Fee_Structure. Returns the new Student_Fee id ("" if no structure exists).
+ * ========================================================================== */
+string school.raiseStudentFee(string studentId, string academicYearId, string classId, string sectionId)
+{
+    crit = "((Class:equals:" + classId + ")and(Academic_Year:equals:" + academicYearId + "))";
+    fs   = zoho.crm.searchRecords("Fee_Structures", crit);
+    if(fs.size() == 0)
+    {
+        return "";
+    }
+    struct   = fs.get(0);
+    totalFee = ifnull(struct.get("Total_Fee"), 0).toDecimal();
+
+    fm = Map();
+    fm.put("Name",              "FEE-" + studentId + "-" + academicYearId);
+    fm.put("Student",           studentId);
+    fm.put("Academic_Year",     academicYearId);
+    fm.put("Fee_Structure",     struct.get("id"));
+    fm.put("Total_Fee",         totalFee);
+    fm.put("Concession_Amount", 0);
+    fm.put("Amount_Paid",       0);
+    fm.put("Status",            "Not Started");
+    fr = zoho.crm.createRecord("Student_Fees", fm);
+    if(isNull(fr.get("id")))
+    {
+        return "";
+    }
+    feeId = fr.get("id").toString();
+
+    // Installment ladder from the structure's JSON plan.
+    planTxt = ifnull(struct.get("Installment_Plan"), "").toString().trim();
+    plan    = List();
+    if(planTxt != "")
+    {
+        plan = planTxt.toJSONList();
+    }
+    else
+    {
+        // Sensible default: 4 equal quarterly installments.
+        for each i in {1, 2, 3, 4}
+        {
+            d = Map();
+            d.put("no", i);
+            d.put("percent", 25);
+            d.put("due_offset_days", (i - 1) * 90);
+            plan.add(d);
+        }
+    }
+
+    ay        = zoho.crm.getRecordById("Academic_Years", academicYearId.toLong());
+    yearStart = ifnull(ay.get("Start_Date"), zoho.currentdate);
+    allocated = 0.0;
+    idx       = 1;
+    firstDue  = null;
+    firstAmt  = 0.0;
+
+    for each item in plan
+    {
+        pct = ifnull(item.get("percent"), 0).toDecimal();
+        amt = round(totalFee * pct / 100, 2);
+        if(idx == plan.size())
+        {
+            amt = totalFee - allocated;   // last installment absorbs rounding
+        }
+        allocated = allocated + amt;
+
+        due = yearStart.toDate().addDay(ifnull(item.get("due_offset_days"), 0).toLong());
+
+        im = Map();
+        im.put("Name",            "INST-" + feeId + "-" + idx);
+        im.put("Student_Fee",     feeId);
+        im.put("Installment_No",  idx);
+        im.put("Due_Date",        due);
+        im.put("Amount_Due",      amt);
+        im.put("Amount_Paid",     0);
+        im.put("Status",          "Pending");
+        zoho.crm.createRecord("Fee_Installments", im);
+
+        if(idx == 1)
+        {
+            firstDue = due;
+            firstAmt = amt;
+        }
+        idx = idx + 1;
+    }
+
+    fu = Map();
+    fu.put("Next_Due_Date",   firstDue);
+    fu.put("Next_Due_Amount", firstAmt);
+    zoho.crm.updateRecord("Student_Fees", feeId.toLong(), fu);
+
+    return feeId;
+}
+
+
+/* Rollback helper - removes a fee row and every installment under it. */
+void school.deleteFeeAndInstallments(string feeId)
+{
+    insts = zoho.crm.searchRecords("Fee_Installments", "(Student_Fee:equals:" + feeId + ")");
+    for each i in insts
+    {
+        zoho.crm.deleteRecord("Fee_Installments", i.get("id").toLong());
+    }
+    zoho.crm.deleteRecord("Student_Fees", feeId.toLong());
+}

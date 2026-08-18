@@ -1,0 +1,284 @@
+/* ============================================================================
+ * ATTENDANCE
+ *
+ * Design decision: teachers mark EXCEPTIONS, not everyone.
+ *   The UI (a CRM button on Class_Section -> widget, and the same function is
+ *   callable from Creator) sends the section, the date, and the small list of
+ *   students who are absent / late / on leave. Everyone else is defaulted to
+ *   Present server-side. For a 40-student class that is one call instead of 40
+ *   clicks, and the payload stays tiny as the school grows.
+ *
+ * Duplicate prevention is layered:
+ *   L1  Attendance_Key is a UNIQUE field in CRM  -> the engine itself rejects a
+ *       second row for the same student on the same date, from any entry point.
+ *   L2  This function pre-reads the day's rows and skips/updates them, so the
+ *       teacher gets a clean "already marked" message instead of an API error.
+ *   L3  A Validation Rule blocks future dates; this function blocks holidays,
+ *       out-of-year dates and non-active enrollments.
+ *
+ * Scalability: records are pushed through the v5 bulk insert endpoint in
+ * batches of 100 (the API maximum), so one section is 1 API call, and an
+ * entire school of 2000 students is 20 - not 2000.
+ * ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.markSectionAttendance
+ * Args     : sectionId (String), attDate (Date), exceptions (Map)
+ *              exceptions = { "<studentRecordId>" : "Absent|Late|Half Day|Approved Leave" }
+ *            markedByTeacherId (String)
+ * Returns  : Map { status, created, updated, skipped, message }
+ * -------------------------------------------------------------------------- */
+map school.markSectionAttendance(string sectionId, date attDate, map exceptions, string markedByTeacherId)
+{
+    result = Map();
+    result.put("created", 0);
+    result.put("updated", 0);
+    result.put("skipped", 0);
+
+    // ---------- Guard 1: date sanity ----------------------------------------
+    if(attDate > zoho.currentdate)
+    {
+        result.put("status", "error");
+        result.put("message", "Attendance cannot be marked for a future date.");
+        return result;
+    }
+
+    section = zoho.crm.getRecordById("Class_Sections", sectionId.toLong());
+    if(isNull(section.get("id")))
+    {
+        result.put("status", "error");
+        result.put("message", "Class section not found.");
+        return result;
+    }
+    ayId = section.get("Academic_Year").get("id").toString();
+    ay   = zoho.crm.getRecordById("Academic_Years", ayId.toLong());
+
+    if(attDate < ay.get("Start_Date").toDate() || attDate > ay.get("End_Date").toDate())
+    {
+        result.put("status", "error");
+        result.put("message", "Date falls outside the academic year " + ay.get("Name") + ".");
+        return result;
+    }
+
+    // ---------- Guard 2: holiday --------------------------------------------
+    hol = zoho.crm.searchRecords("Holidays", "((Holiday_Date:equals:" + attDate.toString("yyyy-MM-dd") + ")and(Academic_Year:equals:" + ayId + "))");
+    if(hol.size() > 0)
+    {
+        result.put("status", "error");
+        result.put("message", "That day is a holiday (" + hol.get(0).get("Name") + "). Attendance not applicable.");
+        return result;
+    }
+
+    // ---------- Active enrollments of this section --------------------------
+    enrollments = school.coql("select id, Student.id, Student.Student_ID, Student.Student_Name " +
+                              "from Enrollments where Class_Section = " + sectionId +
+                              " and Status = 'Active'");
+    if(enrollments.size() == 0)
+    {
+        result.put("status", "error");
+        result.put("message", "No active students in this section.");
+        return result;
+    }
+
+    // ---------- Already-marked rows for this date (one query, not one per student)
+    dateStr  = attDate.toString("yyyy-MM-dd");
+    already  = school.coql("select id, Student.id, Status from Attendance " +
+                           "where Class_Section = " + sectionId + " and Attendance_Date = '" + dateStr + "'");
+    markedBy = Map();
+    for each a in already
+    {
+        markedBy.put(a.get("Student").get("id").toString(), a);
+    }
+
+    toInsert = List();
+
+    for each en in enrollments
+    {
+        stuId    = en.get("Student").get("id").toString();
+        stuCode  = ifnull(en.get("Student").get("Student_ID"), stuId).toString();
+        status   = "Present";
+        if(exceptions.containKey(stuId))
+        {
+            status = exceptions.get(stuId).toString();
+        }
+
+        if(markedBy.containKey(stuId))
+        {
+            prev = markedBy.get(stuId);
+            if(prev.get("Status").toString() != status)
+            {
+                // Correction, not a duplicate - update in place. The
+                // rollup workflow on Attendance edit fixes the percentages.
+                u = Map();
+                u.put("Status", status);
+                u.put("Remarks", "Corrected on " + zoho.currenttime.toString("yyyy-MM-dd HH:mm"));
+                zoho.crm.updateRecord("Attendance", prev.get("id").toLong(), u);
+                result.put("updated", result.get("updated") + 1);
+            }
+            else
+            {
+                result.put("skipped", result.get("skipped") + 1);
+            }
+            continue;
+        }
+
+        rec = Map();
+        rec.put("Name",            stuCode + "-" + dateStr);
+        rec.put("Attendance_Key",  stuCode + "-" + dateStr);
+        rec.put("Student",         stuId);
+        rec.put("Enrollment",      en.get("id").toString());
+        rec.put("Class_Section",   sectionId);
+        rec.put("Attendance_Date", dateStr);
+        rec.put("Status",          status);
+        if(markedByTeacherId != "")
+        {
+            rec.put("Marked_By", markedByTeacherId);
+        }
+        toInsert.add(rec);
+    }
+
+    if(toInsert.size() > 0)
+    {
+        inserted = school.bulkInsert("Attendance", toInsert);
+        result.put("created", inserted);
+    }
+
+    result.put("status", "success");
+    result.put("message", result.get("created") + " marked, " + result.get("updated") + " corrected, " + result.get("skipped") + " unchanged.");
+    return result;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.updateAttendanceRollup
+ * Type     : Workflow on Attendance - Create, Edit(Status), Delete
+ *
+ * Keeps Enrollment.Days_Marked / Days_Present / Attendance_Percent current
+ * INCREMENTALLY. Recounting a student's whole year on every tick would be
+ * O(days) per mark; this is O(1). A nightly reconciliation job
+ * (school.reconcileAttendance) does a full recount to heal any drift.
+ * -------------------------------------------------------------------------- */
+void school.updateAttendanceRollup(string enrollmentId, string oldStatus, string newStatus, string action)
+{
+    en = zoho.crm.getRecordById("Enrollments", enrollmentId.toLong());
+    if(isNull(en.get("id")))
+    {
+        return;
+    }
+
+    marked  = ifnull(en.get("Days_Marked"), 0).toDecimal();
+    present = ifnull(en.get("Days_Present"), 0).toDecimal();
+
+    creditOld = school.presenceCredit(oldStatus);
+    creditNew = school.presenceCredit(newStatus);
+
+    if(action == "create")
+    {
+        marked  = marked + 1;
+        present = present + creditNew;
+    }
+    else if(action == "delete")
+    {
+        marked  = marked - 1;
+        present = present - creditOld;
+    }
+    else
+    {
+        present = present - creditOld + creditNew;
+    }
+
+    if(marked < 0) { marked = 0; }
+    if(present < 0) { present = 0; }
+
+    pct = 0.0;
+    if(marked > 0)
+    {
+        pct = round(present * 100 / marked, 2);
+    }
+
+    u = Map();
+    u.put("Days_Marked",        marked);
+    u.put("Days_Present",       present);
+    u.put("Attendance_Percent", pct);
+    zoho.crm.updateRecord("Enrollments", enrollmentId.toLong(), u);
+}
+
+
+/* Half Day counts as 0.5, Approved Leave is excused (counts as present for the
+ * percentage but is still visible as leave in history). Tune here, once. */
+decimal school.presenceCredit(string status)
+{
+    credit = 0.0;
+    if(status == "Present" || status == "Late")
+    {
+        credit = 1.0;
+    }
+    else if(status == "Half Day")
+    {
+        credit = 0.5;
+    }
+    else if(status == "Approved Leave")
+    {
+        credit = 1.0;
+    }
+    return credit;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.reconcileAttendance   (Scheduled - nightly 01:00)
+ * Full recount for enrollments touched in the last 24h only. Bounded work per
+ * night regardless of school size, and self-healing if a workflow ever misfires.
+ * -------------------------------------------------------------------------- */
+void school.reconcileAttendance()
+{
+    since = zoho.currenttime.subHour(26).toString("yyyy-MM-dd'T'HH:mm:ss+05:30");
+
+    touched = Map();
+    page    = 1;
+    more    = true;
+    while(more && page <= 20)
+    {
+        rows = school.coqlPaged("select id, Enrollment.id from Attendance where Modified_Time > '" + since + "'", page);
+        for each r in rows
+        {
+            if(!isNull(r.get("Enrollment")))
+            {
+                touched.put(r.get("Enrollment").get("id").toString(), 1);
+            }
+        }
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    updates = List();
+    for each enId in touched.keys()
+    {
+        agg     = school.coql("select id, Status from Attendance where Enrollment = " + enId + " limit 400");
+        marked  = agg.size();
+        present = 0.0;
+        for each a in agg
+        {
+            present = present + school.presenceCredit(a.get("Status").toString());
+        }
+        pct = 0.0;
+        if(marked > 0)
+        {
+            pct = round(present * 100 / marked, 2);
+        }
+
+        u = Map();
+        u.put("id", enId);
+        u.put("Days_Marked", marked);
+        u.put("Days_Present", present);
+        u.put("Attendance_Percent", pct);
+        updates.add(u);
+    }
+
+    if(updates.size() > 0)
+    {
+        school.bulkUpdate("Enrollments", updates);
+    }
+    info "Attendance reconciled for " + updates.size() + " enrollments.";
+}

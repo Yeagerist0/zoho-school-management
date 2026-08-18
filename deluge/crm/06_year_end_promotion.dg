@@ -1,0 +1,236 @@
+/* ============================================================================
+ * Function : school.promoteStudents
+ * Type     : Button on Academic_Years ("Promote to Next Year") / scheduled
+ * Args     : fromYearId, toYearId (String)
+ *
+ * This is what makes the "historical information is preserved" requirement real.
+ * Promotion does NOT overwrite anything:
+ *   - the old Enrollment is closed with Status = Promoted / Detained,
+ *   - a NEW Enrollment is opened against next year's Class_Section,
+ *   - the Student row's Current_Enrollment pointer moves forward,
+ *   - a fresh Student_Fee ladder is raised for the new year.
+ * Last year's class, roll number, attendance percentage and results stay exactly
+ * where they were and remain reportable for as long as the school keeps the org.
+ *
+ * PROMOTION RULE (configurable on Academic_Years):
+ *   promote if Final_Result = 'Pass' AND Attendance_Percent >= Min_Attendance.
+ *   Everyone else is detained in the same grade - and gets an Enrollment in the
+ *   new year too, so their record is continuous rather than blank.
+ *
+ * SCALE: processes in pages of 200, writes in batches of 100, and is safely
+ * re-runnable - the Enrollment_Key unique field means a second click cannot
+ * double-enroll anyone.
+ * ========================================================================== */
+void school.promoteStudents(string fromYearId, string toYearId)
+{
+    fromAy = zoho.crm.getRecordById("Academic_Years", fromYearId.toLong());
+    toAy   = zoho.crm.getRecordById("Academic_Years", toYearId.toLong());
+    if(isNull(fromAy.get("id")) || isNull(toAy.get("id")))
+    {
+        info "Invalid academic years supplied.";
+        return;
+    }
+    toYearCode  = ifnull(toAy.get("Year_Code"), "0000").toString();
+    minAttend   = ifnull(fromAy.get("Min_Attendance_For_Promotion"), 75).toDecimal();
+
+    // ---- Index next year's sections by class level, once --------------------
+    sectionsByLevel = Map();
+    page = 1;
+    more = true;
+    while(more && page <= 20)
+    {
+        rows = school.coqlPaged("select id, Class.id, Class.Level, Section, Max_Strength, Current_Strength " +
+                                "from Class_Sections where Academic_Year = " + toYearId +
+                                " and Is_Active = true", page);
+        for each s in rows
+        {
+            lvl = ifnull(s.get("Class").get("Level"), 0).toString();
+            bucket = List();
+            if(sectionsByLevel.containKey(lvl)) { bucket = sectionsByLevel.get(lvl); }
+            bucket.add(s);
+            sectionsByLevel.put(lvl, bucket);
+        }
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    newEnrollments = List();
+    closeOld       = List();
+    studentMoves   = Map();     // studentId -> Map(level, sectionId)
+    promoted       = 0;
+    detained       = 0;
+
+    page = 1;
+    more = true;
+    while(more && page <= 200)
+    {
+        rows = school.coqlPaged(
+            "select id, Student.id, Student.Student_ID, Student.Status, " +
+            "Class_Section.id, Class_Section.Class.id, Class_Section.Class.Level, " +
+            "Attendance_Percent, Final_Result, Roll_No " +
+            "from Enrollments where Academic_Year = " + fromYearId + " and Status = 'Active'", page);
+
+        for each en in rows
+        {
+            if(isNull(en.get("Student")) || ifnull(en.get("Student").get("Status"), "") != "Active")
+            {
+                continue;
+            }
+
+            curLevel  = ifnull(en.get("Class_Section").get("Class").get("Level"), 0).toLong();
+            passed    = ifnull(en.get("Final_Result"), "Pending").toString() == "Pass";
+            attendOk  = ifnull(en.get("Attendance_Percent"), 0).toDecimal() >= minAttend;
+            movesUp   = passed && attendOk;
+
+            targetLevel = if(movesUp, curLevel + 1, curLevel);
+
+            // Grade 12 pass = graduation, not promotion.
+            if(movesUp && curLevel >= 12)
+            {
+                cu = Map();
+                cu.put("id", en.get("id"));
+                cu.put("Status", "Promoted");
+                closeOld.add(cu);
+
+                su = Map();
+                su.put("id", en.get("Student").get("id"));
+                su.put("Status", "Alumni");
+                studentMoves.put(en.get("Student").get("id").toString(), su);
+                promoted = promoted + 1;
+                continue;
+            }
+
+            bucket = List();
+            if(sectionsByLevel.containKey(targetLevel.toString()))
+            {
+                bucket = sectionsByLevel.get(targetLevel.toString());
+            }
+            if(bucket.size() == 0)
+            {
+                info "No section configured for level " + targetLevel + " in " + toAy.get("Name") + " - skipping student " + en.get("Student").get("Student_ID");
+                continue;
+            }
+
+            // Fill the least-loaded section; keep the in-memory counter current
+            // so a whole batch spreads evenly without re-reading the section.
+            target   = "";
+            bestFree = -999999;
+            for each s in bucket
+            {
+                free = ifnull(s.get("Max_Strength"), 0).toLong() - ifnull(s.get("Current_Strength"), 0).toLong();
+                if(free > bestFree)
+                {
+                    bestFree = free;
+                    target   = s;
+                }
+            }
+            target.put("Current_Strength", ifnull(target.get("Current_Strength"), 0).toLong() + 1);
+
+            e = Map();
+            e.put("Name",            en.get("Student").get("Student_ID") + " / " + toAy.get("Name"));
+            e.put("Enrollment_Key",  en.get("Student").get("Student_ID") + "-" + toYearCode);
+            e.put("Student",         en.get("Student").get("id"));
+            e.put("Academic_Year",   toYearId);
+            e.put("Class_Section",   target.get("id"));
+            e.put("Enrollment_Date", toAy.get("Start_Date"));
+            e.put("Status",          "Active");
+            e.put("Roll_No",         target.get("Current_Strength"));
+            e.put("Days_Marked", 0);
+            e.put("Days_Present", 0);
+            e.put("Attendance_Percent", 0);
+            e.put("Final_Result", "Pending");
+            newEnrollments.add(e);
+
+            cu = Map();
+            cu.put("id", en.get("id"));
+            cu.put("Status", if(movesUp, "Promoted", "Detained"));
+            closeOld.add(cu);
+
+            mv = Map();
+            mv.put("student", en.get("Student").get("id").toString());
+            mv.put("key",     e.get("Enrollment_Key"));
+            mv.put("section", target.get("id").toString());
+            mv.put("level",   targetLevel);
+            studentMoves.put(en.get("Student").get("id").toString(), mv);
+
+            if(movesUp) { promoted = promoted + 1; } else { detained = detained + 1; }
+        }
+
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    // ---- Write: new enrollments, then close old, then repoint students ------
+    school.bulkInsert("Enrollments", newEnrollments);
+    school.bulkUpdate("Enrollments", closeOld);
+
+    // Read back the new enrollment ids in one query and repoint each Student.
+    newIdByKey = Map();
+    page = 1;
+    more = true;
+    while(more && page <= 200)
+    {
+        rows = school.coqlPaged("select id, Enrollment_Key, Class_Section.id, Student.id " +
+                                "from Enrollments where Academic_Year = " + toYearId, page);
+        for each r in rows
+        {
+            newIdByKey.put(r.get("Enrollment_Key").toString(), r);
+        }
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    studentUpdates = List();
+    sectionCounts  = Map();
+    for each sid in studentMoves.keys()
+    {
+        mv = studentMoves.get(sid);
+        u  = Map();
+        u.put("id", sid);
+        if(mv.containKey("Status"))
+        {
+            u.put("Status", mv.get("Status"));
+        }
+        else if(newIdByKey.containKey(mv.get("key")))
+        {
+            newEn = newIdByKey.get(mv.get("key"));
+            u.put("Current_Enrollment",    newEn.get("id"));
+            u.put("Current_Class_Section", mv.get("section"));
+
+            secId = mv.get("section").toString();
+            sectionCounts.put(secId, ifnull(sectionCounts.get(secId), 0).toLong() + 1);
+        }
+        studentUpdates.add(u);
+    }
+    school.bulkUpdate("Students", studentUpdates);
+
+    // ---- Refresh section strengths -----------------------------------------
+    secUpdates = List();
+    for each secId in sectionCounts.keys()
+    {
+        u = Map();
+        u.put("id", secId);
+        u.put("Current_Strength", sectionCounts.get(secId));
+        secUpdates.add(u);
+    }
+    school.bulkUpdate("Class_Sections", secUpdates);
+
+    // ---- Raise next year's fees ---------------------------------------------
+    for each sid in studentMoves.keys()
+    {
+        mv = studentMoves.get(sid);
+        if(!mv.containKey("Status") && newIdByKey.containKey(mv.get("key")))
+        {
+            newEn   = newIdByKey.get(mv.get("key"));
+            secRec  = zoho.crm.getRecordById("Class_Sections", mv.get("section").toLong());
+            classId = secRec.get("Class").get("id").toString();
+            existing = zoho.crm.searchRecords("Student_Fees", "((Student:equals:" + sid + ")and(Academic_Year:equals:" + toYearId + "))");
+            if(existing.size() == 0)
+            {
+                school.raiseStudentFee(sid, toYearId, classId, mv.get("section").toString());
+            }
+        }
+    }
+
+    info "Promotion complete: " + promoted + " promoted, " + detained + " detained.";
+}

@@ -1,0 +1,375 @@
+/* ============================================================================
+ * EXAMINATION - MARK ENTRY, VALIDATION, RESULT + RANK COMPUTATION
+ * ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.validateMark
+ * Type     : Workflow on Marks (create / edit), instant action -> function
+ *
+ * Server-side backstop for the Client Script that already blocks bad input on
+ * the form. Anything arriving via API or import still gets checked here.
+ *
+ * The paper's ceiling is read from the Exam_Schedule, never hardcoded and never
+ * trusted from the payload - so a 25-mark unit test and a 100-mark final need
+ * no separate rule.
+ * -------------------------------------------------------------------------- */
+void school.validateMark(int markId)
+{
+    m = zoho.crm.getRecordById("Marks", markId);
+    if(isNull(m.get("id")))
+    {
+        return;
+    }
+
+    maxMarks = 100.0;
+    passMark = 33.0;
+    if(!isNull(m.get("Exam_Schedule")))
+    {
+        sch = zoho.crm.getRecordById("Exam_Schedules", m.get("Exam_Schedule").get("id").toLong());
+        maxMarks = ifnull(sch.get("Max_Marks"), 100).toDecimal();
+        passMark = ifnull(sch.get("Passing_Marks"), maxMarks * 0.33).toDecimal();
+    }
+
+    obtained = ifnull(m.get("Marks_Obtained"), 0).toDecimal();
+    isAbsent = ifnull(m.get("Is_Absent"), false);
+
+    u = Map();
+    invalid = "";
+
+    if(isAbsent)
+    {
+        obtained = 0;
+        u.put("Marks_Obtained", 0);
+    }
+    else if(obtained < 0)
+    {
+        invalid = "Negative marks are not allowed.";
+    }
+    else if(obtained > maxMarks)
+    {
+        invalid = "Marks (" + obtained + ") exceed the paper maximum (" + maxMarks + ") for this exam and subject.";
+    }
+
+    if(invalid != "")
+    {
+        // Quarantine rather than silently keep a bad number: blank the value,
+        // flag the row, and tell the person who entered it.
+        u.put("Marks_Obtained", null);
+        u.put("Validation_Error", invalid);
+        zoho.crm.updateRecord("Marks", markId, u);
+
+        enteredBy = ifnull(m.get("Modified_By"), m.get("Created_By"));
+        sendmail
+        [
+            from    : zoho.adminuserid
+            to      : enteredBy.get("email")
+            subject : "Invalid mark entry rejected"
+            message : invalid + "<br/>Record: " + ifnull(m.get("Name"), markId.toString())
+        ];
+        return;
+    }
+
+    pct   = 0.0;
+    if(maxMarks > 0)
+    {
+        pct = round(obtained * 100 / maxMarks, 2);
+    }
+
+    u.put("Max_Marks",        maxMarks);
+    u.put("Percentage",       pct);
+    u.put("Grade",            school.computeGrade(pct));
+    u.put("Result",           if(!isAbsent && obtained >= passMark, "Pass", "Fail"));
+    u.put("Validation_Error", "");
+    zoho.crm.updateRecord("Marks", markId, u);
+}
+
+
+/* ----------------------------------------------------------------------------
+ * Function : school.publishExamResults
+ * Type     : Workflow on Examinations when Results_Published becomes true,
+ *            also callable from a "Recompute Results" button.
+ *
+ * Builds one Exam_Results row per student: totals, percentage, grade, subjects
+ * failed, and rank within both the section and the whole class.
+ *
+ * SCALABILITY - this is the hot path of the whole system:
+ *   - Marks are pulled with ONE paged COQL query per exam, not per student.
+ *   - Aggregation happens in memory in a single pass (O(n)).
+ *   - Ranking sorts each cohort once (O(n log n)) with dense ranking so tied
+ *     students share a rank.
+ *   - Writes go out through bulk upsert, 100 rows per API call, with workflows
+ *     suppressed so publishing 2000 results does not fire 2000 workflows.
+ *   An exam for 2000 students across 6 subjects = 12000 mark rows =
+ *   60 read calls + ~20 write calls, comfortably inside one execution window.
+ * -------------------------------------------------------------------------- */
+void school.publishExamResults(int examId)
+{
+    exam = zoho.crm.getRecordById("Examinations", examId);
+    if(isNull(exam.get("id")))
+    {
+        return;
+    }
+
+    // ---------- 1. Stream every mark of this exam ---------------------------
+    totalsByStudent = Map();   // studentId -> Map(obtained, max, failed, name)
+    page = 1;
+    more = true;
+
+    while(more && page <= 200)
+    {
+        rows = school.coqlPaged(
+            "select id, Student.id, Marks_Obtained, Max_Marks, Result, Is_Absent " +
+            "from Marks where Examination = " + examId, page);
+
+        for each r in rows
+        {
+            if(isNull(r.get("Student")))
+            {
+                continue;
+            }
+            sid = r.get("Student").get("id").toString();
+
+            agg = Map();
+            if(totalsByStudent.containKey(sid))
+            {
+                agg = totalsByStudent.get(sid);
+            }
+            else
+            {
+                agg.put("obtained", 0.0);
+                agg.put("max", 0.0);
+                agg.put("failed", 0);
+                agg.put("subjects", 0);
+            }
+
+            agg.put("obtained", agg.get("obtained").toDecimal() + ifnull(r.get("Marks_Obtained"), 0).toDecimal());
+            agg.put("max",      agg.get("max").toDecimal()      + ifnull(r.get("Max_Marks"), 0).toDecimal());
+            agg.put("subjects", agg.get("subjects").toLong() + 1);
+            if(ifnull(r.get("Result"), "").toString() == "Fail")
+            {
+                agg.put("failed", agg.get("failed").toLong() + 1);
+            }
+            totalsByStudent.put(sid, agg);
+        }
+
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    if(totalsByStudent.size() == 0)
+    {
+        info "No marks found for exam " + examId;
+        return;
+    }
+
+    // ---------- 2. Attach each student to their section / enrollment --------
+    ayId = exam.get("Academic_Year").get("id").toString();
+    enrollByStudent = Map();
+    page = 1;
+    more = true;
+    while(more && page <= 200)
+    {
+        rows = school.coqlPaged(
+            "select id, Student.id, Class_Section.id, Class_Section.Class.id " +
+            "from Enrollments where Academic_Year = " + ayId + " and Status = 'Active'", page);
+        for each r in rows
+        {
+            if(!isNull(r.get("Student")))
+            {
+                enrollByStudent.put(r.get("Student").get("id").toString(), r);
+            }
+        }
+        more = rows.size() == 200;
+        page = page + 1;
+    }
+
+    // ---------- 3. Build result rows, bucketed by cohort for ranking --------
+    resultRows   = List();
+    bySection    = Map();   // sectionId -> list of {sid, pct}
+    byClass      = Map();   // classId   -> list of {sid, pct}
+
+    for each sid in totalsByStudent.keys()
+    {
+        agg      = totalsByStudent.get(sid);
+        obtained = agg.get("obtained").toDecimal();
+        maxTotal = agg.get("max").toDecimal();
+        pct      = 0.0;
+        if(maxTotal > 0)
+        {
+            pct = round(obtained * 100 / maxTotal, 2);
+        }
+
+        row = Map();
+        row.put("Name",            "RES-" + examId + "-" + sid);
+        row.put("Result_Key",      examId + "-" + sid);
+        row.put("Student",         sid);
+        row.put("Examination",     examId.toString());
+        row.put("Total_Obtained",  obtained);
+        row.put("Total_Max",       maxTotal);
+        row.put("Percentage",      pct);
+        row.put("Overall_Grade",   school.computeGrade(pct));
+        row.put("Subjects_Failed", agg.get("failed"));
+        row.put("Result",          if(agg.get("failed").toLong() > 0, "Fail", "Pass"));
+
+        secId = "";
+        clsId = "";
+        if(enrollByStudent.containKey(sid))
+        {
+            en = enrollByStudent.get(sid);
+            row.put("Enrollment", en.get("id"));
+            if(!isNull(en.get("Class_Section")))
+            {
+                secId = en.get("Class_Section").get("id").toString();
+                row.put("Class_Section", secId);
+                if(!isNull(en.get("Class_Section").get("Class")))
+                {
+                    clsId = en.get("Class_Section").get("Class").get("id").toString();
+                }
+            }
+        }
+
+        entry = Map();
+        entry.put("sid", sid);
+        entry.put("pct", pct);
+
+        if(secId != "")
+        {
+            bucket = List();
+            if(bySection.containKey(secId)) { bucket = bySection.get(secId); }
+            bucket.add(entry);
+            bySection.put(secId, bucket);
+        }
+        if(clsId != "")
+        {
+            bucket = List();
+            if(byClass.containKey(clsId)) { bucket = byClass.get(clsId); }
+            bucket.add(entry);
+            byClass.put(clsId, bucket);
+        }
+
+        resultRows.add(row);
+    }
+
+    sectionRank = school.denseRank(bySection);
+    classRank   = school.denseRank(byClass);
+
+    for each row in resultRows
+    {
+        sid = row.get("Student").toString();
+        row.put("Section_Rank", ifnull(sectionRank.get(sid), 0));
+        row.put("Class_Rank",   ifnull(classRank.get(sid), 0));
+    }
+
+    // ---------- 4. Upsert in batches ----------------------------------------
+    // Result_Key is a unique field, so upsert re-running the button is safe.
+    school.bulkUpsert("Exam_Results", resultRows, "Result_Key");
+
+    info "Published " + resultRows.size() + " results for exam " + exam.get("Exam_Name");
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.denseRank
+ * cohorts : Map(cohortId -> List of Map{sid, pct})
+ * returns : Map(studentId -> rank), ties share a rank (95,95,90 -> 1,1,2)
+ * -------------------------------------------------------------------------- */
+map school.denseRank(map cohorts)
+{
+    ranks = Map();
+    for each cid in cohorts.keys()
+    {
+        members = cohorts.get(cid);
+
+        // Sort by percentage descending. Deluge sorts ascending, so we key on
+        // the complement and reverse-index into the sorted list.
+        keyed = List();
+        for each m in members
+        {
+            // Scale to an integer (87.55 -> 8755) and zero-pad to a FIXED width
+            // so the string sort is numerically correct. Padding the decimal
+            // string directly would rank 87.55 above 100.0.
+            scaled = round(m.get("pct").toDecimal() * 100, 0).toLong();
+            padded = leftpad(scaled.toString(), 6).replaceAll(" ", "0");
+            keyed.add(padded + "#" + m.get("sid"));
+        }
+        keyed = keyed.sort(false);   // descending
+
+        rank    = 0;
+        prevPct = "";
+        for each k in keyed
+        {
+            parts = k.toList("#");
+            pct   = parts.get(0);
+            sid   = parts.get(1);
+            if(pct != prevPct)
+            {
+                rank    = rank + 1;
+                prevPct = pct;
+            }
+            ranks.put(sid, rank);
+        }
+    }
+    return ranks;
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.bulkUpsert - batches of 100 against the v5 /upsert endpoint using a
+ * duplicate_check_field, so re-running a computation updates instead of
+ * duplicating.
+ * -------------------------------------------------------------------------- */
+int school.bulkUpsert(string moduleName, list records, string dupField)
+{
+    done  = 0;
+    batch = List();
+
+    for each rec in records
+    {
+        batch.add(rec);
+        if(batch.size() == 100)
+        {
+            done = done + school.pushUpsert(moduleName, batch, dupField);
+            batch = List();
+        }
+    }
+    if(batch.size() > 0)
+    {
+        done = done + school.pushUpsert(moduleName, batch, dupField);
+    }
+    return done;
+}
+
+int school.pushUpsert(string moduleName, list batch, string dupField)
+{
+    body = Map();
+    body.put("data", batch);
+    body.put("duplicate_check_fields", {dupField});
+    body.put("trigger", List());
+
+    resp = invokeurl
+    [
+        url        : "https://www.zohoapis.in/crm/v5/" + moduleName + "/upsert"
+        type       : POST
+        parameters : body.toString()
+        headers    : {"Content-Type":"application/json"}
+        connection : "crmconn"
+    ];
+
+    ok = 0;
+    if(!isNull(resp.get("data")))
+    {
+        for each r in resp.get("data").toList()
+        {
+            if(r.get("code") == "SUCCESS")
+            {
+                ok = ok + 1;
+            }
+            else
+            {
+                info moduleName + " upsert item failed: " + r.toString();
+            }
+        }
+    }
+    return ok;
+}
