@@ -102,3 +102,33 @@ the standalone library.
                 (module, trigger, name, body.split("\n")[-1].strip()))
 
 print("%d adapters" % len(out))
+
+# --------------------------------------------------------------- schedules
+# Same story as the workflow adapters: a Schedule can only pick a function whose
+# category is `schedule`, so these four are the thinnest possible entry points.
+SCHEDULES = [
+    ("schAbsenceSameDay", "notifyAbsenceSameDay", "daily 11:00", "Same-day absence alert to parents"),
+    ("schFeeDueSweep", "feeDueScheduler", "daily 08:00", "Fee due and overdue sweep"),
+    ("schEarlyWarning", "runEarlyWarning", "daily 02:00", "Nightly early-warning engine"),
+    ("schReconcileAttendance", "reconcileAttendance", "daily 01:00", "Attendance rollup reconciliation"),
+]
+sch = [{"name": n, "file": "schedule", "ret": "void", "category": "schedule", "params": [],
+        "workflow": "// %s : %s\nstandalone.%s();\n" % (when, desc, target),
+        "target": target, "when": when, "desc": desc}
+       for n, target, when, desc in SCHEDULES]
+json.dump(sch, open('tools/schedules.json', 'w'), indent=1)
+
+with open('deluge/automation/README.md', 'a') as f:
+    f.write("""
+## Scheduled functions
+
+A Schedule can only pick a function whose category is `schedule`, so these are
+adapters too.
+
+| Runs | Adapter | Calls | Why |
+|---|---|---|---|
+""")
+    for n, target, when, desc in SCHEDULES:
+        f.write("| %s | `%s` | `standalone.%s()` | %s |\n" % (when, n, target, desc))
+
+print("%d schedule adapters" % len(sch))
