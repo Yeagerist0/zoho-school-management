@@ -1,0 +1,6563 @@
+[
+ {
+  "module": "Academic_Years",
+  "key": "Name",
+  "records": [
+   {
+    "Name": "2025-26",
+    "Year_Code": "2526",
+    "Start_Date": "2025-04-01",
+    "End_Date": "2026-03-31",
+    "Is_Current": false,
+    "Total_Working_Days": 220,
+    "Min_Attendance_For_Promotion": 75
+   },
+   {
+    "Name": "2026-27",
+    "Year_Code": "2627",
+    "Start_Date": "2026-04-01",
+    "End_Date": "2027-03-31",
+    "Is_Current": true,
+    "Total_Working_Days": 220,
+    "Min_Attendance_For_Promotion": 75
+   }
+  ]
+ },
+ {
+  "module": "Classes",
+  "key": "Name",
+  "records": [
+   {
+    "Name": "Grade 1",
+    "Level": 1,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 2",
+    "Level": 2,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 3",
+    "Level": 3,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 4",
+    "Level": 4,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 5",
+    "Level": 5,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 6",
+    "Level": 6,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 7",
+    "Level": 7,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 8",
+    "Level": 8,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 9",
+    "Level": 9,
+    "Stream": "General"
+   },
+   {
+    "Name": "Grade 10",
+    "Level": 10,
+    "Stream": "General"
+   }
+  ]
+ },
+ {
+  "module": "Subjects",
+  "key": "Name",
+  "records": [
+   {
+    "Name": "English",
+    "Subject_Code": "ENG",
+    "Default_Max_Marks": 100,
+    "Is_Elective": false,
+    "Has_Practical": false
+   },
+   {
+    "Name": "Hindi",
+    "Subject_Code": "HIN",
+    "Default_Max_Marks": 100,
+    "Is_Elective": false,
+    "Has_Practical": false
+   },
+   {
+    "Name": "Mathematics",
+    "Subject_Code": "MAT",
+    "Default_Max_Marks": 100,
+    "Is_Elective": false,
+    "Has_Practical": false
+   },
+   {
+    "Name": "Science",
+    "Subject_Code": "SCI",
+    "Default_Max_Marks": 100,
+    "Is_Elective": false,
+    "Has_Practical": true
+   },
+   {
+    "Name": "Social Studies",
+    "Subject_Code": "SST",
+    "Default_Max_Marks": 100,
+    "Is_Elective": false,
+    "Has_Practical": false
+   },
+   {
+    "Name": "Computer Science",
+    "Subject_Code": "CSC",
+    "Default_Max_Marks": 50,
+    "Is_Elective": true,
+    "Has_Practical": true
+   }
+  ]
+ },
+ {
+  "module": "Teachers",
+  "key": "Employee_ID",
+  "records": [
+   {
+    "Name": "Aarav Mehta",
+    "Employee_ID": "EMP001",
+    "Email": "teacher01@vidyavihar.example",
+    "Mobile": "9871934017",
+    "Date_Of_Joining": "2024-06-01",
+    "Qualification": "M.A, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   },
+   {
+    "Name": "Ishita Bose",
+    "Employee_ID": "EMP002",
+    "Email": "teacher02@vidyavihar.example",
+    "Mobile": "9854951938",
+    "Date_Of_Joining": "2017-06-01",
+    "Qualification": "M.Com, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   },
+   {
+    "Name": "Aadhya Sharma",
+    "Employee_ID": "EMP003",
+    "Email": "teacher03@vidyavihar.example",
+    "Mobile": "9815394126",
+    "Date_Of_Joining": "2017-06-01",
+    "Qualification": "B.Tech, B.Ed",
+    "Department": "Mathematics",
+    "Status": "Active"
+   },
+   {
+    "Name": "Myra Menon",
+    "Employee_ID": "EMP004",
+    "Email": "teacher04@vidyavihar.example",
+    "Mobile": "9805352214",
+    "Date_Of_Joining": "2015-06-01",
+    "Qualification": "M.A, B.Ed",
+    "Department": "Science",
+    "Status": "Active"
+   },
+   {
+    "Name": "Ayaan Rao",
+    "Employee_ID": "EMP005",
+    "Email": "teacher05@vidyavihar.example",
+    "Mobile": "9837452917",
+    "Date_Of_Joining": "2016-06-01",
+    "Qualification": "M.Com, B.Ed",
+    "Department": "Social Studies",
+    "Status": "Active"
+   },
+   {
+    "Name": "Vivaan Nair",
+    "Employee_ID": "EMP006",
+    "Email": "teacher06@vidyavihar.example",
+    "Mobile": "9844664043",
+    "Date_Of_Joining": "2015-06-01",
+    "Qualification": "M.Sc, B.Ed",
+    "Department": "Computer Science",
+    "Status": "Active"
+   },
+   {
+    "Name": "Aryan Pillai",
+    "Employee_ID": "EMP007",
+    "Email": "teacher07@vidyavihar.example",
+    "Mobile": "9840995639",
+    "Date_Of_Joining": "2019-06-01",
+    "Qualification": "B.Tech, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   },
+   {
+    "Name": "Siya Bose",
+    "Employee_ID": "EMP008",
+    "Email": "teacher08@vidyavihar.example",
+    "Mobile": "9882669157",
+    "Date_Of_Joining": "2019-06-01",
+    "Qualification": "M.A, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   },
+   {
+    "Name": "Myra Mehta",
+    "Employee_ID": "EMP009",
+    "Email": "teacher09@vidyavihar.example",
+    "Mobile": "9882400912",
+    "Date_Of_Joining": "2016-06-01",
+    "Qualification": "M.Com, B.Ed",
+    "Department": "Mathematics",
+    "Status": "Active"
+   },
+   {
+    "Name": "Riya Gupta",
+    "Employee_ID": "EMP010",
+    "Email": "teacher10@vidyavihar.example",
+    "Mobile": "9868520257",
+    "Date_Of_Joining": "2020-06-01",
+    "Qualification": "M.Com, B.Ed",
+    "Department": "Science",
+    "Status": "Active"
+   },
+   {
+    "Name": "Riya Menon",
+    "Employee_ID": "EMP011",
+    "Email": "teacher11@vidyavihar.example",
+    "Mobile": "9874781118",
+    "Date_Of_Joining": "2024-06-01",
+    "Qualification": "M.Sc, B.Ed",
+    "Department": "Social Studies",
+    "Status": "Active"
+   },
+   {
+    "Name": "Aadhya Gupta",
+    "Employee_ID": "EMP012",
+    "Email": "teacher12@vidyavihar.example",
+    "Mobile": "9830411007",
+    "Date_Of_Joining": "2023-06-01",
+    "Qualification": "M.Sc, B.Ed",
+    "Department": "Computer Science",
+    "Status": "Active"
+   },
+   {
+    "Name": "Rudra Menon",
+    "Employee_ID": "EMP013",
+    "Email": "teacher13@vidyavihar.example",
+    "Mobile": "9894376174",
+    "Date_Of_Joining": "2020-06-01",
+    "Qualification": "B.Tech, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   },
+   {
+    "Name": "Ishaan Chawla",
+    "Employee_ID": "EMP014",
+    "Email": "teacher14@vidyavihar.example",
+    "Mobile": "9860548384",
+    "Date_Of_Joining": "2020-06-01",
+    "Qualification": "B.Tech, B.Ed",
+    "Department": "Languages",
+    "Status": "Active"
+   }
+  ]
+ },
+ {
+  "module": "Holidays",
+  "key": "Holiday_Key",
+  "records": [
+   {
+    "Name": "Independence Day",
+    "Holiday_Key": "2627-2026-08-15",
+    "Holiday_Date": "2026-08-15",
+    "Type": "Holiday",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    }
+   },
+   {
+    "Name": "Ganesh Chaturthi",
+    "Holiday_Key": "2627-2026-09-14",
+    "Holiday_Date": "2026-09-14",
+    "Type": "Holiday",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    }
+   },
+   {
+    "Name": "Gandhi Jayanti",
+    "Holiday_Key": "2627-2026-10-02",
+    "Holiday_Date": "2026-10-02",
+    "Type": "Holiday",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    }
+   },
+   {
+    "Name": "Diwali Break",
+    "Holiday_Key": "2627-2026-11-09",
+    "Holiday_Date": "2026-11-09",
+    "Type": "Vacation",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    }
+   },
+   {
+    "Name": "Diwali Break",
+    "Holiday_Key": "2627-2026-11-10",
+    "Holiday_Date": "2026-11-10",
+    "Type": "Vacation",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    }
+   }
+  ]
+ },
+ {
+  "module": "Class_Sections",
+  "key": "Section_Key",
+  "records": [
+   {
+    "Name": "2026-27 / Grade 1 / A",
+    "Section_Key": "2627-1-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 1"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Room_No": "101",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 2 / A",
+    "Section_Key": "2627-2-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 2"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP003"
+    },
+    "Room_No": "201",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 3 / A",
+    "Section_Key": "2627-3-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 3"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Room_No": "301",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 4 / A",
+    "Section_Key": "2627-4-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 4"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP005"
+    },
+    "Room_No": "401",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 5 / A",
+    "Section_Key": "2627-5-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 5"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Room_No": "501",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 6 / A",
+    "Section_Key": "2627-6-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 6"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP007"
+    },
+    "Room_No": "601",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 6 / B",
+    "Section_Key": "2627-6-B",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 6"
+    },
+    "Section": "B",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Room_No": "602",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 7 / A",
+    "Section_Key": "2627-7-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 7"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Room_No": "701",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 7 / B",
+    "Section_Key": "2627-7-B",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 7"
+    },
+    "Section": "B",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP009"
+    },
+    "Room_No": "702",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 8 / A",
+    "Section_Key": "2627-8-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 8"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP009"
+    },
+    "Room_No": "801",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 8 / B",
+    "Section_Key": "2627-8-B",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 8"
+    },
+    "Section": "B",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Room_No": "802",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 9 / A",
+    "Section_Key": "2627-9-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 9"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Room_No": "901",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 9 / B",
+    "Section_Key": "2627-9-B",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 9"
+    },
+    "Section": "B",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP011"
+    },
+    "Room_No": "902",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 10 / A",
+    "Section_Key": "2627-10-A",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 10"
+    },
+    "Section": "A",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP011"
+    },
+    "Room_No": "1001",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   },
+   {
+    "Name": "2026-27 / Grade 10 / B",
+    "Section_Key": "2627-10-B",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 10"
+    },
+    "Section": "B",
+    "Class_Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Room_No": "1002",
+    "Max_Strength": 40,
+    "Current_Strength": 0,
+    "Is_Active": true
+   }
+  ]
+ },
+ {
+  "module": "Subject_Allocations",
+  "key": "Allocation_Key",
+  "records": [
+   {
+    "Name": "2627-1-A-ENG",
+    "Allocation_Key": "2627-1-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-1-A-HIN",
+    "Allocation_Key": "2627-1-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-1-A-MAT",
+    "Allocation_Key": "2627-1-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-1-A-SCI",
+    "Allocation_Key": "2627-1-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-1-A-SST",
+    "Allocation_Key": "2627-1-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-1-A-CSC",
+    "Allocation_Key": "2627-1-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-2-A-ENG",
+    "Allocation_Key": "2627-2-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-2-A-HIN",
+    "Allocation_Key": "2627-2-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-2-A-MAT",
+    "Allocation_Key": "2627-2-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-2-A-SCI",
+    "Allocation_Key": "2627-2-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-2-A-SST",
+    "Allocation_Key": "2627-2-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-2-A-CSC",
+    "Allocation_Key": "2627-2-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-3-A-ENG",
+    "Allocation_Key": "2627-3-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-3-A-HIN",
+    "Allocation_Key": "2627-3-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-3-A-MAT",
+    "Allocation_Key": "2627-3-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-3-A-SCI",
+    "Allocation_Key": "2627-3-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-3-A-SST",
+    "Allocation_Key": "2627-3-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-3-A-CSC",
+    "Allocation_Key": "2627-3-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-4-A-ENG",
+    "Allocation_Key": "2627-4-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-4-A-HIN",
+    "Allocation_Key": "2627-4-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-4-A-MAT",
+    "Allocation_Key": "2627-4-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-4-A-SCI",
+    "Allocation_Key": "2627-4-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-4-A-SST",
+    "Allocation_Key": "2627-4-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-4-A-CSC",
+    "Allocation_Key": "2627-4-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-5-A-ENG",
+    "Allocation_Key": "2627-5-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-5-A-HIN",
+    "Allocation_Key": "2627-5-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-5-A-MAT",
+    "Allocation_Key": "2627-5-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-5-A-SCI",
+    "Allocation_Key": "2627-5-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-5-A-SST",
+    "Allocation_Key": "2627-5-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-5-A-CSC",
+    "Allocation_Key": "2627-5-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-A-ENG",
+    "Allocation_Key": "2627-6-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-6-A-HIN",
+    "Allocation_Key": "2627-6-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-A-MAT",
+    "Allocation_Key": "2627-6-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-6-A-SCI",
+    "Allocation_Key": "2627-6-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-A-SST",
+    "Allocation_Key": "2627-6-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-A-CSC",
+    "Allocation_Key": "2627-6-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-B-ENG",
+    "Allocation_Key": "2627-6-B-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-6-B-HIN",
+    "Allocation_Key": "2627-6-B-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-B-MAT",
+    "Allocation_Key": "2627-6-B-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-6-B-SCI",
+    "Allocation_Key": "2627-6-B-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-B-SST",
+    "Allocation_Key": "2627-6-B-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-6-B-CSC",
+    "Allocation_Key": "2627-6-B-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-A-ENG",
+    "Allocation_Key": "2627-7-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-7-A-HIN",
+    "Allocation_Key": "2627-7-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-A-MAT",
+    "Allocation_Key": "2627-7-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-7-A-SCI",
+    "Allocation_Key": "2627-7-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-A-SST",
+    "Allocation_Key": "2627-7-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-A-CSC",
+    "Allocation_Key": "2627-7-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-B-ENG",
+    "Allocation_Key": "2627-7-B-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-7-B-HIN",
+    "Allocation_Key": "2627-7-B-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-B-MAT",
+    "Allocation_Key": "2627-7-B-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-7-B-SCI",
+    "Allocation_Key": "2627-7-B-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-B-SST",
+    "Allocation_Key": "2627-7-B-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-7-B-CSC",
+    "Allocation_Key": "2627-7-B-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-A-ENG",
+    "Allocation_Key": "2627-8-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-8-A-HIN",
+    "Allocation_Key": "2627-8-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-A-MAT",
+    "Allocation_Key": "2627-8-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-8-A-SCI",
+    "Allocation_Key": "2627-8-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-A-SST",
+    "Allocation_Key": "2627-8-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-A-CSC",
+    "Allocation_Key": "2627-8-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-B-ENG",
+    "Allocation_Key": "2627-8-B-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-8-B-HIN",
+    "Allocation_Key": "2627-8-B-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-B-MAT",
+    "Allocation_Key": "2627-8-B-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-8-B-SCI",
+    "Allocation_Key": "2627-8-B-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-B-SST",
+    "Allocation_Key": "2627-8-B-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-8-B-CSC",
+    "Allocation_Key": "2627-8-B-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-A-ENG",
+    "Allocation_Key": "2627-9-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-9-A-HIN",
+    "Allocation_Key": "2627-9-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-A-MAT",
+    "Allocation_Key": "2627-9-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-9-A-SCI",
+    "Allocation_Key": "2627-9-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-A-SST",
+    "Allocation_Key": "2627-9-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-A-CSC",
+    "Allocation_Key": "2627-9-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-B-ENG",
+    "Allocation_Key": "2627-9-B-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-9-B-HIN",
+    "Allocation_Key": "2627-9-B-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-B-MAT",
+    "Allocation_Key": "2627-9-B-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-9-B-SCI",
+    "Allocation_Key": "2627-9-B-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-B-SST",
+    "Allocation_Key": "2627-9-B-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-9-B-CSC",
+    "Allocation_Key": "2627-9-B-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-A-ENG",
+    "Allocation_Key": "2627-10-A-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-10-A-HIN",
+    "Allocation_Key": "2627-10-A-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-A-MAT",
+    "Allocation_Key": "2627-10-A-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-10-A-SCI",
+    "Allocation_Key": "2627-10-A-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-A-SST",
+    "Allocation_Key": "2627-10-A-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-A-CSC",
+    "Allocation_Key": "2627-10-A-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-B-ENG",
+    "Allocation_Key": "2627-10-B-ENG",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:English"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP002"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-10-B-HIN",
+    "Allocation_Key": "2627-10-B-HIN",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Hindi"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP004"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-B-MAT",
+    "Allocation_Key": "2627-10-B-MAT",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Mathematics"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP006"
+    },
+    "Periods_Per_Week": 6
+   },
+   {
+    "Name": "2627-10-B-SCI",
+    "Allocation_Key": "2627-10-B-SCI",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP008"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-B-SST",
+    "Allocation_Key": "2627-10-B-SST",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Social Studies"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP010"
+    },
+    "Periods_Per_Week": 4
+   },
+   {
+    "Name": "2627-10-B-CSC",
+    "Allocation_Key": "2627-10-B-CSC",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Subject": {
+     "$ref": "Subjects:Computer Science"
+    },
+    "Teacher": {
+     "$ref": "Teachers:EMP012"
+    },
+    "Periods_Per_Week": 4
+   }
+  ]
+ },
+ {
+  "module": "Contacts",
+  "key": "Email",
+  "records": [
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Aditya",
+    "Email": "parent001@vidyavihar.example",
+    "Phone": "9798279857",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Pillai",
+    "First_Name": "Aarav",
+    "Email": "parent002@vidyavihar.example",
+    "Phone": "9759641415",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Vivaan",
+    "Email": "parent003@vidyavihar.example",
+    "Phone": "9784731616",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Pillai",
+    "First_Name": "Vivaan",
+    "Email": "parent004@vidyavihar.example",
+    "Phone": "9791949038",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Arjun",
+    "Email": "parent005@vidyavihar.example",
+    "Phone": "9775401549",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Gupta",
+    "First_Name": "Ayaan",
+    "Email": "parent006@vidyavihar.example",
+    "Phone": "9728669376",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Rudra",
+    "Email": "parent007@vidyavihar.example",
+    "Phone": "9796821583",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Aarav",
+    "Email": "parent008@vidyavihar.example",
+    "Phone": "9783934937",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Aarav",
+    "Email": "parent009@vidyavihar.example",
+    "Phone": "9797016530",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Devansh",
+    "Email": "parent010@vidyavihar.example",
+    "Phone": "9728854658",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Gupta",
+    "First_Name": "Aryan",
+    "Email": "parent011@vidyavihar.example",
+    "Phone": "9778508700",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Vivaan",
+    "Email": "parent012@vidyavihar.example",
+    "Phone": "9723510229",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Aarav",
+    "Email": "parent013@vidyavihar.example",
+    "Phone": "9744662936",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Kabir",
+    "Email": "parent014@vidyavihar.example",
+    "Phone": "9745346063",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Gupta",
+    "First_Name": "Atharv",
+    "Email": "parent015@vidyavihar.example",
+    "Phone": "9775950645",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Reyansh",
+    "Email": "parent016@vidyavihar.example",
+    "Phone": "9701346328",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Atharv",
+    "Email": "parent017@vidyavihar.example",
+    "Phone": "9734941694",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Arjun",
+    "Email": "parent018@vidyavihar.example",
+    "Phone": "9706866962",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Reyansh",
+    "Email": "parent019@vidyavihar.example",
+    "Phone": "9714433623",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Nair",
+    "First_Name": "Rudra",
+    "Email": "parent020@vidyavihar.example",
+    "Phone": "9799821705",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Aarav",
+    "Email": "parent021@vidyavihar.example",
+    "Phone": "9712197003",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Ishaan",
+    "Email": "parent022@vidyavihar.example",
+    "Phone": "9719435529",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Vihaan",
+    "Email": "parent023@vidyavihar.example",
+    "Phone": "9711364511",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Devansh",
+    "Email": "parent024@vidyavihar.example",
+    "Phone": "9763568869",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Ayaan",
+    "Email": "parent025@vidyavihar.example",
+    "Phone": "9705386187",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Bose",
+    "First_Name": "Devansh",
+    "Email": "parent026@vidyavihar.example",
+    "Phone": "9760422843",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Krishna",
+    "Email": "parent027@vidyavihar.example",
+    "Phone": "9794349676",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Devansh",
+    "Email": "parent028@vidyavihar.example",
+    "Phone": "9774946005",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Verma",
+    "First_Name": "Aarav",
+    "Email": "parent029@vidyavihar.example",
+    "Phone": "9706074999",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Verma",
+    "First_Name": "Arjun",
+    "Email": "parent030@vidyavihar.example",
+    "Phone": "9781814137",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Bose",
+    "First_Name": "Aditya",
+    "Email": "parent031@vidyavihar.example",
+    "Phone": "9753070844",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Aarav",
+    "Email": "parent032@vidyavihar.example",
+    "Phone": "9735337366",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Pillai",
+    "First_Name": "Sai",
+    "Email": "parent033@vidyavihar.example",
+    "Phone": "9780415505",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Ishaan",
+    "Email": "parent034@vidyavihar.example",
+    "Phone": "9784451313",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Pillai",
+    "First_Name": "Arjun",
+    "Email": "parent035@vidyavihar.example",
+    "Phone": "9791803655",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Vivaan",
+    "Email": "parent036@vidyavihar.example",
+    "Phone": "9770105879",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Kabir",
+    "Email": "parent037@vidyavihar.example",
+    "Phone": "9715166127",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Bose",
+    "First_Name": "Kabir",
+    "Email": "parent038@vidyavihar.example",
+    "Phone": "9769922213",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Aryan",
+    "Email": "parent039@vidyavihar.example",
+    "Phone": "9781199043",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Bose",
+    "First_Name": "Ayaan",
+    "Email": "parent040@vidyavihar.example",
+    "Phone": "9794111715",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Aditya",
+    "Email": "parent041@vidyavihar.example",
+    "Phone": "9708303863",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Vihaan",
+    "Email": "parent042@vidyavihar.example",
+    "Phone": "9701960117",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Rudra",
+    "Email": "parent043@vidyavihar.example",
+    "Phone": "9724419658",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Joshi",
+    "First_Name": "Devansh",
+    "Email": "parent044@vidyavihar.example",
+    "Phone": "9758336229",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Rudra",
+    "Email": "parent045@vidyavihar.example",
+    "Phone": "9727885713",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Rudra",
+    "Email": "parent046@vidyavihar.example",
+    "Phone": "9753020179",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Aditya",
+    "Email": "parent047@vidyavihar.example",
+    "Phone": "9739129986",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Ishaan",
+    "Email": "parent048@vidyavihar.example",
+    "Phone": "9778919952",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Arjun",
+    "Email": "parent049@vidyavihar.example",
+    "Phone": "9734426641",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Vivaan",
+    "Email": "parent050@vidyavihar.example",
+    "Phone": "9763336573",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Pillai",
+    "First_Name": "Aditya",
+    "Email": "parent051@vidyavihar.example",
+    "Phone": "9725369329",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Kabir",
+    "Email": "parent052@vidyavihar.example",
+    "Phone": "9766530835",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Chawla",
+    "First_Name": "Sai",
+    "Email": "parent053@vidyavihar.example",
+    "Phone": "9760298197",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Kabir",
+    "Email": "parent054@vidyavihar.example",
+    "Phone": "9762352625",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Bose",
+    "First_Name": "Aarav",
+    "Email": "parent055@vidyavihar.example",
+    "Phone": "9748035621",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Joshi",
+    "First_Name": "Rudra",
+    "Email": "parent056@vidyavihar.example",
+    "Phone": "9789905478",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Aryan",
+    "Email": "parent057@vidyavihar.example",
+    "Phone": "9707704988",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Joshi",
+    "First_Name": "Vihaan",
+    "Email": "parent058@vidyavihar.example",
+    "Phone": "9732886163",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Kabir",
+    "Email": "parent059@vidyavihar.example",
+    "Phone": "9710879884",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Reyansh",
+    "Email": "parent060@vidyavihar.example",
+    "Phone": "9790940772",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Joshi",
+    "First_Name": "Vivaan",
+    "Email": "parent061@vidyavihar.example",
+    "Phone": "9795201811",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Verma",
+    "First_Name": "Krishna",
+    "Email": "parent062@vidyavihar.example",
+    "Phone": "9750107410",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Arjun",
+    "Email": "parent063@vidyavihar.example",
+    "Phone": "9762490244",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Reyansh",
+    "Email": "parent064@vidyavihar.example",
+    "Phone": "9794302408",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Sai",
+    "Email": "parent065@vidyavihar.example",
+    "Phone": "9728565476",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Vivaan",
+    "Email": "parent066@vidyavihar.example",
+    "Phone": "9756089598",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Reddy",
+    "First_Name": "Rudra",
+    "Email": "parent067@vidyavihar.example",
+    "Phone": "9735316941",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Iyer",
+    "First_Name": "Arjun",
+    "Email": "parent068@vidyavihar.example",
+    "Phone": "9750517664",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Arjun",
+    "Email": "parent069@vidyavihar.example",
+    "Phone": "9730826768",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Devansh",
+    "Email": "parent070@vidyavihar.example",
+    "Phone": "9782453801",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Krishna",
+    "Email": "parent071@vidyavihar.example",
+    "Phone": "9771415764",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Gupta",
+    "First_Name": "Aryan",
+    "Email": "parent072@vidyavihar.example",
+    "Phone": "9726016170",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Arjun",
+    "Email": "parent073@vidyavihar.example",
+    "Phone": "9735446283",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Aditya",
+    "Email": "parent074@vidyavihar.example",
+    "Phone": "9704624099",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Vihaan",
+    "Email": "parent075@vidyavihar.example",
+    "Phone": "9726095892",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Reyansh",
+    "Email": "parent076@vidyavihar.example",
+    "Phone": "9721525275",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Mehta",
+    "First_Name": "Vihaan",
+    "Email": "parent077@vidyavihar.example",
+    "Phone": "9794858416",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Kulkarni",
+    "First_Name": "Aryan",
+    "Email": "parent078@vidyavihar.example",
+    "Phone": "9797066091",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Joshi",
+    "First_Name": "Vivaan",
+    "Email": "parent079@vidyavihar.example",
+    "Phone": "9778947771",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Atharv",
+    "Email": "parent080@vidyavihar.example",
+    "Phone": "9738396529",
+    "Relationship": "Father",
+    "Occupation": "Doctor",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Verma",
+    "First_Name": "Vivaan",
+    "Email": "parent081@vidyavihar.example",
+    "Phone": "9703466697",
+    "Relationship": "Father",
+    "Occupation": "Shopkeeper",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Ishaan",
+    "Email": "parent082@vidyavihar.example",
+    "Phone": "9705574619",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Atharv",
+    "Email": "parent083@vidyavihar.example",
+    "Phone": "9725068981",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Arjun",
+    "Email": "parent084@vidyavihar.example",
+    "Phone": "9778362150",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Rao",
+    "First_Name": "Reyansh",
+    "Email": "parent085@vidyavihar.example",
+    "Phone": "9796227898",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Sai",
+    "Email": "parent086@vidyavihar.example",
+    "Phone": "9710362690",
+    "Relationship": "Father",
+    "Occupation": "Teacher",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Patel",
+    "First_Name": "Rudra",
+    "Email": "parent087@vidyavihar.example",
+    "Phone": "9789324438",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Sharma",
+    "First_Name": "Ishaan",
+    "Email": "parent088@vidyavihar.example",
+    "Phone": "9734243068",
+    "Relationship": "Father",
+    "Occupation": "Engineer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Gupta",
+    "First_Name": "Ayaan",
+    "Email": "parent089@vidyavihar.example",
+    "Phone": "9703181428",
+    "Relationship": "Father",
+    "Occupation": "Farmer",
+    "Portal_Enabled": true
+   },
+   {
+    "Last_Name": "Menon",
+    "First_Name": "Aryan",
+    "Email": "parent090@vidyavihar.example",
+    "Phone": "9737097698",
+    "Relationship": "Father",
+    "Occupation": "Accountant",
+    "Portal_Enabled": true
+   }
+  ]
+ },
+ {
+  "module": "Students",
+  "key": "Student_ID",
+  "records": [
+   {
+    "Name": "Ayaan Menon",
+    "Student_Name": "Ayaan Menon",
+    "Student_ID": "STU-2627-00001",
+    "DOB": "2020-12-19",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent001@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560041",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Diya Pillai",
+    "Student_Name": "Diya Pillai",
+    "Student_ID": "STU-2627-00002",
+    "DOB": "2020-09-18",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent002@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560083",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ayaan Sharma",
+    "Student_Name": "Ayaan Sharma",
+    "Student_ID": "STU-2627-00003",
+    "DOB": "2020-08-01",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent003@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560091",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Aditya Pillai",
+    "Student_Name": "Aditya Pillai",
+    "Student_ID": "STU-2627-00004",
+    "DOB": "2020-06-03",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent004@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560013",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Arjun Kulkarni",
+    "Student_Name": "Arjun Kulkarni",
+    "Student_ID": "STU-2627-00005",
+    "DOB": "2020-02-27",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent005@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560040",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Atharv Gupta",
+    "Student_Name": "Atharv Gupta",
+    "Student_ID": "STU-2627-00006",
+    "DOB": "2020-06-25",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent006@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560057",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Devansh Sharma",
+    "Student_Name": "Devansh Sharma",
+    "Student_ID": "STU-2627-00007",
+    "DOB": "2019-09-25",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent007@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560059",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Meera Chawla",
+    "Student_Name": "Meera Chawla",
+    "Student_ID": "STU-2627-00008",
+    "DOB": "2019-06-20",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent008@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560046",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Rudra Reddy",
+    "Student_Name": "Rudra Reddy",
+    "Student_ID": "STU-2627-00009",
+    "DOB": "2019-02-11",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent009@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560011",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Anika Sharma",
+    "Student_Name": "Anika Sharma",
+    "Student_ID": "STU-2627-00010",
+    "DOB": "2019-11-19",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent010@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560034",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Vihaan Gupta",
+    "Student_Name": "Vihaan Gupta",
+    "Student_ID": "STU-2627-00011",
+    "DOB": "2019-05-24",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent011@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560068",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aditya Chawla",
+    "Student_Name": "Aditya Chawla",
+    "Student_ID": "STU-2627-00012",
+    "DOB": "2019-01-11",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent012@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560088",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ishita Sharma",
+    "Student_Name": "Ishita Sharma",
+    "Student_ID": "STU-2627-00013",
+    "DOB": "2018-10-11",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent013@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560056",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Vihaan Reddy",
+    "Student_Name": "Vihaan Reddy",
+    "Student_ID": "STU-2627-00014",
+    "DOB": "2018-06-10",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent014@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560097",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Riya Gupta",
+    "Student_Name": "Riya Gupta",
+    "Student_ID": "STU-2627-00015",
+    "DOB": "2018-05-16",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent015@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560071",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Atharv Patel",
+    "Student_Name": "Atharv Patel",
+    "Student_ID": "STU-2627-00016",
+    "DOB": "2018-10-25",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent016@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560054",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Vihaan Iyer",
+    "Student_Name": "Vihaan Iyer",
+    "Student_ID": "STU-2627-00017",
+    "DOB": "2018-01-08",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent017@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560095",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ananya Iyer",
+    "Student_Name": "Ananya Iyer",
+    "Student_ID": "STU-2627-00018",
+    "DOB": "2018-05-03",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent018@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560092",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Meera Chawla",
+    "Student_Name": "Meera Chawla",
+    "Student_ID": "STU-2627-00019",
+    "DOB": "2017-02-06",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent019@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560006",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Pari Nair",
+    "Student_Name": "Pari Nair",
+    "Student_ID": "STU-2627-00020",
+    "DOB": "2017-12-19",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent020@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560044",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Siya Sharma",
+    "Student_Name": "Siya Sharma",
+    "Student_ID": "STU-2627-00021",
+    "DOB": "2017-01-19",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent021@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560080",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Rudra Iyer",
+    "Student_Name": "Rudra Iyer",
+    "Student_ID": "STU-2627-00022",
+    "DOB": "2017-03-20",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent022@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560090",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Vivaan Patel",
+    "Student_Name": "Vivaan Patel",
+    "Student_ID": "STU-2627-00023",
+    "DOB": "2017-12-26",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent023@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560090",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Riya Reddy",
+    "Student_Name": "Riya Reddy",
+    "Student_ID": "STU-2627-00024",
+    "DOB": "2017-09-02",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent024@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560084",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Meera Reddy",
+    "Student_Name": "Meera Reddy",
+    "Student_ID": "STU-2627-00025",
+    "DOB": "2016-09-27",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent025@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560023",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Rudra Bose",
+    "Student_Name": "Rudra Bose",
+    "Student_ID": "STU-2627-00026",
+    "DOB": "2016-02-19",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent026@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560032",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Navya Chawla",
+    "Student_Name": "Navya Chawla",
+    "Student_ID": "STU-2627-00027",
+    "DOB": "2016-08-01",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent027@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560051",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ishita Iyer",
+    "Student_Name": "Ishita Iyer",
+    "Student_ID": "STU-2627-00028",
+    "DOB": "2016-08-12",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent028@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560047",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Kiara Verma",
+    "Student_Name": "Kiara Verma",
+    "Student_ID": "STU-2627-00029",
+    "DOB": "2016-09-07",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent029@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560026",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Devansh Verma",
+    "Student_Name": "Devansh Verma",
+    "Student_ID": "STU-2627-00030",
+    "DOB": "2016-04-16",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent030@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560045",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ananya Bose",
+    "Student_Name": "Ananya Bose",
+    "Student_ID": "STU-2627-00031",
+    "DOB": "2015-07-05",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent031@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560081",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ananya Menon",
+    "Student_Name": "Ananya Menon",
+    "Student_ID": "STU-2627-00032",
+    "DOB": "2015-08-17",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent032@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560028",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Sai Pillai",
+    "Student_Name": "Sai Pillai",
+    "Student_ID": "STU-2627-00033",
+    "DOB": "2015-05-01",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent033@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560091",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Vivaan Kulkarni",
+    "Student_Name": "Vivaan Kulkarni",
+    "Student_ID": "STU-2627-00034",
+    "DOB": "2015-05-16",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent034@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560005",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aarohi Pillai",
+    "Student_Name": "Aarohi Pillai",
+    "Student_ID": "STU-2627-00035",
+    "DOB": "2015-09-21",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent035@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560088",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Krishna Menon",
+    "Student_Name": "Krishna Menon",
+    "Student_ID": "STU-2627-00036",
+    "DOB": "2015-09-08",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent036@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560032",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Pari Reddy",
+    "Student_Name": "Pari Reddy",
+    "Student_ID": "STU-2627-00037",
+    "DOB": "2015-02-20",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent037@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560071",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Bose",
+    "Student_Name": "Ayaan Bose",
+    "Student_ID": "STU-2627-00038",
+    "DOB": "2015-11-12",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent038@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560078",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Menon",
+    "Student_Name": "Ayaan Menon",
+    "Student_ID": "STU-2627-00039",
+    "DOB": "2015-05-22",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent039@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560096",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Riya Bose",
+    "Student_Name": "Riya Bose",
+    "Student_ID": "STU-2627-00040",
+    "DOB": "2015-08-05",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent040@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560051",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Navya Sharma",
+    "Student_Name": "Navya Sharma",
+    "Student_ID": "STU-2627-00041",
+    "DOB": "2015-05-06",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent041@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560011",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Aryan Reddy",
+    "Student_Name": "Aryan Reddy",
+    "Student_ID": "STU-2627-00042",
+    "DOB": "2015-01-24",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent042@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560069",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Vihaan Mehta",
+    "Student_Name": "Vihaan Mehta",
+    "Student_ID": "STU-2627-00043",
+    "DOB": "2014-10-11",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent043@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560010",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ananya Joshi",
+    "Student_Name": "Ananya Joshi",
+    "Student_ID": "STU-2627-00044",
+    "DOB": "2014-03-19",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent044@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560044",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Aditya Patel",
+    "Student_Name": "Aditya Patel",
+    "Student_ID": "STU-2627-00045",
+    "DOB": "2014-01-01",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent045@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560062",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Chawla",
+    "Student_Name": "Ayaan Chawla",
+    "Student_ID": "STU-2627-00046",
+    "DOB": "2014-11-12",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent046@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560061",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Myra Sharma",
+    "Student_Name": "Myra Sharma",
+    "Student_ID": "STU-2627-00047",
+    "DOB": "2014-07-09",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent047@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560029",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Atharv Reddy",
+    "Student_Name": "Atharv Reddy",
+    "Student_ID": "STU-2627-00048",
+    "DOB": "2014-12-20",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent048@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560012",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Sai Menon",
+    "Student_Name": "Sai Menon",
+    "Student_ID": "STU-2627-00049",
+    "DOB": "2014-01-12",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent049@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560028",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Saanvi Reddy",
+    "Student_Name": "Saanvi Reddy",
+    "Student_ID": "STU-2627-00050",
+    "DOB": "2014-04-12",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent050@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560054",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Meera Pillai",
+    "Student_Name": "Meera Pillai",
+    "Student_ID": "STU-2627-00051",
+    "DOB": "2014-04-26",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent051@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560089",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Arjun Mehta",
+    "Student_Name": "Arjun Mehta",
+    "Student_ID": "STU-2627-00052",
+    "DOB": "2014-06-17",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent052@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560013",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Rudra Chawla",
+    "Student_Name": "Rudra Chawla",
+    "Student_ID": "STU-2627-00053",
+    "DOB": "2014-06-10",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent053@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560037",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Navya Iyer",
+    "Student_Name": "Navya Iyer",
+    "Student_ID": "STU-2627-00054",
+    "DOB": "2014-08-17",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent054@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560028",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Bose",
+    "Student_Name": "Ayaan Bose",
+    "Student_ID": "STU-2627-00055",
+    "DOB": "2013-09-10",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent055@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560079",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aarohi Joshi",
+    "Student_Name": "Aarohi Joshi",
+    "Student_ID": "STU-2627-00056",
+    "DOB": "2013-09-28",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent056@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560072",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Mehta",
+    "Student_Name": "Ayaan Mehta",
+    "Student_ID": "STU-2627-00057",
+    "DOB": "2013-02-06",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent057@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560016",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Pari Joshi",
+    "Student_Name": "Pari Joshi",
+    "Student_ID": "STU-2627-00058",
+    "DOB": "2013-04-17",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent058@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560079",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Navya Sharma",
+    "Student_Name": "Navya Sharma",
+    "Student_ID": "STU-2627-00059",
+    "DOB": "2013-04-21",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent059@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560088",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Aditya Mehta",
+    "Student_Name": "Aditya Mehta",
+    "Student_ID": "STU-2627-00060",
+    "DOB": "2013-01-22",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent060@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560095",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ayaan Joshi",
+    "Student_Name": "Ayaan Joshi",
+    "Student_ID": "STU-2627-00061",
+    "DOB": "2013-06-04",
+    "Gender": "Male",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent061@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560046",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Ananya Verma",
+    "Student_Name": "Ananya Verma",
+    "Student_ID": "STU-2627-00062",
+    "DOB": "2013-02-08",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent062@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560050",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Pari Kulkarni",
+    "Student_Name": "Pari Kulkarni",
+    "Student_ID": "STU-2627-00063",
+    "DOB": "2013-10-01",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent063@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560034",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Sai Reddy",
+    "Student_Name": "Sai Reddy",
+    "Student_ID": "STU-2627-00064",
+    "DOB": "2013-05-12",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent064@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560062",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Meera Iyer",
+    "Student_Name": "Meera Iyer",
+    "Student_ID": "STU-2627-00065",
+    "DOB": "2013-07-26",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent065@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560089",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Myra Menon",
+    "Student_Name": "Myra Menon",
+    "Student_ID": "STU-2627-00066",
+    "DOB": "2013-12-24",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent066@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560051",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Pari Reddy",
+    "Student_Name": "Pari Reddy",
+    "Student_ID": "STU-2627-00067",
+    "DOB": "2012-09-01",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent067@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560033",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Siya Iyer",
+    "Student_Name": "Siya Iyer",
+    "Student_ID": "STU-2627-00068",
+    "DOB": "2012-07-01",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent068@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560011",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Diya Mehta",
+    "Student_Name": "Diya Mehta",
+    "Student_ID": "STU-2627-00069",
+    "DOB": "2012-02-16",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent069@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560075",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Anika Menon",
+    "Student_Name": "Anika Menon",
+    "Student_ID": "STU-2627-00070",
+    "DOB": "2012-10-16",
+    "Gender": "Female",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent070@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560041",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ayaan Kulkarni",
+    "Student_Name": "Ayaan Kulkarni",
+    "Student_ID": "STU-2627-00071",
+    "DOB": "2012-01-28",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent071@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560083",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aarohi Gupta",
+    "Student_Name": "Aarohi Gupta",
+    "Student_ID": "STU-2627-00072",
+    "DOB": "2012-02-15",
+    "Gender": "Female",
+    "Blood_Group": "O-",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent072@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560044",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Diya Kulkarni",
+    "Student_Name": "Diya Kulkarni",
+    "Student_ID": "STU-2627-00073",
+    "DOB": "2012-08-13",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent073@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560097",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Atharv Kulkarni",
+    "Student_Name": "Atharv Kulkarni",
+    "Student_ID": "STU-2627-00074",
+    "DOB": "2012-05-12",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent074@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560067",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aarav Menon",
+    "Student_Name": "Aarav Menon",
+    "Student_ID": "STU-2627-00075",
+    "DOB": "2012-07-19",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent075@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560055",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Reyansh Patel",
+    "Student_Name": "Reyansh Patel",
+    "Student_ID": "STU-2627-00076",
+    "DOB": "2012-07-14",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent076@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560094",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Krishna Mehta",
+    "Student_Name": "Krishna Mehta",
+    "Student_ID": "STU-2627-00077",
+    "DOB": "2012-03-08",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent077@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560002",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aditya Kulkarni",
+    "Student_Name": "Aditya Kulkarni",
+    "Student_ID": "STU-2627-00078",
+    "DOB": "2012-12-14",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent078@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560035",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Atharv Joshi",
+    "Student_Name": "Atharv Joshi",
+    "Student_ID": "STU-2627-00079",
+    "DOB": "2011-04-07",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent079@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560051",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Aarohi Sharma",
+    "Student_Name": "Aarohi Sharma",
+    "Student_ID": "STU-2627-00080",
+    "DOB": "2011-07-02",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent080@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560028",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Ishita Verma",
+    "Student_Name": "Ishita Verma",
+    "Student_ID": "STU-2627-00081",
+    "DOB": "2011-05-16",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent081@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560054",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Devansh Patel",
+    "Student_Name": "Devansh Patel",
+    "Student_ID": "STU-2627-00082",
+    "DOB": "2011-05-02",
+    "Gender": "Male",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent082@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560072",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Kabir Menon",
+    "Student_Name": "Kabir Menon",
+    "Student_ID": "STU-2627-00083",
+    "DOB": "2011-06-10",
+    "Gender": "Male",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent083@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560038",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Myra Sharma",
+    "Student_Name": "Myra Sharma",
+    "Student_ID": "STU-2627-00084",
+    "DOB": "2011-08-23",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent084@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560029",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Kiara Rao",
+    "Student_Name": "Kiara Rao",
+    "Student_ID": "STU-2627-00085",
+    "DOB": "2011-08-11",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent085@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560045",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Atharv Menon",
+    "Student_Name": "Atharv Menon",
+    "Student_ID": "STU-2627-00086",
+    "DOB": "2011-07-28",
+    "Gender": "Male",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent086@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560082",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Avni Patel",
+    "Student_Name": "Avni Patel",
+    "Student_ID": "STU-2627-00087",
+    "DOB": "2011-12-17",
+    "Gender": "Female",
+    "Blood_Group": "B+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent087@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560077",
+    "Transport_Opted": true
+   },
+   {
+    "Name": "Saanvi Sharma",
+    "Student_Name": "Saanvi Sharma",
+    "Student_ID": "STU-2627-00088",
+    "DOB": "2011-08-10",
+    "Gender": "Female",
+    "Blood_Group": "AB+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent088@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560004",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Anika Gupta",
+    "Student_Name": "Anika Gupta",
+    "Student_ID": "STU-2627-00089",
+    "DOB": "2011-10-16",
+    "Gender": "Female",
+    "Blood_Group": "A+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent089@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560098",
+    "Transport_Opted": false
+   },
+   {
+    "Name": "Atharv Menon",
+    "Student_Name": "Atharv Menon",
+    "Student_ID": "STU-2627-00090",
+    "DOB": "2011-05-20",
+    "Gender": "Male",
+    "Blood_Group": "O+",
+    "Admission_Date": "2026-04-05",
+    "Status": "Active",
+    "Parent": {
+     "$ref": "Contacts:parent090@vidyavihar.example"
+    },
+    "Current_Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "City": "Bengaluru",
+    "Pincode": "560048",
+    "Transport_Opted": false
+   }
+  ]
+ },
+ {
+  "module": "Enrollments",
+  "key": "Enrollment_Key",
+  "records": [
+   {
+    "Name": "STU-2627-00001 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00001-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00001"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00002 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00002-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00002"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00003 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00003-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00003"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00004 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00004-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00004"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00005 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00005-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00005"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00006 / 2026-27 / Grade 1 / A",
+    "Enrollment_Key": "STU-2627-00006-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00006"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-1-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00007 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00007-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00007"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00008 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00008-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00008"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00009 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00009-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00009"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00010 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00010-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00010"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00011 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00011-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00011"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00012 / 2026-27 / Grade 2 / A",
+    "Enrollment_Key": "STU-2627-00012-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00012"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-2-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00013 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00013-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00013"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00014 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00014-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00014"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00015 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00015-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00015"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00016 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00016-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00016"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00017 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00017-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00017"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00018 / 2026-27 / Grade 3 / A",
+    "Enrollment_Key": "STU-2627-00018-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00018"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-3-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00019 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00019-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00019"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00020 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00020-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00020"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00021 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00021-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00021"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00022 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00022-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00022"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00023 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00023-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00023"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00024 / 2026-27 / Grade 4 / A",
+    "Enrollment_Key": "STU-2627-00024-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00024"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-4-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00025 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00025-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00025"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00026 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00026-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00026"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00027 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00027-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00027"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00028 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00028-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00028"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00029 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00029-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00029"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00030 / 2026-27 / Grade 5 / A",
+    "Enrollment_Key": "STU-2627-00030-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00030"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-5-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00031 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00031-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00031"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00032 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00032-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00032"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00033 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00033-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00033"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00034 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00034-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00034"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00035 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00035-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00035"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00036 / 2026-27 / Grade 6 / A",
+    "Enrollment_Key": "STU-2627-00036-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00036"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00037 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00037-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00037"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00038 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00038-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00038"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00039 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00039-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00039"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00040 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00040-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00040"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00041 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00041-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00041"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00042 / 2026-27 / Grade 6 / B",
+    "Enrollment_Key": "STU-2627-00042-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00042"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-6-B"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00043 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00043-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00043"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00044 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00044-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00044"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00045 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00045-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00045"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00046 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00046-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00046"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00047 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00047-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00047"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00048 / 2026-27 / Grade 7 / A",
+    "Enrollment_Key": "STU-2627-00048-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00048"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00049 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00049-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00049"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00050 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00050-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00050"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00051 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00051-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00051"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00052 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00052-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00052"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00053 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00053-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00053"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00054 / 2026-27 / Grade 7 / B",
+    "Enrollment_Key": "STU-2627-00054-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00054"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-7-B"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00055 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00055-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00055"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00056 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00056-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00056"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00057 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00057-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00057"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00058 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00058-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00058"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00059 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00059-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00059"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00060 / 2026-27 / Grade 8 / A",
+    "Enrollment_Key": "STU-2627-00060-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00060"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00061 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00061-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00061"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00062 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00062-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00062"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00063 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00063-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00063"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00064 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00064-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00064"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00065 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00065-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00065"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00066 / 2026-27 / Grade 8 / B",
+    "Enrollment_Key": "STU-2627-00066-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00066"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-8-B"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00067 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00067-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00067"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00068 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00068-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00068"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00069 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00069-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00069"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00070 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00070-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00070"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00071 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00071-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00071"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00072 / 2026-27 / Grade 9 / A",
+    "Enrollment_Key": "STU-2627-00072-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00072"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00073 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00073-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00073"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00074 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00074-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00074"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00075 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00075-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00075"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00076 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00076-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00076"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00077 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00077-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00077"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00078 / 2026-27 / Grade 9 / B",
+    "Enrollment_Key": "STU-2627-00078-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00078"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-9-B"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00079 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00079-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00079"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00080 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00080-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00080"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00081 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00081-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00081"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00082 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00082-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00082"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00083 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00083-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00083"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00084 / 2026-27 / Grade 10 / A",
+    "Enrollment_Key": "STU-2627-00084-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00084"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-A"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00085 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00085-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00085"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 1,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00086 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00086-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00086"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 2,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00087 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00087-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00087"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 3,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00088 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00088-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00088"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 4,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00089 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00089-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00089"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 5,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   },
+   {
+    "Name": "STU-2627-00090 / 2026-27 / Grade 10 / B",
+    "Enrollment_Key": "STU-2627-00090-2627",
+    "Student": {
+     "$ref": "Students:STU-2627-00090"
+    },
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class_Section": {
+     "$ref": "Class_Sections:2627-10-B"
+    },
+    "Roll_No": 6,
+    "Enrollment_Date": "2026-04-05",
+    "Status": "Active",
+    "Days_Marked": 0,
+    "Days_Present": 0,
+    "Attendance_Percent": 0
+   }
+  ]
+ },
+ {
+  "module": "Fee_Structures",
+  "key": "Name",
+  "records": [
+   {
+    "Name": "2026-27 / Grade 1",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 1"
+    },
+    "Tuition_Fee": 26000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 0,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 37000,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 2",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 2"
+    },
+    "Tuition_Fee": 28000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 0,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 39000,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 3",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 3"
+    },
+    "Tuition_Fee": 30000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 0,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 41000,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 4",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 4"
+    },
+    "Tuition_Fee": 32000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 0,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 43000,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 5",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 5"
+    },
+    "Tuition_Fee": 34000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 0,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 45000,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 6",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 6"
+    },
+    "Tuition_Fee": 36000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 1500,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 48500,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 7",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 7"
+    },
+    "Tuition_Fee": 38000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 1500,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 50500,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 8",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 8"
+    },
+    "Tuition_Fee": 40000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 1500,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 52500,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 9",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 9"
+    },
+    "Tuition_Fee": 42000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 1500,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 54500,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   },
+   {
+    "Name": "2026-27 / Grade 10",
+    "Academic_Year": {
+     "$ref": "Academic_Years:2026-27"
+    },
+    "Class": {
+     "$ref": "Classes:Grade 10"
+    },
+    "Tuition_Fee": 44000,
+    "Transport_Fee": 9000,
+    "Lab_Fee": 1500,
+    "Exam_Fee": 1200,
+    "Misc_Fee": 800,
+    "Total_Fee": 56500,
+    "No_of_Installments": 4,
+    "Installment_Plan": "[{\"no\": 1, \"percent\": 25, \"due_offset_days\": 0}, {\"no\": 2, \"percent\": 25, \"due_offset_days\": 90}, {\"no\": 3, \"percent\": 25, \"due_offset_days\": 180}, {\"no\": 4, \"percent\": 25, \"due_offset_days\": 270}]"
+   }
+  ]
+ }
+]
