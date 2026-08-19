@@ -1,0 +1,46 @@
+[
+ {
+  "name": "schAbsenceSameDay",
+  "file": "schedule",
+  "ret": "void",
+  "category": "schedule",
+  "params": [],
+  "workflow": "// daily 11:00 : Same-day absence alert to parents\nstandalone.notifyAbsenceSameDay();\n",
+  "target": "notifyAbsenceSameDay",
+  "when": "daily 11:00",
+  "desc": "Same-day absence alert to parents"
+ },
+ {
+  "name": "schFeeDueSweep",
+  "file": "schedule",
+  "ret": "void",
+  "category": "schedule",
+  "params": [],
+  "workflow": "// daily 08:00 : Fee due and overdue sweep\nstandalone.feeDueScheduler();\n",
+  "target": "feeDueScheduler",
+  "when": "daily 08:00",
+  "desc": "Fee due and overdue sweep"
+ },
+ {
+  "name": "schEarlyWarning",
+  "file": "schedule",
+  "ret": "void",
+  "category": "schedule",
+  "params": [],
+  "workflow": "// daily 02:00 : Nightly early-warning engine\nstandalone.runEarlyWarning();\n",
+  "target": "runEarlyWarning",
+  "when": "daily 02:00",
+  "desc": "Nightly early-warning engine"
+ },
+ {
+  "name": "schReconcileAttendance",
+  "file": "schedule",
+  "ret": "void",
+  "category": "schedule",
+  "params": [],
+  "workflow": "// daily 01:00 : Attendance rollup reconciliation\nstandalone.reconcileAttendance();\n",
+  "target": "reconcileAttendance",
+  "when": "daily 01:00",
+  "desc": "Attendance rollup reconciliation"
+ }
+]

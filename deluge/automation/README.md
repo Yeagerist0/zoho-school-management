@@ -23,3 +23,15 @@ the standalone library.
 | Payments | Edit | `wfPaymentEdited` | `standalone.allocatePayment(paymentId);` |
 | Students | Create or Edit | `wfInvalidatePortalCache` | `standalone.invalidatePortalCache(studentId);` |
 | Leave_Requests | Edit | `wfProcessLeaveApproval` | `}` |
+
+## Scheduled functions
+
+A Schedule can only pick a function whose category is `schedule`, so these are
+adapters too.
+
+| Runs | Adapter | Calls | Why |
+|---|---|---|---|
+| daily 11:00 | `schAbsenceSameDay` | `standalone.notifyAbsenceSameDay()` | Same-day absence alert to parents |
+| daily 08:00 | `schFeeDueSweep` | `standalone.feeDueScheduler()` | Fee due and overdue sweep |
+| daily 02:00 | `schEarlyWarning` | `standalone.runEarlyWarning()` | Nightly early-warning engine |
+| daily 01:00 | `schReconcileAttendance` | `standalone.reconcileAttendance()` | Attendance rollup reconciliation |
