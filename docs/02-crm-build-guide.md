@@ -67,61 +67,99 @@ duplicate-prevention layer and several functions depend on them:
 
 ## Step 3 — Functions
 
-Setup → Developer Space → **Functions** → *Standalone*. Paste in this order (later files
-call earlier ones):
+Deployed from the repo, not pasted by hand. `tools/port_to_standalone.py` turns
+`deluge/crm/*.dg` into `tools/functions.json`, and the loader in the browser creates each
+function and PUTs its body through the settings API. Re-running it is idempotent.
 
-1. `00_utils.dg` — `school.coql`, `coqlPaged`, `bulkInsert`, `bulkUpdate`, `pushBatch`,
-   `computeGrade`, `dayDiff`, `currentAcademicYear`, `enforceSingleCurrentYear`
-2. `01_student_id_generator.dg`
-3. `02_admission_lead_conversion.dg`
-4. `03_attendance.dg`
-5. `04_marks_and_results.dg`
-6. `05_fees_and_payments.dg`
-7. `06_year_end_promotion.dg`
-8. `07_early_warning_engine.dg`
-9. `08_creator_sync.dg`
+> **The `school.` prefix in the source is not a namespace.** Zoho CRM function categories
+> are a fixed list (Button, Automation, Schedule, Related List, Standalone, Signals); you
+> cannot invent one. The port rewrites every `school.x` to `standalone.x`, which is how a
+> CRM function is actually addressed.
+>
+> **`standalone` functions may only return `string`** — the compiler rejects any other
+> declared return type — and `standalone` is the only category a function can be called
+> from another function. So every helper returns a JSON string and the port rewrites each
+> call site to parse it back (`.toJSONList()`, `.toMap()`, `.toLong()`). This is the single
+> biggest difference between the design on paper and the code that runs.
 
-> Deluge standalone functions are namespaced by the category you create them under. All of
-> these live under a category named **`school`**, which is where the `school.` prefix comes
-> from. Create the category first, or drop the prefix consistently.
+Load order does not matter for saving, but it does for validation: the deploy runs two
+passes, first registering every signature with an empty body, then writing the real
+bodies, so cross-calls resolve.
+
+## Step 3b — The dialect
+
+Five more things CRM Deluge does not accept, all fixed in `tools/fix_crm_deluge*.py`:
+
+| Assumption | Reality |
+|---|---|
+| `while (cond) { }` | No while loop. |
+| `for each index i in 1 to N` | No counted loop either. `for each x in <list>` is all there is, so `school.boundedSeq(n)` materialises the bound. |
+| `for each r in resp.get("data").toList()` | The iterable must be a plain variable. Hoist it. |
+| `type : method` in `invokeurl` | The HTTP verb must be a literal. |
+| `zoho.crm.deleteRecord(...)` | No such task — delete over REST through the connection. |
+
+Also: `sendmail from:` must be `zoho.loginuserid`, and unary minus on a variable
+(`-x % 7`) does not parse — write `(x * -1) % 7`.
 
 ## Step 4 — Workflow rules
 
-| # | Module | Trigger | Action |
+A workflow rule's Function action can only pick a function whose **category is
+`automation`**, and an automation function cannot be called from another function. So
+`deluge/automation/` holds ten one-line adapters — the entry point for one rule each —
+and all the logic stays in the standalone library.
+
+Two things changed once this ran against the real org:
+
+- **The trigger guard lives in the adapter, not in the rule's criteria builder.** "Only
+  when `Lead_Status = Admission Confirmed`" is a line of Deluge in git rather than a
+  setting buried in a UI. Without it, every lead edit would have created a student.
+- **Attendance rollup takes the attendance record id**, not merge fields for the
+  enrollment: a merge field on a lookup yields the display name, not the id.
+
+| # | Module | Trigger | Adapter |
 |---|---|---|---|
-| 1 | Leads | Edit → `Lead_Status = Admission Confirmed` | `school.confirmAdmission(Lead.id)` |
-| 2 | Academic_Years | Create/Edit, `Is_Current = true` | `school.enforceSingleCurrentYear(id)` |
-| 3 | Attendance | Create | `school.updateAttendanceRollup(Enrollment.id, "", Status, "create")` |
-| 4 | Attendance | Edit (`Status` changed) | `school.updateAttendanceRollup(Enrollment.id, oldStatus, Status, "edit")` |
-| 5 | Attendance | Delete | `school.updateAttendanceRollup(Enrollment.id, Status, "", "delete")` |
-| 6 | Marks | Create / Edit | `school.validateMark(id)` |
-| 7 | Examinations | Edit → `Results_Published = true` | `school.publishExamResults(id)` |
-| 8 | Payments | Create | `school.allocatePayment(id)` + `school.generateReceipt(id)` |
-| 9 | Payments | Edit (`Status` changed) | `school.allocatePayment(id)` |
-| 10 | Students | Create / Edit (`Parent`, `Secondary_Parent`, `Status`, `Current_Class_Section`) | `school.invalidatePortalCache(id)` |
-| 11 | Leave_Requests | Edit → `Status` in (Approved, Rejected) | `school.processLeaveApproval(id)` |
+| 1 | Leads | Edit | `wfConfirmAdmission` — guards on `Lead_Status = Admission Confirmed` |
+| 2 | Academic_Years | Create or Edit | `wfEnforceSingleCurrentYear` — guards on `Is_Current` |
+| 3 | Attendance | Create | `wfAttendanceCreated` — incremental rollup |
+| 4 | Attendance | Edit | `wfAttendanceEdited` — full recount |
+| 5 | Marks | Create or Edit | `wfValidateMark` |
+| 6 | Examinations | Edit | `wfPublishExamResults` — guards on `Results_Published` |
+| 7 | Payments | Create | `wfPaymentCreated` — allocate, then receipt |
+| 8 | Payments | Edit | `wfPaymentEdited` |
+| 9 | Students | Create or Edit | `wfInvalidatePortalCache` |
+| 10 | Leave_Requests | Edit | `wfProcessLeaveApproval` — guards on Approved/Rejected |
+
+There is deliberately **no delete rule on Attendance**: a deleted record has nothing left
+to read, so the nightly reconciliation is the honest place to correct for it.
+
+Zoho's public API refuses `workflow_rules` outright, so these were created by replaying
+the two calls the UI itself makes — `POST /crm/v7/settings/automation/functions` to bind a
+function to its argument mapping, then `POST /crm/v8/settings/automation/workflow_rules`.
 
 ## Step 5 — Scheduled functions
 
-Setup → Automation → **Schedules**.
+Schedules need their own category too, so there are four `schedule` adapters.
 
-| Schedule | Time | Function |
-|---|---|---|
-| Same-day absence alert | daily 11:00 | `school.notifyAbsenceSameDay` |
-| Fee due & overdue sweep | daily 08:00 | `school.feeDueScheduler` |
-| Early-warning engine | daily 02:00 | `school.runEarlyWarning` |
-| Attendance reconciliation | daily 01:00 | `school.reconcileAttendance` |
+| Schedule | Time | Adapter | Calls |
+|---|---|---|---|
+| Attendance reconciliation | daily 01:00 | `schReconcileAttendance` | `reconcileAttendance` |
+| Early-warning engine | daily 02:00 | `schEarlyWarning` | `runEarlyWarning` |
+| Fee due & overdue sweep | daily 08:00 | `schFeeDueSweep` | `feeDueScheduler` |
+| Same-day absence alert | daily 11:00 | `schAbsenceSameDay` | `notifyAbsenceSameDay` |
 
 ## Step 6 — Validation rules & Client Script
 
-Validation rules (declarative, Setup → Customization → Modules → *Validation Rules*):
+Three validation rules are live, each stopping the save with an error:
 
-- `Attendance.Attendance_Date` ≤ TODAY — *"Attendance cannot be marked for a future date."*
-- `Payments.Amount` > 0 — *"Payment amount must be greater than zero."*
-- `Marks.Marks_Obtained` ≥ 0
-- `Leads` : `Rejection_Reason` required when `Lead_Status = Rejected`
-- `Class_Sections.Max_Strength` > 0
-- `Fee_Structures.No_of_Installments` between 1 and 12
+| Module | Field | Criteria | Message |
+|---|---|---|---|
+| Attendance | `Attendance_Date` | `> ${TODAY}` | Attendance cannot be marked for a future date. |
+| Payments | `Amount` | `< 1` | Payment amount must be greater than zero. |
+| Marks | `Marks_Obtained` | `> ${Marks.Max_Marks}` | Marks obtained cannot be greater than the maximum marks for this paper. |
+
+Zoho allows one validation rule per primary field, which is why the Marks rule carries the
+paper-maximum check rather than a separate non-negative rule; the client script covers the
+rest before the round trip.
 
 Client Script: `clientscript/marks_entry_validation.js` on **Marks → Create/Edit**.
 
