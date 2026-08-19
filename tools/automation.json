@@ -1,0 +1,171 @@
+[
+ {
+  "name": "wfConfirmAdmission",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "leadId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Leads : Edit, Lead_Status = Admission Confirmed\nstandalone.confirmAdmission(leadId);\n",
+  "module": "Leads",
+  "trigger": "Edit, Lead_Status = Admission Confirmed"
+ },
+ {
+  "name": "wfEnforceSingleCurrentYear",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "yearId",
+    "type": "string"
+   }
+  ],
+  "workflow": "// Academic_Years : Create or Edit, Is_Current = true\nstandalone.enforceSingleCurrentYear(yearId);\n",
+  "module": "Academic_Years",
+  "trigger": "Create or Edit, Is_Current = true"
+ },
+ {
+  "name": "wfAttendanceCreated",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "enrollmentId",
+    "type": "string"
+   },
+   {
+    "name": "status",
+    "type": "string"
+   }
+  ],
+  "workflow": "// Attendance : Create\nstandalone.updateAttendanceRollup(enrollmentId, \"\", status, \"create\");\n",
+  "module": "Attendance",
+  "trigger": "Create"
+ },
+ {
+  "name": "wfAttendanceEdited",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "enrollmentId",
+    "type": "string"
+   }
+  ],
+  "workflow": "// Attendance : Edit, Status changed\n// the old status is not available to a workflow, so recount authoritatively\nstandalone.recomputeEnrollmentAttendance(enrollmentId);\n",
+  "module": "Attendance",
+  "trigger": "Edit, Status changed"
+ },
+ {
+  "name": "wfAttendanceDeleted",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "enrollmentId",
+    "type": "string"
+   }
+  ],
+  "workflow": "// Attendance : Delete\nstandalone.recomputeEnrollmentAttendance(enrollmentId);\n",
+  "module": "Attendance",
+  "trigger": "Delete"
+ },
+ {
+  "name": "wfValidateMark",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "markId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Marks : Create or Edit\nstandalone.validateMark(markId);\n",
+  "module": "Marks",
+  "trigger": "Create or Edit"
+ },
+ {
+  "name": "wfPublishExamResults",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "examId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Examinations : Edit, Results_Published = true\nstandalone.publishExamResults(examId);\n",
+  "module": "Examinations",
+  "trigger": "Edit, Results_Published = true"
+ },
+ {
+  "name": "wfPaymentCreated",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "paymentId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Payments : Create\nstandalone.allocatePayment(paymentId);\nstandalone.generateReceipt(paymentId);\n",
+  "module": "Payments",
+  "trigger": "Create"
+ },
+ {
+  "name": "wfPaymentEdited",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "paymentId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Payments : Edit, Status changed\nstandalone.allocatePayment(paymentId);\n",
+  "module": "Payments",
+  "trigger": "Edit, Status changed"
+ },
+ {
+  "name": "wfInvalidatePortalCache",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "studentId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Students : Create or Edit (Parent, Status, Current_Class_Section)\nstandalone.invalidatePortalCache(studentId);\n",
+  "module": "Students",
+  "trigger": "Create or Edit (Parent, Status, Current_Class_Section)"
+ },
+ {
+  "name": "wfProcessLeaveApproval",
+  "file": "automation",
+  "ret": "void",
+  "category": "automation",
+  "params": [
+   {
+    "name": "leaveId",
+    "type": "int"
+   }
+  ],
+  "workflow": "// Leave_Requests : Edit, Status is Approved or Rejected\nstandalone.processLeaveApproval(leaveId);\n",
+  "module": "Leave_Requests",
+  "trigger": "Edit, Status is Approved or Rejected"
+ }
+]

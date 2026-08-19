@@ -205,6 +205,49 @@ void school.updateAttendanceRollup(string enrollmentId, string oldStatus, string
 }
 
 
+/* ----------------------------------------------------------------------------
+ * school.recomputeEnrollmentAttendance - authoritative recount for one
+ * enrollment.
+ *
+ * The incremental rollup above needs the PREVIOUS status to unwind, and a Zoho
+ * workflow cannot hand a function the old value of a field. So the create path
+ * stays incremental (it is the hot path and only ever adds), while edit and
+ * delete recount from the attendance rows themselves. Correct beats clever.
+ * -------------------------------------------------------------------------- */
+void school.recomputeEnrollmentAttendance(string enrollmentId)
+{
+    marked  = 0;
+    present = 0.0;
+
+    loopSeqA = school.boundedSeq(20);
+    for each loopGuardA in loopSeqA
+    {
+        rows = school.coqlPaged("select id, Status from Attendance where Enrollment = " + enrollmentId, loopGuardA);
+        for each r in rows
+        {
+            marked  = marked + 1;
+            present = present + school.presenceCredit(ifnull(r.get("Status"), "").toString());
+        }
+        if(rows.size() < 200)
+        {
+            break;
+        }
+    }
+
+    pct = 0.0;
+    if(marked > 0)
+    {
+        pct = round(present * 100 / marked, 2);
+    }
+
+    u = Map();
+    u.put("Days_Marked",        marked);
+    u.put("Days_Present",       present);
+    u.put("Attendance_Percent", pct);
+    zoho.crm.updateRecord("Enrollments", enrollmentId.toLong(), u);
+}
+
+
 /* Half Day counts as 0.5, Approved Leave is excused (counts as present for the
  * percentage but is still visible as leave in history). Tune here, once. */
 decimal school.presenceCredit(string status)
