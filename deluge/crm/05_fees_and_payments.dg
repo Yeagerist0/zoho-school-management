@@ -211,7 +211,7 @@ void school.generateReceipt(int paymentId)
 
     sendmail
     [
-        from    : zoho.adminuserid
+        from    : zoho.loginuserid
         to      : email
         subject : "Fee Receipt " + ifnull(pay.get("Receipt_No"), "") + " - " + ifnull(stu.get("Student_Name"), "")
         message : body
@@ -243,8 +243,11 @@ void school.feeDueScheduler()
     more = true;
     remindersSent = 0;
 
-    while(more && page <= 100)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(100);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(more && page <= 100)) { break; }
         rows = school.coqlPaged(
             "select id, Student.id, Student.Student_Name, Student.Parent.Email, " +
             "Next_Due_Date, Next_Due_Amount, Status, Last_Reminder_Sent " +
@@ -272,7 +275,7 @@ void school.feeDueScheduler()
             kind = "";
             if(daysToGo == 7)                    { kind = "upcoming"; }
             else if(daysToGo == 0)               { kind = "due_today"; }
-            else if(daysToGo < 0 && daysToGo >= -30 && (-daysToGo % 7) == 0) { kind = "overdue"; }
+            else if(daysToGo < 0 && daysToGo >= -30 && ((daysToGo * -1) % 7) == 0) { kind = "overdue"; }
             else if(daysToGo < -30)              { kind = "escalate"; }
 
             if(kind == "")
@@ -300,7 +303,7 @@ void school.feeDueScheduler()
                 }
                 sendmail
                 [
-                    from    : zoho.adminuserid
+                    from    : zoho.loginuserid
                     to      : email
                     subject : subj
                     message : "<p>Dear Parent,</p><p>An installment of <b>Rs. " + ifnull(f.get("Next_Due_Amount"), 0) +

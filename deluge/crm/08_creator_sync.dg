@@ -31,7 +31,8 @@ void school.invalidatePortalCache(int studentId)
     }
 
     emails = List();
-    for each fld in {"Parent", "Secondary_Parent"}
+    iter_fld = {"Parent", "Secondary_Parent"};
+    for each fld in iter_fld
     {
         if(!isNull(stu.get(fld)))
         {
@@ -125,8 +126,11 @@ void school.processLeaveApproval(int leaveId)
 
     rows = List();
     d    = fromD;
-    while(d <= toD)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(1000);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(d <= toD)) { break; }
         ds  = d.toString("yyyy-MM-dd");
         dow = d.toString("EEE");
         if(dow != "Sat" && dow != "Sun" && !holSet.containKey(ds))
@@ -160,7 +164,7 @@ void school.processLeaveApproval(int leaveId)
         {
             sendmail
             [
-                from    : zoho.adminuserid
+                from    : zoho.loginuserid
                 to      : parent.get("Email")
                 subject : "Leave approved - " + ifnull(stu.get("Student_Name"), "")
                 message : "<p>Dear Parent,</p><p>The leave request for <b>" + ifnull(stu.get("Student_Name"), "") +

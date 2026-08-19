@@ -62,7 +62,7 @@ void school.validateMark(int markId)
         enteredBy = ifnull(m.get("Modified_By"), m.get("Created_By"));
         sendmail
         [
-            from    : zoho.adminuserid
+            from    : zoho.loginuserid
             to      : enteredBy.get("email")
             subject : "Invalid mark entry rejected"
             message : invalid + "<br/>Record: " + ifnull(m.get("Name"), markId.toString())
@@ -116,8 +116,11 @@ void school.publishExamResults(int examId)
     page = 1;
     more = true;
 
-    while(more && page <= 200)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(200);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(more && page <= 200)) { break; }
         rows = school.coqlPaged(
             "select id, Student.id, Marks_Obtained, Max_Marks, Result, Is_Absent " +
             "from Marks where Examination = " + examId, page);
@@ -168,8 +171,11 @@ void school.publishExamResults(int examId)
     enrollByStudent = Map();
     page = 1;
     more = true;
-    while(more && page <= 200)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq2 = school.boundedSeq(200);
+    for each loopGuard2 in loopSeq2
     {
+        if(!(more && page <= 200)) { break; }
         rows = school.coqlPaged(
             "select id, Student.id, Class_Section.id, Class_Section.Class.id " +
             "from Enrollments where Academic_Year = " + ayId + " and Status = 'Active'", page);
@@ -189,7 +195,8 @@ void school.publishExamResults(int examId)
     bySection    = Map();   // sectionId -> list of {sid, pct}
     byClass      = Map();   // classId   -> list of {sid, pct}
 
-    for each sid in totalsByStudent.keys()
+    iter_sid = totalsByStudent.keys();
+    for each sid in iter_sid
     {
         agg      = totalsByStudent.get(sid);
         obtained = agg.get("obtained").toDecimal();
@@ -277,7 +284,8 @@ void school.publishExamResults(int examId)
 map school.denseRank(map cohorts)
 {
     ranks = Map();
-    for each cid in cohorts.keys()
+    iter_cid = cohorts.keys();
+    for each cid in iter_cid
     {
         members = cohorts.get(cid);
 
@@ -359,7 +367,8 @@ int school.pushUpsert(string moduleName, list batch, string dupField)
     ok = 0;
     if(!isNull(resp.get("data")))
     {
-        for each r in resp.get("data").toList()
+        iter_r = resp.get("data").toList();
+        for each r in iter_r
         {
             if(r.get("code") == "SUCCESS")
             {

@@ -115,19 +115,36 @@ int school.pushBatch(string moduleName, list batch, string method)
     // already maintaining the rollups itself - prevents N workflow storms.
     body.put("trigger", List());
 
-    resp = invokeurl
-    [
-        url        : "https://www.zohoapis.in/crm/v5/" + moduleName
-        type       : method
-        parameters : body.toString()
-        headers    : {"Content-Type":"application/json"}
-        connection : "crmconn"
-    ];
+    // invokeurl needs a literal HTTP verb, so the two paths are spelled out.
+    resp = Map();
+    if(method == "POST")
+    {
+        resp = invokeurl
+        [
+            url        : "https://www.zohoapis.in/crm/v5/" + moduleName
+            type       : POST
+            parameters : body.toString()
+            headers    : {"Content-Type":"application/json"}
+            connection : "crmconn"
+        ];
+    }
+    else
+    {
+        resp = invokeurl
+        [
+            url        : "https://www.zohoapis.in/crm/v5/" + moduleName
+            type       : PUT
+            parameters : body.toString()
+            headers    : {"Content-Type":"application/json"}
+            connection : "crmconn"
+        ];
+    }
 
     ok = 0;
     if(!isNull(resp.get("data")))
     {
-        for each r in resp.get("data").toList()
+        iter_r = resp.get("data").toList();
+        for each r in iter_r
         {
             if(r.get("code") == "SUCCESS")
             {
@@ -216,4 +233,35 @@ void school.enforceSingleCurrentYear(string yearId)
     {
         school.bulkUpdate("Academic_Years", updates);
     }
+}
+
+
+/* ----------------------------------------------------------------------------
+ * school.boundedSeq - CRM Deluge has neither a while loop nor a counted loop;
+ * `for each x in <list>` is the only iteration construct there is. Every paged
+ * read in this project needs a hard ceiling on the API calls it can make, so
+ * that ceiling is materialised as a list once and iterated.
+ * -------------------------------------------------------------------------- */
+list school.boundedSeq(int upto)
+{
+    digits = {0,1,2,3,4,5,6,7,8,9};
+    out    = List();
+    for each h in digits
+    {
+        if(h * 100 <= upto)
+        {
+            for each t in digits
+            {
+                for each u in digits
+                {
+                    n = h * 100 + t * 10 + u + 1;
+                    if(n <= upto)
+                    {
+                        out.add(n);
+                    }
+                }
+            }
+        }
+    }
+    return out;
 }
