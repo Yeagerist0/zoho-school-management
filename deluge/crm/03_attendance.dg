@@ -248,6 +248,35 @@ void school.recomputeEnrollmentAttendance(string enrollmentId)
 }
 
 
+/* ----------------------------------------------------------------------------
+ * school.attendanceRollupFromRecord - workflow entry point for one attendance
+ * row.
+ *
+ * A workflow can only hand a function merge fields, and a merge field on a
+ * lookup gives the display name, not the id. Passing the attendance record's
+ * own id and reading the row back is unambiguous, and costs one call.
+ * -------------------------------------------------------------------------- */
+void school.attendanceRollupFromRecord(string attendanceId, string action)
+{
+    att = zoho.crm.getRecordById("Attendance", attendanceId.toLong());
+    if(isNull(att.get("id")) || isNull(att.get("Enrollment")))
+    {
+        return;
+    }
+    enrollmentId = att.get("Enrollment").get("id").toString();
+
+    if(action == "create")
+    {
+        // the hot path only ever adds, so the cheap incremental update is safe
+        school.updateAttendanceRollup(enrollmentId, "", ifnull(att.get("Status"), "").toString(), "create");
+    }
+    else
+    {
+        school.recomputeEnrollmentAttendance(enrollmentId);
+    }
+}
+
+
 /* Half Day counts as 0.5, Approved Leave is excused (counts as present for the
  * percentage but is still visible as leave in history). Tune here, once. */
 decimal school.presenceCredit(string status)

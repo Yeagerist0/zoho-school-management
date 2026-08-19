@@ -10,9 +10,9 @@
     "type": "int"
    }
   ],
-  "workflow": "// Leads : Edit, Lead_Status = Admission Confirmed\nstandalone.confirmAdmission(leadId);\n",
+  "workflow": "// Leads : Edit\nlead = zoho.crm.getRecordById(\"Leads\", leadId);\nif(ifnull(lead.get(\"Lead_Status\"), \"\") == \"Admission Confirmed\")\n{\n    standalone.confirmAdmission(leadId);\n}\n",
   "module": "Leads",
-  "trigger": "Edit, Lead_Status = Admission Confirmed"
+  "trigger": "Edit"
  },
  {
   "name": "wfEnforceSingleCurrentYear",
@@ -25,9 +25,9 @@
     "type": "string"
    }
   ],
-  "workflow": "// Academic_Years : Create or Edit, Is_Current = true\nstandalone.enforceSingleCurrentYear(yearId);\n",
+  "workflow": "// Academic_Years : Create or Edit\nyr = zoho.crm.getRecordById(\"Academic_Years\", yearId.toLong());\nif(ifnull(yr.get(\"Is_Current\"), false))\n{\n    standalone.enforceSingleCurrentYear(yearId);\n}\n",
   "module": "Academic_Years",
-  "trigger": "Create or Edit, Is_Current = true"
+  "trigger": "Create or Edit"
  },
  {
   "name": "wfAttendanceCreated",
@@ -36,15 +36,11 @@
   "category": "automation",
   "params": [
    {
-    "name": "enrollmentId",
-    "type": "string"
-   },
-   {
-    "name": "status",
+    "name": "attendanceId",
     "type": "string"
    }
   ],
-  "workflow": "// Attendance : Create\nstandalone.updateAttendanceRollup(enrollmentId, \"\", status, \"create\");\n",
+  "workflow": "// Attendance : Create\nstandalone.attendanceRollupFromRecord(attendanceId, \"create\");\n",
   "module": "Attendance",
   "trigger": "Create"
  },
@@ -55,28 +51,13 @@
   "category": "automation",
   "params": [
    {
-    "name": "enrollmentId",
+    "name": "attendanceId",
     "type": "string"
    }
   ],
-  "workflow": "// Attendance : Edit, Status changed\n// the old status is not available to a workflow, so recount authoritatively\nstandalone.recomputeEnrollmentAttendance(enrollmentId);\n",
+  "workflow": "// Attendance : Edit\nstandalone.attendanceRollupFromRecord(attendanceId, \"edit\");\n",
   "module": "Attendance",
-  "trigger": "Edit, Status changed"
- },
- {
-  "name": "wfAttendanceDeleted",
-  "file": "automation",
-  "ret": "void",
-  "category": "automation",
-  "params": [
-   {
-    "name": "enrollmentId",
-    "type": "string"
-   }
-  ],
-  "workflow": "// Attendance : Delete\nstandalone.recomputeEnrollmentAttendance(enrollmentId);\n",
-  "module": "Attendance",
-  "trigger": "Delete"
+  "trigger": "Edit"
  },
  {
   "name": "wfValidateMark",
@@ -104,9 +85,9 @@
     "type": "int"
    }
   ],
-  "workflow": "// Examinations : Edit, Results_Published = true\nstandalone.publishExamResults(examId);\n",
+  "workflow": "// Examinations : Edit\nex = zoho.crm.getRecordById(\"Examinations\", examId);\nif(ifnull(ex.get(\"Results_Published\"), false))\n{\n    standalone.publishExamResults(examId);\n}\n",
   "module": "Examinations",
-  "trigger": "Edit, Results_Published = true"
+  "trigger": "Edit"
  },
  {
   "name": "wfPaymentCreated",
@@ -134,9 +115,9 @@
     "type": "int"
    }
   ],
-  "workflow": "// Payments : Edit, Status changed\nstandalone.allocatePayment(paymentId);\n",
+  "workflow": "// Payments : Edit\nstandalone.allocatePayment(paymentId);\n",
   "module": "Payments",
-  "trigger": "Edit, Status changed"
+  "trigger": "Edit"
  },
  {
   "name": "wfInvalidatePortalCache",
@@ -149,9 +130,9 @@
     "type": "int"
    }
   ],
-  "workflow": "// Students : Create or Edit (Parent, Status, Current_Class_Section)\nstandalone.invalidatePortalCache(studentId);\n",
+  "workflow": "// Students : Create or Edit\nstandalone.invalidatePortalCache(studentId);\n",
   "module": "Students",
-  "trigger": "Create or Edit (Parent, Status, Current_Class_Section)"
+  "trigger": "Create or Edit"
  },
  {
   "name": "wfProcessLeaveApproval",
@@ -164,8 +145,8 @@
     "type": "int"
    }
   ],
-  "workflow": "// Leave_Requests : Edit, Status is Approved or Rejected\nstandalone.processLeaveApproval(leaveId);\n",
+  "workflow": "// Leave_Requests : Edit\nlv = zoho.crm.getRecordById(\"Leave_Requests\", leaveId);\nst = ifnull(lv.get(\"Status\"), \"\").toString();\nif(st == \"Approved\" || st == \"Rejected\")\n{\n    standalone.processLeaveApproval(leaveId);\n}\n",
   "module": "Leave_Requests",
-  "trigger": "Edit, Status is Approved or Rejected"
+  "trigger": "Edit"
  }
 ]

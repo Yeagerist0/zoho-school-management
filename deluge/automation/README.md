@@ -13,14 +13,13 @@ the standalone library.
 
 | Module | Trigger | Adapter | Call |
 |---|---|---|---|
-| Leads | Edit, Lead_Status = Admission Confirmed | `wfConfirmAdmission` | `standalone.confirmAdmission(leadId);` |
-| Academic_Years | Create or Edit, Is_Current = true | `wfEnforceSingleCurrentYear` | `standalone.enforceSingleCurrentYear(yearId);` |
-| Attendance | Create | `wfAttendanceCreated` | `standalone.updateAttendanceRollup(enrollmentId, "", status, "create");` |
-| Attendance | Edit, Status changed | `wfAttendanceEdited` | `standalone.recomputeEnrollmentAttendance(enrollmentId);` |
-| Attendance | Delete | `wfAttendanceDeleted` | `standalone.recomputeEnrollmentAttendance(enrollmentId);` |
+| Leads | Edit | `wfConfirmAdmission` | `}` |
+| Academic_Years | Create or Edit | `wfEnforceSingleCurrentYear` | `}` |
+| Attendance | Create | `wfAttendanceCreated` | `standalone.attendanceRollupFromRecord(attendanceId, "create");` |
+| Attendance | Edit | `wfAttendanceEdited` | `standalone.attendanceRollupFromRecord(attendanceId, "edit");` |
 | Marks | Create or Edit | `wfValidateMark` | `standalone.validateMark(markId);` |
-| Examinations | Edit, Results_Published = true | `wfPublishExamResults` | `standalone.publishExamResults(examId);` |
+| Examinations | Edit | `wfPublishExamResults` | `}` |
 | Payments | Create | `wfPaymentCreated` | `standalone.generateReceipt(paymentId);` |
-| Payments | Edit, Status changed | `wfPaymentEdited` | `standalone.allocatePayment(paymentId);` |
-| Students | Create or Edit (Parent, Status, Current_Class_Section) | `wfInvalidatePortalCache` | `standalone.invalidatePortalCache(studentId);` |
-| Leave_Requests | Edit, Status is Approved or Rejected | `wfProcessLeaveApproval` | `standalone.processLeaveApproval(leaveId);` |
+| Payments | Edit | `wfPaymentEdited` | `standalone.allocatePayment(paymentId);` |
+| Students | Create or Edit | `wfInvalidatePortalCache` | `standalone.invalidatePortalCache(studentId);` |
+| Leave_Requests | Edit | `wfProcessLeaveApproval` | `}` |
