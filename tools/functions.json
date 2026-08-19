@@ -294,6 +294,24 @@
  },
  {
   "file": "03_attendance.dg",
+  "name": "attendanceRollupFromRecord",
+  "ret": "void",
+  "params": [
+   {
+    "name": "attendanceId",
+    "type": "string"
+   },
+   {
+    "name": "action",
+    "type": "string"
+   }
+  ],
+  "body": "    att = zoho.crm.getRecordById(\"Attendance\", attendanceId.toLong());\n    if(isNull(att.get(\"id\")) || isNull(att.get(\"Enrollment\")))\n    {\n        return;\n    }\n    enrollmentId = att.get(\"Enrollment\").get(\"id\").toString();\n\n    if(action == \"create\")\n    {\n        // the hot path only ever adds, so the cheap incremental update is safe\n        school.updateAttendanceRollup(enrollmentId, \"\", ifnull(att.get(\"Status\"), \"\").toString(), \"create\");\n    }\n    else\n    {\n        school.recomputeEnrollmentAttendance(enrollmentId);\n    }",
+  "lineno": 259,
+  "workflow": "    att = zoho.crm.getRecordById(\"Attendance\", attendanceId.toLong());\n    if(isNull(att.get(\"id\")) || isNull(att.get(\"Enrollment\")))\n    {\n        return \"\";\n    }\n    enrollmentId = att.get(\"Enrollment\").get(\"id\").toString();\n\n    if(action == \"create\")\n    {\n        // the hot path only ever adds, so the cheap incremental update is safe\n        standalone.updateAttendanceRollup(enrollmentId, \"\", ifnull(att.get(\"Status\"), \"\").toString(), \"create\");\n    }\n    else\n    {\n        standalone.recomputeEnrollmentAttendance(enrollmentId);\n    }\nreturn \"\";\n"
+ },
+ {
+  "file": "03_attendance.dg",
   "name": "presenceCredit",
   "ret": "decimal",
   "params": [
@@ -303,7 +321,7 @@
    }
   ],
   "body": "    credit = 0.0;\n    if(status == \"Present\" || status == \"Late\")\n    {\n        credit = 1.0;\n    }\n    else if(status == \"Half Day\")\n    {\n        credit = 0.5;\n    }\n    else if(status == \"Approved Leave\")\n    {\n        credit = 1.0;\n    }\n    return credit;",
-  "lineno": 253,
+  "lineno": 282,
   "workflow": "    credit = 0.0;\n    if(status == \"Present\" || status == \"Late\")\n    {\n        credit = 1.0;\n    }\n    else if(status == \"Half Day\")\n    {\n        credit = 0.5;\n    }\n    else if(status == \"Approved Leave\")\n    {\n        credit = 1.0;\n    }\n    return credit.toString();"
  },
  {
@@ -312,7 +330,7 @@
   "ret": "void",
   "params": [],
   "body": "    since = zoho.currenttime.subHour(26).toString(\"yyyy-MM-dd'T'HH:mm:ss+05:30\");\n\n    touched = Map();\n    page    = 1;\n    more    = true;\n    // CRM Deluge has no while loop - bounded loop with an explicit exit.\n    loopSeq1 = school.boundedSeq(20);\n    for each loopGuard1 in loopSeq1\n    {\n        if(!(more && page <= 20)) { break; }\n        rows = school.coqlPaged(\"select id, Enrollment.id from Attendance where Modified_Time > '\" + since + \"'\", page);\n        for each r in rows\n        {\n            if(!isNull(r.get(\"Enrollment\")))\n            {\n                touched.put(r.get(\"Enrollment\").get(\"id\").toString(), 1);\n            }\n        }\n        more = rows.size() == 200;\n        page = page + 1;\n    }\n\n    updates = List();\n    iter_enId = touched.keys();\n    for each enId in iter_enId\n    {\n        agg     = school.coql(\"select id, Status from Attendance where Enrollment = \" + enId + \" limit 400\");\n        marked  = agg.size();\n        present = 0.0;\n        for each a in agg\n        {\n            present = present + school.presenceCredit(a.get(\"Status\").toString());\n        }\n        pct = 0.0;\n        if(marked > 0)\n        {\n            pct = round(present * 100 / marked, 2);\n        }\n\n        u = Map();\n        u.put(\"id\", enId);\n        u.put(\"Days_Marked\", marked);\n        u.put(\"Days_Present\", present);\n        u.put(\"Attendance_Percent\", pct);\n        updates.add(u);\n    }\n\n    if(updates.size() > 0)\n    {\n        school.bulkUpdate(\"Enrollments\", updates);\n    }\n    info \"Attendance reconciled for \" + updates.size() + \" enrollments.\";",
-  "lineno": 277,
+  "lineno": 306,
   "workflow": "    since = zoho.currenttime.subHour(26).toString(\"yyyy-MM-dd'T'HH:mm:ss+05:30\");\n\n    touched = Map();\n    page    = 1;\n    more    = true;\n    // CRM Deluge has no while loop - bounded loop with an explicit exit.\n    loopSeq1 = standalone.boundedSeq(20).toJSONList();\n    for each loopGuard1 in loopSeq1\n    {\n        if(!(more && page <= 20)) { break; }\n        rows = standalone.coqlPaged(\"select id, Enrollment.id from Attendance where Modified_Time > '\" + since + \"'\", page).toJSONList();\n        for each r in rows\n        {\n            if(!isNull(r.get(\"Enrollment\")))\n            {\n                touched.put(r.get(\"Enrollment\").get(\"id\").toString(), 1);\n            }\n        }\n        more = rows.size() == 200;\n        page = page + 1;\n    }\n\n    updates = List();\n    iter_enId = touched.keys();\n    for each enId in iter_enId\n    {\n        agg     = standalone.coql(\"select id, Status from Attendance where Enrollment = \" + enId + \" limit 400\").toJSONList();\n        marked  = agg.size();\n        present = 0.0;\n        for each a in agg\n        {\n            present = present + standalone.presenceCredit(a.get(\"Status\").toString()).toDecimal();\n        }\n        pct = 0.0;\n        if(marked > 0)\n        {\n            pct = round(present * 100 / marked, 2);\n        }\n\n        u = Map();\n        u.put(\"id\", enId);\n        u.put(\"Days_Marked\", marked);\n        u.put(\"Days_Present\", present);\n        u.put(\"Attendance_Percent\", pct);\n        updates.add(u);\n    }\n\n    if(updates.size() > 0)\n    {\n        standalone.bulkUpdate(\"Enrollments\", updates);\n    }\n    info \"Attendance reconciled for \" + updates.size() + \" enrollments.\";\nreturn \"\";\n"
  },
  {

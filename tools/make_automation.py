@@ -15,43 +15,56 @@ argument names are what the rule's argument mapping binds to record fields.
 import json
 
 ADAPTERS = [
-    ("wfConfirmAdmission", "Leads", "Edit, Lead_Status = Admission Confirmed",
-     [("leadId", "int")], 'standalone.confirmAdmission(leadId);'),
+    # The trigger guard lives HERE, in version-controlled code, rather than in the
+    # workflow rule's criteria builder. The rule fires on the record action; the
+    # adapter decides whether the condition is actually met. That keeps the whole
+    # trigger contract reviewable in a diff instead of buried in a settings UI,
+    # and it is the part most likely to need changing later.
+    ("wfConfirmAdmission", "Leads", "Edit",
+     [("leadId", "int")],
+     'lead = zoho.crm.getRecordById("Leads", leadId);\n'
+     'if(ifnull(lead.get("Lead_Status"), "") == "Admission Confirmed")\n{\n'
+     '    standalone.confirmAdmission(leadId);\n}'),
 
-    ("wfEnforceSingleCurrentYear", "Academic_Years", "Create or Edit, Is_Current = true",
-     [("yearId", "string")], 'standalone.enforceSingleCurrentYear(yearId);'),
+    ("wfEnforceSingleCurrentYear", "Academic_Years", "Create or Edit",
+     [("yearId", "string")],
+     'yr = zoho.crm.getRecordById("Academic_Years", yearId.toLong());\n'
+     'if(ifnull(yr.get("Is_Current"), false))\n{\n'
+     '    standalone.enforceSingleCurrentYear(yearId);\n}'),
 
     ("wfAttendanceCreated", "Attendance", "Create",
-     [("enrollmentId", "string"), ("status", "string")],
-     'standalone.updateAttendanceRollup(enrollmentId, "", status, "create");'),
+     [("attendanceId", "string")],
+     'standalone.attendanceRollupFromRecord(attendanceId, "create");'),
 
-    ("wfAttendanceEdited", "Attendance", "Edit, Status changed",
-     [("enrollmentId", "string")],
-     '// the old status is not available to a workflow, so recount authoritatively\n'
-     'standalone.recomputeEnrollmentAttendance(enrollmentId);'),
-
-    ("wfAttendanceDeleted", "Attendance", "Delete",
-     [("enrollmentId", "string")],
-     'standalone.recomputeEnrollmentAttendance(enrollmentId);'),
+    ("wfAttendanceEdited", "Attendance", "Edit",
+     [("attendanceId", "string")],
+     'standalone.attendanceRollupFromRecord(attendanceId, "edit");'),
 
     ("wfValidateMark", "Marks", "Create or Edit",
      [("markId", "int")], 'standalone.validateMark(markId);'),
 
-    ("wfPublishExamResults", "Examinations", "Edit, Results_Published = true",
-     [("examId", "int")], 'standalone.publishExamResults(examId);'),
+    ("wfPublishExamResults", "Examinations", "Edit",
+     [("examId", "int")],
+     'ex = zoho.crm.getRecordById("Examinations", examId);\n'
+     'if(ifnull(ex.get("Results_Published"), false))\n{\n'
+     '    standalone.publishExamResults(examId);\n}'),
 
     ("wfPaymentCreated", "Payments", "Create",
      [("paymentId", "int")],
      'standalone.allocatePayment(paymentId);\nstandalone.generateReceipt(paymentId);'),
 
-    ("wfPaymentEdited", "Payments", "Edit, Status changed",
+    ("wfPaymentEdited", "Payments", "Edit",
      [("paymentId", "int")], 'standalone.allocatePayment(paymentId);'),
 
-    ("wfInvalidatePortalCache", "Students", "Create or Edit (Parent, Status, Current_Class_Section)",
+    ("wfInvalidatePortalCache", "Students", "Create or Edit",
      [("studentId", "int")], 'standalone.invalidatePortalCache(studentId);'),
 
-    ("wfProcessLeaveApproval", "Leave_Requests", "Edit, Status is Approved or Rejected",
-     [("leaveId", "int")], 'standalone.processLeaveApproval(leaveId);'),
+    ("wfProcessLeaveApproval", "Leave_Requests", "Edit",
+     [("leaveId", "int")],
+     'lv = zoho.crm.getRecordById("Leave_Requests", leaveId);\n'
+     'st = ifnull(lv.get("Status"), "").toString();\n'
+     'if(st == "Approved" || st == "Rejected")\n{\n'
+     '    standalone.processLeaveApproval(leaveId);\n}'),
 ]
 
 out, doc = [], []
