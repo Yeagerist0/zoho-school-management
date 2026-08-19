@@ -201,7 +201,7 @@ void school.confirmAdmission(int leadId)
         // ---------- 9. Welcome mail ------------------------------------------
         sendmail
         [
-            from    : zoho.adminuserid
+            from    : zoho.loginuserid
             to      : parentEmail
             subject : "Admission Confirmed - " + sm.get("Student_Name")
             message : "<p>Dear Parent,</p><p>We are glad to confirm the admission of <b>" + sm.get("Student_Name") + "</b>.</p><p>Student ID: <b>" + studentId + "</b><br/>Class: <b>" + ifnull(chosenSection.get("Name"), "") + "</b></p><p>You can track attendance, results and fees on the Parent Portal using this email address.</p>"
@@ -218,11 +218,21 @@ void school.confirmAdmission(int leadId)
         }
         if(createdEnrollmentId != "")
         {
-            zoho.crm.deleteRecord("Enrollments", createdEnrollmentId.toLong());
+            invokeurl
+            [
+                url        : "https://www.zohoapis.in/crm/v5/Enrollments/" + createdEnrollmentId
+                type       : DELETE
+                connection : "crmconn"
+            ];
         }
         if(createdStudentId != "")
         {
-            zoho.crm.deleteRecord("Students", createdStudentId.toLong());
+            invokeurl
+            [
+                url        : "https://www.zohoapis.in/crm/v5/Students/" + createdStudentId
+                type       : DELETE
+                connection : "crmconn"
+            ];
         }
 
         note = Map();
@@ -279,7 +289,8 @@ string school.raiseStudentFee(string studentId, string academicYearId, string cl
     else
     {
         // Sensible default: 4 equal quarterly installments.
-        for each i in {1, 2, 3, 4}
+        iter_i = {1, 2, 3, 4};
+        for each i in iter_i
         {
             d = Map();
             d.put("no", i);
@@ -338,10 +349,21 @@ string school.raiseStudentFee(string studentId, string academicYearId, string cl
 /* Rollback helper - removes a fee row and every installment under it. */
 void school.deleteFeeAndInstallments(string feeId)
 {
+    // There is no zoho.crm.deleteRecord task - deletion goes over REST.
     insts = zoho.crm.searchRecords("Fee_Installments", "(Student_Fee:equals:" + feeId + ")");
     for each i in insts
     {
-        zoho.crm.deleteRecord("Fee_Installments", i.get("id").toLong());
+        invokeurl
+        [
+            url        : "https://www.zohoapis.in/crm/v5/Fee_Installments/" + i.get("id")
+            type       : DELETE
+            connection : "crmconn"
+        ];
     }
-    zoho.crm.deleteRecord("Student_Fees", feeId.toLong());
+    invokeurl
+    [
+        url        : "https://www.zohoapis.in/crm/v5/Student_Fees/" + feeId
+        type       : DELETE
+        connection : "crmconn"
+    ];
 }

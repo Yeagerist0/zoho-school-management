@@ -238,8 +238,11 @@ void school.reconcileAttendance()
     touched = Map();
     page    = 1;
     more    = true;
-    while(more && page <= 20)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(20);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(more && page <= 20)) { break; }
         rows = school.coqlPaged("select id, Enrollment.id from Attendance where Modified_Time > '" + since + "'", page);
         for each r in rows
         {
@@ -253,7 +256,8 @@ void school.reconcileAttendance()
     }
 
     updates = List();
-    for each enId in touched.keys()
+    iter_enId = touched.keys();
+    for each enId in iter_enId
     {
         agg     = school.coql("select id, Status from Attendance where Enrollment = " + enId + " limit 400");
         marked  = agg.size();

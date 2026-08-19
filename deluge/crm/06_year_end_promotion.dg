@@ -37,8 +37,11 @@ void school.promoteStudents(string fromYearId, string toYearId)
     sectionsByLevel = Map();
     page = 1;
     more = true;
-    while(more && page <= 20)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(20);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(more && page <= 20)) { break; }
         rows = school.coqlPaged("select id, Class.id, Class.Level, Section, Max_Strength, Current_Strength " +
                                 "from Class_Sections where Academic_Year = " + toYearId +
                                 " and Is_Active = true", page);
@@ -62,8 +65,11 @@ void school.promoteStudents(string fromYearId, string toYearId)
 
     page = 1;
     more = true;
-    while(more && page <= 200)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq2 = school.boundedSeq(200);
+    for each loopGuard2 in loopSeq2
     {
+        if(!(more && page <= 200)) { break; }
         rows = school.coqlPaged(
             "select id, Student.id, Student.Student_ID, Student.Status, " +
             "Class_Section.id, Class_Section.Class.id, Class_Section.Class.Level, " +
@@ -168,8 +174,11 @@ void school.promoteStudents(string fromYearId, string toYearId)
     newIdByKey = Map();
     page = 1;
     more = true;
-    while(more && page <= 200)
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq3 = school.boundedSeq(200);
+    for each loopGuard3 in loopSeq3
     {
+        if(!(more && page <= 200)) { break; }
         rows = school.coqlPaged("select id, Enrollment_Key, Class_Section.id, Student.id " +
                                 "from Enrollments where Academic_Year = " + toYearId, page);
         for each r in rows
@@ -182,7 +191,8 @@ void school.promoteStudents(string fromYearId, string toYearId)
 
     studentUpdates = List();
     sectionCounts  = Map();
-    for each sid in studentMoves.keys()
+    iter_sid = studentMoves.keys();
+    for each sid in iter_sid
     {
         mv = studentMoves.get(sid);
         u  = Map();
@@ -206,7 +216,8 @@ void school.promoteStudents(string fromYearId, string toYearId)
 
     // ---- Refresh section strengths -----------------------------------------
     secUpdates = List();
-    for each secId in sectionCounts.keys()
+    iter_secId = sectionCounts.keys();
+    for each secId in iter_secId
     {
         u = Map();
         u.put("id", secId);
@@ -216,7 +227,8 @@ void school.promoteStudents(string fromYearId, string toYearId)
     school.bulkUpdate("Class_Sections", secUpdates);
 
     // ---- Raise next year's fees ---------------------------------------------
-    for each sid in studentMoves.keys()
+    iter_sid = studentMoves.keys();
+    for each sid in iter_sid
     {
         mv = studentMoves.get(sid);
         if(!mv.containKey("Status") && newIdByKey.containKey(mv.get("key")))

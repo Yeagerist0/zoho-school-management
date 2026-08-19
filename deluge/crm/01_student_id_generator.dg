@@ -28,8 +28,11 @@ string school.generateStudentID(string academicYearId)
     newId      = "";
     attempt    = 1;
 
-    while(attempt <= 5 && newId == "")
+    // CRM Deluge has no while loop - bounded loop with an explicit exit.
+    loopSeq1 = school.boundedSeq(5);
+    for each loopGuard1 in loopSeq1
     {
+        if(!(attempt <= 5 && newId == "")) { break; }
         rows = zoho.crm.searchRecords("Sequence_Counters", "(Counter_Key:equals:" + counterKey + ")");
 
         counterId = "";
@@ -84,8 +87,8 @@ string school.generateStudentID(string academicYearId)
         newId = "STU-" + yearCode + "-T" + zoho.currenttime.toString("HHmmssSSS");
         sendmail
         [
-            from    : zoho.adminuserid
-            to      : zoho.adminuserid
+            from    : zoho.loginuserid
+            to      : zoho.loginuserid
             subject : "Student ID counter contention - manual review"
             message : "Fallback Student ID issued: " + newId + " for AY " + yearCode
         ];
